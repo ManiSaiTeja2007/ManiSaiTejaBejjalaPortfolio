@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mani Sai Teja Bejjala - Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: #f8fafc;
+    }
+    .icon {
+      transition: transform 0.2s ease-in-out;
+    }
+    .icon:hover {
+      transform: scale(1.1);
+    }
+    .stats-img {
+      max-width: 100%;
+      margin-bottom: 1rem;
+    }
+    .nav-link:hover {
+      color: #2563eb;
+    }
+    .project-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body class="text-gray-900">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
+      <div class="space-x-6">
+        <a href="#about" class="text-gray-600 hover:text-blue-600 nav-link">About</a>
+        <a href="#skills" class="text-gray-600 hover:text-blue-600 nav-link">Skills</a>
+        <a href="#projects" class="text-gray-600 hover:text-blue-600 nav-link">Projects</a>
+        <a href="#connect" class="text-gray-600 hover:text-blue-600 nav-link">Connect</a>
+        <a href="#stats" class="text-gray-600 hover:text-blue-600 nav-link">Stats</a>
+        <a href="#contact" class="text-gray-600 hover:text-blue-600 nav-link">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-12 text-center">
+    <h1 class="text-4xl md:text-5xl font-bold">Hi 👋, I'm Mani Sai Teja Bejjala</h1>
+    <h3 class="text-xl md:text-2xl mt-2">Frontend Developer | B-Tech ECE Student | IIIT Sri City, Chittoor</h3>
+  </header>
+
+  <!-- About Section -->
+  <section id="about" class="max-w-6xl mx-auto py-12 px-4">
+    <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6">About Me</h3>
+    <p class="text-lg leading-relaxed">
+      I'm a B-Tech Electronics and Communication Engineering student at <strong>IIIT Sri City, Chittoor</strong>, passionate about frontend development and innovative technology solutions. My expertise spans crafting responsive web interfaces and building IoT systems, leveraging modern web technologies and embedded systems. I strive to create seamless, user-centric applications that combine technical precision with creative design.
+    </p>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="max-w-6xl mx-auto py-12 px-4">
+    <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6">Languages and Tools</h3>
+    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
+      <a href="https://angular.io" target="_blank" rel="noreferrer"><img src="https://angular.io/assets/images/logos/angular/angular.svg" alt="angular" class="w-10 h-10 icon" /></a>
+      <a href="https://www.arduino.cc/" target="_blank" rel="noreferrer"><img src="https://cdn.worldvectorlogo.com/logos/arduino-1.svg" alt="arduino" class="w-10 h-10 icon" /></a>
+      <a href="https://aws.amazon.com" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="aws" class="w-10 h-10 icon" /></a>
+      <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/gnu_bash/gnu_bash-icon.svg" alt="bash" class="w-10 h-10 icon" /></a>
+      <a href="https://www.cprogramming.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" alt="c" class="w-10 h-10 icon" /></a>
+      <a href="https://www.w3schools.com/cpp/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" alt="cplusplus" class="w-10 h-10 icon" /></a>
+      <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" class="w-10 h-10 icon" /></a>
+      <a href="https://d3js.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/d3js/d3js-original.svg" alt="d3js" class="w-10 h-10 icon" /></a>
+      <a href="https://www.docker.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" class="w-10 h-10 icon" /></a>
+      <a href="https://expressjs.com" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="express" class="w-10 h-10 icon" /></a>
+      <a href="https://firebase.google.com/" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="firebase" class="w-10 h-10 icon" /></a>
+      <a href="https://git-scm.com/" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" class="w-10 h-10 icon" /></a>
+      <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" class="w-10 h-10 icon" /></a>
+      <a href="https://www.java.com" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" class="w-10 h-10 icon" /></a>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" class="w-10 h-10 icon" /></a>
+      <a href="https://www.jenkins.io" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/jenkins/jenkins-icon.svg" alt="jenkins" class="w-10 h-10 icon" /></a>
+      <a href="https://kubernetes.io" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/kubernetes/kubernetes-icon.svg" alt="kubernetes" class="w-10 h-10 icon" /></a>
+      <a href="https://www.linux.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" class="w-10 h-10 icon" /></a>
+      <a href="https://www.mathworks.com/" target="_blank" rel="noreferrer"><img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Matlab_Logo.png" alt="matlab" class="w-10 h-10 icon" /></a>
+      <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="mongodb" class="w-10 h-10 icon" /></a>
+      <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" class="w-10 h-10 icon" /></a>
+      <a href="https://nodejs.org" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" class="w-10 h-10 icon" /></a>
+      <a href="https://www.postgresql.org" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg" alt="postgresql" class="w-10 h-10 icon" /></a>
+      <a href="https://postman.com" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman" class="w-10 h-10 icon" /></a>
+      <a href="https://www.python.org" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" class="w-10 h-10 icon" /></a>
+      <a href="https://reactjs.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" class="w-10 h-10 icon" /></a>
+      <a href="https://unity.com/" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/unity3d/unity3d-icon.svg" alt="unity" class="w-10 h-10 icon" /></a>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="max-w-6xl mx-auto py-12 px-4">
+    <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6">Projects</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Task Management App (Angular)</h4>
+        <p class="text-gray-600">A web app for managing tasks with real-time updates.</p>
+        <p class="mt-2"><strong>Tech:</strong> Angular, Firebase</p>
+        <a href="projects/task-management-app.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Smart Home IoT (Arduino)</h4>
+        <p class="text-gray-600">An IoT system to control home appliances.</p>
+        <p class="mt-2"><strong>Tech:</strong> Arduino, C, Bluetooth</p>
+        <a href="projects/smart-home-iot.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Serverless API (AWS)</h4>
+        <p class="text-gray-600">A serverless REST API for a todo app.</p>
+        <p class="mt-2"><strong>Tech:</strong> AWS Lambda, Node.js</p>
+        <a href="projects/serverless-api.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Automation Script (Bash)</h4>
+        <p class="text-gray-600">A script to automate server setup tasks.</p>
+        <p class="mt-2"><strong>Tech:</strong> Bash, Linux</p>
+        <a href="projects/automation-script.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Embedded System Monitor (C)</h4>
+        <p class="text-gray-600">A real-time monitoring system for devices.</p>
+        <p class="mt-2"><strong>Tech:</strong> C, Arduino</p>
+        <a href="projects/embedded-system-monitor.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Pathfinding Visualizer (C++)</h4>
+        <p class="text-gray-600">A desktop app to visualize pathfinding algorithms.</p>
+        <p class="mt-2"><strong>Tech:</strong> C++, SFML</p>
+        <a href="projects/pathfinding-visualizer.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">E-Commerce UI (CSS)</h4>
+        <p class="text-gray-600">A responsive e-commerce website UI.</p>
+        <p class="mt-2"><strong>Tech:</strong> HTML, CSS</p>
+        <a href="projects/ecommerce-ui.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Data Visualization Dashboard (D3.js)</h4>
+        <p class="text-gray-600">An interactive dashboard for sales data.</p>
+        <p class="mt-2"><strong>Tech:</strong> D3.js, JavaScript</p>
+        <a href="projects/data-visualization-dashboard.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Microservices Deployment (Docker)</h4>
+        <p class="text-gray-600">Containerized a web app for deployment.</p>
+        <p class="mt-2"><strong>Tech:</strong> Docker, Node.js</p>
+        <a href="projects/microservices-deployment.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">User Authentication API (Express)</h4>
+        <p class="text-gray-600">A secure REST API with JWT.</p>
+        <p class="mt-2"><strong>Tech:</strong> Express, Node.js, MongoDB</p>
+        <a href="projects/user-authentication-api.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Real-Time Chat App (Firebase)</h4>
+        <p class="text-gray-600">A chat app with real-time messaging.</p>
+        <p class="mt-2"><strong>Tech:</strong> Firebase, React</p>
+        <a href="projects/realtime-chat-app.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Version Control Workflow (Git)</h4>
+        <p class="text-gray-600">A collaborative project with CI/CD.</p>
+        <p class="mt-2"><strong>Tech:</strong> Git, GitHub Actions</p>
+        <a href="projects/version-control-workflow.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Portfolio Website (HTML)</h4>
+        <p class="text-gray-600">A responsive personal portfolio.</p>
+        <p class="mt-2"><strong>Tech:</strong> HTML, Tailwind CSS</p>
+        <a href="projects/portfolio-website.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Inventory Management System (Java)</h4>
+        <p class="text-gray-600">A desktop app for inventory management.</p>
+        <p class="mt-2"><strong>Tech:</strong> Java, JavaFX</p>
+        <a href="projects/inventory-management-system.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Weather App (JavaScript)</h4>
+        <p class="text-gray-600">A web app for real-time weather data.</p>
+        <p class="mt-2"><strong>Tech:</strong> JavaScript, HTML, CSS</p>
+        <a href="projects/weather-app.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">CI/CD Pipeline (Jenkins)</h4>
+        <p class="text-gray-600">Automated build and deployment pipeline.</p>
+        <p class="mt-2"><strong>Tech:</strong> Jenkins, Docker</p>
+        <a href="projects/cicd-pipeline.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Kubernetes Cluster Setup (Kubernetes)</h4>
+        <p class="text-gray-600">Deployed a scalable web app.</p>
+        <p class="mt-2"><strong>Tech:</strong> Kubernetes, Docker</p>
+        <a href="projects/kubernetes-cluster-setup.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Server Monitoring Script (Linux)</h4>
+        <p class="text-gray-600">A script to monitor server health.</p>
+        <p class="mt-2"><strong>Tech:</strong> Linux, Bash</p>
+        <a href="projects/server-monitoring-script.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Signal Processing Tool (MATLAB)</h4>
+        <p class="text-gray-600">A tool for analyzing signal data.</p>
+        <p class="mt-2"><strong>Tech:</strong> MATLAB</p>
+        <a href="projects/signal-processing-tool.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Blog Platform Backend (MongoDB)</h4>
+        <p class="text-gray-600">A NoSQL backend for a blogging platform.</p>
+        <p class="mt-2"><strong>Tech:</strong> MongoDB, Express</p>
+        <a href="projects/blog-platform-backend.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Library Management System (MySQL)</h4>
+        <p class="text-gray-600">A database-driven app for library records.</p>
+        <p class="mt-2"><strong>Tech:</strong> MySQL, Java</p>
+        <a href="projects/library-management-system.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Event Management API (Node.js)</h4>
+        <p class="text-gray-600">A REST API for events and bookings.</p>
+        <p class="mt-2"><strong>Tech:</strong> Node.js, Express</p>
+        <a href="projects/event-management-api.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">E-Learning Platform (PostgreSQL)</h4>
+        <p class="text-gray-600">A database backend for e-learning.</p>
+        <p class="mt-2"><strong>Tech:</strong> PostgreSQL, Node.js</p>
+        <a href="projects/elearning-platform.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">API Testing Suite (Postman)</h4>
+        <p class="text-gray-600">A collection of API tests.</p>
+        <p class="mt-2"><strong>Tech:</strong> Postman, REST APIs</p>
+        <a href="projects/api-testing-suite.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Data Analysis Script (Python)</h4>
+        <p class="text-gray-600">A script for dataset trend analysis.</p>
+        <p class="mt-2"><strong>Tech:</strong> Python, Pandas, Matplotlib</p>
+        <a href="projects/data-analysis-script.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">Social Media Dashboard (React)</h4>
+        <p class="text-gray-600">A dashboard for social media accounts.</p>
+        <p class="mt-2"><strong>Tech:</strong> React, Tailwind CSS</p>
+        <a href="projects/social-media-dashboard.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md project-card">
+        <h4 class="text-xl font-semibold">2D Platformer Game (Unity)</h4>
+        <p class="text-gray-600">A 2D platformer with custom levels.</p>
+        <p class="mt-2"><strong>Tech:</strong> Unity, C#</p>
+        <a href="projects/2d-platformer-game.html" class="text-blue-600 hover:underline">View Details</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Connect Section -->
+  <section id="connect" class="max-w-6xl mx-auto py-12 px-4">
+    <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6">Connect with Me</h3>
+    <div class="flex space-x-4 flex-wrap gap-4">
+      <a href="https://github.com/manisaiteja2007" target="_blank"><img src="https://www.vectorlogo.zone/logos/github/github-icon.svg" alt="GitHub" class="w-8 h-8 icon" /></a>
+      <a href="https://www.kaggle.com/bejjalamanisaiteja" target="_blank"><img src="https://www.vectorlogo.zone/logos/kaggle/kaggle-icon.svg" alt="Kaggle" class="w-8 h-8 icon" /></a>
+      <a href="https://manisaitejabejjala.hashnode.dev" target="_blank"><img src="https://www.vectorlogo.zone/logos/hashnode/hashnode-icon.svg" alt="Hashnode" class="w-8 h-8 icon" /></a>
+      <a href="https://discord.com/users/manisaiteja7509" target="_blank"><img src="https://www.vectorlogo.zone/logos/discord/discord-icon.svg" alt="Discord" class="w-8 h-8 icon" /></a>
+      <a href="https://codepen.io/bejjala-mani-sai-teja" target="_blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/codepen.svg" alt="CodePen" class="w-8 h-8 icon" /></a>
+      <a href="https://dev.to/manisaiteja2007" target="_blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/devto.svg" alt="Dev.to" class="w-8 h-8 icon" /></a>
+      <a href="https://twitter.com/manisaiteja_b" target="_blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="Twitter" class="w-8 h-8 icon" /></a>
+      <a href="https://linkedin.com/in/bejjala-mani-sai-teja" target="_blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="LinkedIn" class="w-8 h-8 icon" /></a>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section id="stats" class="max-w-6xl mx-auto py-12 px-4">
+    <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6">My GitHub Stats</h3>
+    <div class="flex flex-col space-y-4">
+      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=manisaiteja2007&theme=aura&hide_border=true&include_all_commits=true&count_private=true&layout=compact" class="stats-img" style="width: 36%;" />
+      <img src="https://github-readme-stats.vercel.app/api?username=manisaiteja2007&theme=aura&hide_border=true&include_all_commits=true&count_private=true" class="stats-img" style="width: 55%;" />
+      <img src="https://github-readme-streak-stats.herokuapp.com/?user=manisaiteja2007&theme=aura&hide_border=true" class="stats-img" style="width: 50%;" />
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="max-w-6xl mx-auto py-12 px-4">
+    <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6">Contact Me</h3>
+    <p class="text-lg mb-4">
+      I'm always open to new opportunities and collaborations. Feel free to reach out via email or connect with me on my social platforms above!
+    </p>
+    <a href="mailto:manisaiteja2007@gmail.com" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">Email Me</a>
+  </section>
+
+  <!-- Fun Fact Section -->
+  <section class="max-w-6xl mx-auto py-12 px-4">
+    <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6">Fun Fact</h3>
+    <p class="text-lg italic text-gray-600">
+      🌟 I love blending my ECE background with frontend development, experimenting with new tech stacks to create innovative projects that bridge hardware and software!
+    </p>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center py-6">
+    <p>© 2025 Mani Sai Teja Bejjala. All rights reserved.</p>
+  </footer>
+</body>
+</html>
