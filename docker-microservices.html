@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microservices Deployment - Mani Sai Teja Bejjala</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+    }
+    .icon {
+      transition: transform 0.2s ease-in-out;
+    }
+    .icon:hover {
+      transform: scale(1.1);
+    }
+    .nav-link:hover {
+      color: #2563eb;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body class="text-gray-900">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
+      <div class="space-x-6">
+        <a href="index.html" class="text-gray-600 hover:text-blue-600 nav-link">Home</a>
+        <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link">About</a>
+        <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link">Skills</a>
+        <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link">Projects</a>
+        <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link">Connect</a>
+        <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-12 text-center">
+    <h1 class="text-4xl md:text-5xl font-bold">Microservices Deployment</h1>
+    <h3 class="text-xl md:text-2xl mt-2">Built with Docker and Node.js</h3>
+  </header>
+
+  <!-- Overview Section -->
+  <section class="max-w-6xl mx-auto py-12 px-4">
+    <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6">Overview</h3>
+    <p class="text-lg leading-relaxed">
+      The Microservices Deployment project involves containerizing a Node.js-based web application using Docker. It consists of multiple microservices (e.g., user service, product service) orchestrated with Docker Compose, demonstrating scalable and modular deployment.
+    </p>
+  </section>
+
+  <!-- Technical Details Section -->
+  <section class="max-w-6xl mx-auto py-12 px-4">
+    <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6">Technical Details</h3>
+    <ul class="list-disc list-inside text-lg space-y-2">
+      <li><strong>Containerization:</strong> Docker for packaging microservices.</li>
+      <li><strong>Backend:</strong> Node.js with Express for service APIs.</li>
+      <li><strong>Orchestration:</strong> Docker Compose for multi-container management.</li>
+      <li><strong>Features:</strong> Service isolation, inter-service communication, scalable deployment.</li>
+      <li><strong>Tools:</strong> Docker CLI, Visual Studio Code.</li>
+    </ul>
+    <p class="mt-4">
+      <a href="https://github.com/manisaiteja2007" target="_blank" class="text-blue-600 hover:underline">View on GitHub</a> |
+      <a href="#" class="text-blue-600 hover:underline">Live Demo (Placeholder)</a>
+    </p>
+  </section>
+
+  <!-- Summary Section -->
+  <section class="max-w-6xl mx-auto py-12 px-4">
+    <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6">Summary</h3>
+    <p class="text-lg leading-relaxed">
+      This project demonstrates a modern approach to deploying applications using microservices and Docker. It ensures portability, scalability, and ease of maintenance, making it ideal for production environments. The setup is a practical example of containerized application development.
+    </p>
+  </section>
+
+  <!-- Pictures Section -->
+  <section class="max-w-6xl mx-auto py-12 px-4">
+    <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6">Pictures</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <img src="https://via.placeholder.com/600x400?text=Docker+Compose+File" alt="Docker Compose File" class="mb-2">
+        <p class="text-gray-600">Docker Compose configuration for microservices.</p>
+      </div>
+      <div>
+        <img src="https://via.placeholder.com/600x400?text=Container+Status" alt="Container Status" class="mb-2">
+        <p class="text-gray-600">Docker CLI showing running containers.</p>
+      </div>
+      <div>
+        <img src="https://via.placeholder.com/600x400?text=Service+API" alt="Service API" class="mb-2">
+        <p class="text-gray-600">API response from user service.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Conclusions Section -->
+  <section class="max-w-6xl mx-auto py-12 px-4">
+    <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6">Conclusions</h3>
+    <p class="text-lg leading-relaxed">
+      The Microservices Deployment project solidified my understanding of Docker and containerized architectures. It highlighted the benefits of modularity and scalability in application deployment. The project is a strong addition to my DevOps skill set.
+    </p>
+  </section>
+
+  <!-- Notes Section -->
+  <section class="max-w-6xl mx-auto py-12 px-4">
+    <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6">Notes</h3>
+    <ul class="list-disc list-inside text-lg space-y-2">
+      <li>Docker images were optimized for minimal size.</li>
+      <li>Environment variables ensure secure configuration.</li>
+      <li>Tested with multiple service instances for scalability.</li>
+      <li>Future enhancements could include Kubernetes orchestration.</li>
+    </ul>
+  </section>
+
+  <!-- Cautions Section -->
+  <section class="max-w-6xl mx-auto py-12 px-4">
+    <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6">Cautions</h3>
+    <ul class="list-disc list-inside text-lg space-y-2">
+      <li>Monitor container resource usage to avoid bottlenecks.</li>
+      <li>Ensure proper network configuration for inter-service communication.</li>
+      <li>Secure Docker images to prevent vulnerabilities.</li>
+      <li>Test thoroughly in production-like environments.</li>
+    </ul>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center py-6">
+    <p>© 2025 Mani Sai Teja Bejjala. All rights reserved.</p>
+    <a href="index.html" class="text-blue-400 hover:underline">Back to Home</a>
+  </footer>
+</body>
+</html>
