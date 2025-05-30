@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System - Mani Sai Teja Bejjala</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f8fafc;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        body.dark {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        /* Dark mode specific styles for various elements */
+        body.dark .nav-link {
+            color: #cbd5e1;
+        }
+        body.dark .nav-link:hover {
+            color: #60a5fa;
+        }
+        body.dark .text-gray-900 {
+            color: #e2e8f0;
+        }
+        body.dark .text-gray-800 {
+            color: #e2e8f0;
+        }
+        body.dark .text-gray-600 {
+            color: #a0aec0;
+        }
+        body.dark .border-blue-200 {
+            border-color: #4a5568;
+        }
+        body.dark .bg-white {
+            background-color: #2d3748;
+        }
+        body.dark .bg-gray-100 {
+            background-color: #2d3748;
+        }
+        body.dark .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+        }
+        body.dark .text-blue-600 {
+            color: #60a5fa;
+        }
+        body.dark .bg-blue-600 {
+            background-color: #3b82f6;
+        }
+        body.dark .hover\:bg-blue-700:hover {
+            background-color: #2563eb;
+        }
+    </style>
+    <script>
+        // Set up Tailwind CSS for dark mode
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        // Define any custom colors if needed
+                    }
+                }
+            }
+        }
+
+        // Function to toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+            // Store user preference in local storage
+            if (document.body.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Apply theme on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.body.classList.add('dark');
+            }
+        });
+    </script>
+</head>
+<body class="text-gray-900">
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
+            <div class="space-x-6 flex items-center">
+                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link">About</a>
+                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link">Skills</a>
+                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link">Projects</a>
+                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link">Connect</a>
+                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link">Stats</a>
+                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link">Contact</a>
+                <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto py-12 px-4">
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8 dark:bg-gray-800">
+            <h2 class="text-4xl font-bold text-blue-600 mb-4 dark:text-blue-400">Library Management System (MySQL)</h2>
+            <p class="text-gray-700 text-lg mb-6 dark:text-gray-300">
+                A comprehensive desktop application designed to manage library records, including books, members, and borrowing transactions, powered by a MySQL database.
+            </p>
+
+            <div class="mb-6">
+                <img src="https://via.placeholder.com/800x450?text=Library+Management+System+Screenshot" alt="Library Management System Screenshot" class="w-full h-auto rounded-lg shadow-lg">
+                <p class="text-center text-gray-500 text-sm mt-2 dark:text-gray-400">Screenshot of the Library Management System's user interface.</p>
+            </div>
+
+            <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mb-4 dark:border-blue-700">Detailed Description</h3>
+            <div class="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
+                <p>
+                    This project involved developing a desktop-based **Library Management System** that provides a robust solution for managing library operations. The system uses a **MySQL** relational database to store and manage all data, ensuring data integrity and efficient querying.
+                </p>
+                <ul>
+                    <li><strong>The problem it solves:</strong> Manual library management can be error-prone and time-consuming. This system automates critical processes like book borrowing/returning, member registration, and inventory tracking, significantly improving efficiency and accuracy.</li>
+                    <li><strong>Your role:</strong> I was responsible for designing the relational database schema, implementing the backend logic for data manipulation (CRUD operations), and developing the user interface using JavaFX. This also included establishing database connections and ensuring secure and reliable data transactions.</li>
+                    <li><strong>Key features:</strong> The application offers:
+                        <ul>
+                            <li>**Book Management:** Add, update, delete, and search for books by various criteria (title, author, ISBN).</li>
+                            <li>**Member Management:** Register new members, update their details, and track their borrowing history.</li>
+                            <li>**Borrowing & Returning:** Efficiently manage book check-outs and check-ins, with due date tracking.</li>
+                            <li>**Reports:** Generate reports on borrowed books, overdue books, and member activity.</li>
+                            <li>**User Authentication:** Secure login for library staff.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Technologies used:</strong> The frontend was developed using **Java** with **JavaFX** for the graphical user interface. The backend database was **MySQL**, and JDBC (Java Database Connectivity) was used to facilitate communication between the Java application and the MySQL database.</li>
+                    <li><strong>Challenges and solutions:</strong> A primary challenge was designing an optimal relational schema that efficiently handles complex relationships between books, members, and transactions. This was addressed by normalizing the database to reduce redundancy and improve data integrity. Ensuring robust error handling for database operations and user input validation was another focus, achieved through comprehensive exception handling and client-side validation.</li>
+                    <li><strong>Learnings:</strong> This project provided deep insights into relational database design, SQL querying, and database connectivity in Java. I gained significant experience in building interactive desktop applications with JavaFX and understanding the full stack of a desktop application with a persistent database.</li>
+                    <li><strong>Future enhancements (optional):</strong> Future improvements could include web-based access for members to browse the catalog, barcode scanning for faster check-outs, and integration with an online payment system for fines.</li>
+                </ul>
+                <p>
+                    This Library Management System demonstrates strong capabilities in database design, Java application development, and building robust, user-friendly tools for administrative tasks.
+                </p>
+            </div>
+
+            <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mt-8 mb-4 dark:border-blue-700">Technologies Used</h3>
+            <div class="flex flex-wrap gap-2 text-sm">
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">MySQL</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Java</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">JavaFX</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">JDBC</span>
+            </div>
+
+            <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mt-8 mb-4 dark:border-blue-700">Project Links</h3>
+            <div class="flex space-x-4">
+                <a href="#" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition dark:bg-blue-700 dark:hover:bg-blue-600">Live Demo (if applicable)</a>
+                <a href="

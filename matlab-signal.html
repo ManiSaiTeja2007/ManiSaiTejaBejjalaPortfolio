@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signal Processing Tool - Mani Sai Teja Bejjala</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f8fafc;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        body.dark {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        /* Dark mode specific styles for various elements */
+        body.dark .nav-link {
+            color: #cbd5e1;
+        }
+        body.dark .nav-link:hover {
+            color: #60a5fa;
+        }
+        body.dark .text-gray-900 {
+            color: #e2e8f0;
+        }
+        body.dark .text-gray-800 {
+            color: #e2e8f0;
+        }
+        body.dark .text-gray-600 {
+            color: #a0aec0;
+        }
+        body.dark .border-blue-200 {
+            border-color: #4a5568;
+        }
+        body.dark .bg-white {
+            background-color: #2d3748;
+        }
+        body.dark .bg-gray-100 {
+            background-color: #2d3748;
+        }
+        body.dark .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+        }
+        body.dark .text-blue-600 {
+            color: #60a5fa;
+        }
+        body.dark .bg-blue-600 {
+            background-color: #3b82f6;
+        }
+        body.dark .hover\:bg-blue-700:hover {
+            background-color: #2563eb;
+        }
+    </style>
+    <script>
+        // Set up Tailwind CSS for dark mode
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        // Define any custom colors if needed
+                    }
+                }
+            }
+        }
+
+        // Function to toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+            // Store user preference in local storage
+            if (document.body.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Apply theme on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.body.classList.add('dark');
+            }
+        });
+    </script>
+</head>
+<body class="text-gray-900">
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
+            <div class="space-x-6 flex items-center">
+                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link">About</a>
+                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link">Skills</a>
+                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link">Projects</a>
+                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link">Connect</a>
+                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link">Stats</a>
+                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link">Contact</a>
+                <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto py-12 px-4">
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8 dark:bg-gray-800">
+            <h2 class="text-4xl font-bold text-blue-600 mb-4 dark:text-blue-400">Signal Processing Tool (MATLAB)</h2>
+            <p class="text-gray-700 text-lg mb-6 dark:text-gray-300">
+                A MATLAB-based tool for analyzing and visualizing various signal data, demonstrating fundamental concepts in digital signal processing.
+            </p>
+
+            <div class="mb-6">
+                <img src="https://via.placeholder.com/800x450?text=MATLAB+Signal+Processing+Tool+Screenshot" alt="MATLAB Signal Processing Tool Screenshot" class="w-full h-auto rounded-lg shadow-lg">
+                <p class="text-center text-gray-500 text-sm mt-2 dark:text-gray-400">Example of signal visualization within the MATLAB tool.</p>
+            </div>
+
+            <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mb-4 dark:border-blue-700">Detailed Description</h3>
+            <div class="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
+                <p>
+                    This project involved developing a comprehensive tool in MATLAB for **digital signal processing (DSP)**, focusing on the analysis and visualization of various types of signals. The tool allows users to import, process, and interpret signal data through a graphical user interface (GUI).
+                </p>
+                <ul>
+                    <li><strong>The problem it solves:</strong> The tool provides an accessible platform for students and researchers to experiment with DSP concepts without needing to write extensive code from scratch. It simplifies tasks like filtering, spectral analysis, and time-domain visualization, which can be complex to set up manually.</li>
+                    <li><strong>Your role:</strong> I was responsible for the complete design and implementation of the MATLAB scripts and the interactive GUI. This included developing the core signal processing algorithms, designing the user interface, and ensuring robust data handling.</li>
+                    <li><strong>Key features:</strong> The tool includes features such as:
+                        <ul>
+                            <li>Importing and exporting signal data (e.g., from CSV, WAV files).</li>
+                            <li>Applying various filters (e.g., low-pass, high-pass, band-pass) with adjustable parameters.</li>
+                            <li>Performing Fast Fourier Transforms (FFT) for frequency domain analysis.</li>
+                            <li>Interactive plotting of time-domain waveforms and frequency spectra.</li>
+                            <li>Basic signal generation capabilities (e.g., sine waves, square waves).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Technologies used:</strong> The entire project was developed using **MATLAB**, leveraging its powerful built-in functions for signal processing, numerical computation, and GUI development (App Designer).</li>
+                    <li><strong>Challenges and solutions:</strong> A primary challenge was optimizing the plotting functions for large datasets to ensure smooth and responsive GUI performance. I addressed this by implementing techniques like decimation for visualization and optimizing the update frequency of plots. Another challenge was making the GUI intuitive for users with varying levels of MATLAB proficiency, which was solved through clear labeling, tooltips, and a logical layout.</li>
+                    <li><strong>Learnings:</strong> This project significantly deepened my understanding of DSP principles, including sampling theory, filtering techniques, and frequency analysis. I also gained extensive experience in MATLAB's GUI development capabilities and best practices for creating user-friendly scientific tools.</li>
+                    <li><strong>Future enhancements (optional):</strong> Future work could include adding more advanced analysis features like wavelet transforms, integrating machine learning algorithms for signal classification, and enabling real-time signal acquisition from external hardware.</li>
+                </ul>
+                <p>
+                    This tool serves as a strong foundation for further exploration into digital signal processing applications, from audio analysis to biomedical signal interpretation.
+                </p>
+            </div>
+
+            <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mt-8 mb-4 dark:border-blue-700">Technologies Used</h3>
+            <div class="flex flex-wrap gap-2 text-sm">
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">MATLAB</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Digital Signal Processing (DSP)</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">GUI Development (MATLAB App Designer)</span>
+            </div>
+
+            <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mt-8 mb-4 dark:border-blue-700">Project Links</h3>
+            <div class="flex space-x-4">
+                <a href="#" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition dark:bg-blue-700 dark:hover:bg-blue-600">View Project (Code/Documentation)</a>
+                <a href="#" target="_blank" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">GitHub Repo</a>
+            </div>
+        </section>
+
+        <div class="text-center mt-8">
+            <a href="index.html#projects" class="inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">← Back to Projects</a>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800">
+        <p>© 2025 Mani Sai Teja Bejjala. All rights reserved.</p>
+        <a href="#top" class="text-blue-400 hover:underline">Back to Top</a>
+    </footer>
+</body>
+</html>

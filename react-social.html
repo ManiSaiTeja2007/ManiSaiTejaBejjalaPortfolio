@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Dashboard - Mani Sai Teja Bejjala</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f8fafc;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        body.dark {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        /* Dark mode specific styles for various elements */
+        body.dark .nav-link {
+            color: #cbd5e1;
+        }
+        body.dark .nav-link:hover {
+            color: #60a5fa;
+        }
+        body.dark .text-gray-900 {
+            color: #e2e8f0;
+        }
+        body.dark .text-gray-800 {
+            color: #e2e8f0;
+        }
+        body.dark .text-gray-600 {
+            color: #a0aec0;
+        }
+        body.dark .border-blue-200 {
+            border-color: #4a5568;
+        }
+        body.dark .bg-white {
+            background-color: #2d3748;
+        }
+        body.dark .bg-gray-100 {
+            background-color: #2d3748;
+        }
+        body.dark .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+        }
+        body.dark .text-blue-600 {
+            color: #60a5fa;
+        }
+        body.dark .bg-blue-600 {
+            background-color: #3b82f6;
+        }
+        body.dark .hover\:bg-blue-700:hover {
+            background-color: #2563eb;
+        }
+    </style>
+    <script>
+        // Set up Tailwind CSS for dark mode
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        // Define any custom colors if needed
+                    }
+                }
+            }
+        }
+
+        // Function to toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+            // Store user preference in local storage
+            if (document.body.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Apply theme on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.body.classList.add('dark');
+            }
+        });
+    </script>
+</head>
+<body class="text-gray-900">
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
+            <div class="space-x-6 flex items-center">
+                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link">About</a>
+                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link">Skills</a>
+                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link">Projects</a>
+                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link">Connect</a>
+                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link">Stats</a>
+                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link">Contact</a>
+                <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto py-12 px-4">
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8 dark:bg-gray-800">
+            <h2 class="text-4xl font-bold text-blue-600 mb-4 dark:text-blue-400">Social Media Dashboard (React)</h2>
+            <p class="text-gray-700 text-lg mb-6 dark:text-gray-300">
+                A dynamic and responsive social media dashboard built with React and styled with Tailwind CSS, offering a unified view of various social media metrics.
+            </p>
+
+            <div class="mb-6">
+                <img src="https://via.placeholder.com/800x450?text=React+Social+Media+Dashboard+Screenshot" alt="React Social Media Dashboard Screenshot" class="w-full h-auto rounded-lg shadow-lg">
+                <p class="text-center text-gray-500 text-sm mt-2 dark:text-gray-400">Screenshot of the social media dashboard interface.</p>
+            </div>
+
+            <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mb-4 dark:border-blue-700">Detailed Description</h3>
+            <div class="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
+                <p>
+                    This project involved creating an interactive and responsive **Social Media Dashboard** using **React.js** for the frontend and **Tailwind CSS** for rapid styling. The dashboard aims to provide a centralized view of key metrics and activities across multiple social media platforms.
+                </p>
+                <ul>
+                    <li><strong>The problem it solves:</strong> Managing and monitoring performance across various social media accounts can be fragmented. This dashboard centralizes data, making it easier for users to track engagement, follower growth, and other important statistics from a single interface.</li>
+                    <li><strong>Your role:</strong> I was responsible for the entire frontend development, including component design, state management, API integration (simulated or actual, if a backend was present), and ensuring a responsive and intuitive user experience using Tailwind CSS.</li>
+                    <li><strong>Key features:</strong> The dashboard includes:
+                        <ul>
+                            <li>**Metric Overviews:** Displaying key metrics like total followers, likes, comments, and views from different platforms.</li>
+                            <li>**Platform-Specific Cards:** Dedicated sections for each social media platform with their respective data.</li>
+                            <li>**Interactive Charts/Graphs:** Visualizing trends over time (e.g., follower growth, engagement rates).</li>
+                            <li>**Responsive Design:** Adapting seamlessly to various screen sizes and devices.</li>
+                            <li>**Dark Mode Toggle:** (As implemented in the template) enhancing user accessibility and preference.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Technologies used:</strong> The core of this project is **React.js** for building a dynamic user interface. **Tailwind CSS** was used for utility-first styling, enabling highly customizable and responsive designs without writing custom CSS from scratch.</li>
+                    <li><strong>Challenges and solutions:</strong> A challenge was managing the state for various social media metrics and ensuring efficient re-rendering of components. This was addressed by using React's state and props effectively and potentially leveraging React Hooks for complex state logic. Another challenge was ensuring cross-browser compatibility and responsiveness, which Tailwind CSS greatly simplified.</li>
+                    <li><strong>Learnings:</strong> This project significantly strengthened my expertise in React development, including component-based architecture, state management, and props drilling/context API usage. I gained practical experience in building modern, performant, and highly customizable user interfaces using Tailwind CSS.</li>
+                    <li><strong>Future enhancements (optional):</strong> Future work could involve integrating with actual social media APIs for real-time data, allowing users to connect their own accounts, implementing post scheduling features, and adding more advanced analytics and reporting functionalities.</li>
+                </ul>
+                <p>
+                    This Social Media Dashboard demonstrates strong capabilities in modern frontend development, particularly with React and Tailwind CSS, focusing on creating clean, functional, and visually appealing user interfaces.
+                </p>
+            </div>
+
+            <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mt-8 mb-4 dark:border-blue-700">Technologies Used</h3>
+            <div class="flex flex-wrap gap-2 text-sm">
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">React.js</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Tailwind CSS</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">JavaScript (ES6+)</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Frontend Development</span>
+            </div>
+
+            <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mt-8 mb-4 dark:border-blue-700">Project Links</h3>
+            <div class="flex space-x-4">
+                <a href="#" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition dark:bg-blue-700 dark:hover:bg-blue-600">Live Demo (if deployed)</a>
+                <a href="https://github.com/manisaiteja2007/social-media-dashboard-react" target="_blank" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">GitHub Repo</a>
+            </div>
+        </section>
+
+        <div class="text-center mt-8">
+            <a href="index.html#projects" class="inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">← Back to Projects</a>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800">
+        <p>© 2025 Mani Sai Teja Bejjala. All rights reserved.</p>
+        <a href="#top" class="text-blue-400 hover:underline">Back to Top</a>
+    </footer>
+</body>
+</html>

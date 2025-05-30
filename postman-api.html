@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Testing Suite - Mani Sai Teja Bejjala</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f8fafc;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        body.dark {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        /* Dark mode specific styles for various elements */
+        body.dark .nav-link {
+            color: #cbd5e1;
+        }
+        body.dark .nav-link:hover {
+            color: #60a5fa;
+        }
+        body.dark .text-gray-900 {
+            color: #e2e8f0;
+        }
+        body.dark .text-gray-800 {
+            color: #e2e8f0;
+        }
+        body.dark .text-gray-600 {
+            color: #a0aec0;
+        }
+        body.dark .border-blue-200 {
+            border-color: #4a5568;
+        }
+        body.dark .bg-white {
+            background-color: #2d3748;
+        }
+        body.dark .bg-gray-100 {
+            background-color: #2d3748;
+        }
+        body.dark .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+        }
+        body.dark .text-blue-600 {
+            color: #60a5fa;
+        }
+        body.dark .bg-blue-600 {
+            background-color: #3b82f6;
+        }
+        body.dark .hover\:bg-blue-700:hover {
+            background-color: #2563eb;
+        }
+    </style>
+    <script>
+        // Set up Tailwind CSS for dark mode
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        // Define any custom colors if needed
+                    }
+                }
+            }
+        }
+
+        // Function to toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+            // Store user preference in local storage
+            if (document.body.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Apply theme on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.body.classList.add('dark');
+            }
+        });
+    </script>
+</head>
+<body class="text-gray-900">
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
+            <div class="space-x-6 flex items-center">
+                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link">About</a>
+                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link">Skills</a>
+                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link">Projects</a>
+                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link">Connect</a>
+                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link">Stats</a>
+                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link">Contact</a>
+                <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto py-12 px-4">
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8 dark:bg-gray-800">
+            <h2 class="text-4xl font-bold text-blue-600 mb-4 dark:text-blue-400">API Testing Suite (Postman)</h2>
+            <p class="text-gray-700 text-lg mb-6 dark:text-gray-300">
+                A comprehensive collection of automated API tests developed using Postman, ensuring the reliability and functionality of various RESTful APIs.
+            </p>
+
+            <div class="mb-6">
+                <img src="https://via.placeholder.com/800x450?text=Postman+API+Testing+Screenshot" alt="Postman API Testing Screenshot" class="w-full h-auto rounded-lg shadow-lg">
+                <p class="text-center text-gray-500 text-sm mt-2 dark:text-gray-400">Screenshot of Postman test collection with executed requests.</p>
+            </div>
+
+            <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mb-4 dark:border-blue-700">Detailed Description</h3>
+            <div class="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
+                <p>
+                    This project involved creating a robust **API Testing Suite** using **Postman**, a popular API development and testing tool. The suite comprises a collection of requests and automated tests designed to validate the functionality, performance, and security of various **RESTful APIs**.
+                </p>
+                <ul>
+                    <li><strong>The problem it solves:</strong> Manually testing APIs is inefficient and prone to human error, especially as APIs evolve. This Postman collection automates the testing process, allowing for quick and repeatable verification of API endpoints, ensuring consistent behavior and data integrity.</li>
+                    <li><strong>Your role:</strong> I was responsible for designing the test scenarios, writing the individual API requests, and implementing the JavaScript test scripts within Postman. This also included setting up environments, variables, and collection runners for automated execution.</li>
+                    <li><strong>Key features:</strong> The testing suite includes:
+                        <ul>
+                            <li>**Functional Tests:** Validating correct responses for various HTTP methods (GET, POST, PUT, DELETE).</li>
+                            <li>**Data Validation:** Asserting that response bodies contain expected data types, formats, and values.</li>
+                            <li>**Status Code Checks:** Verifying that APIs return appropriate HTTP status codes (e.g., 200 OK, 404 Not Found, 500 Internal Server Error).</li>
+                            <li>**Authentication Tests:** Ensuring proper handling of authentication tokens and unauthorized access attempts.</li>
+                            <li>**Chained Requests:** Executing sequential requests where the output of one request serves as input for the next (e.g., login to get a token, then use token for subsequent requests).</li>
+                            <li>**Automated Runs:** Configured for running the entire collection automatically, providing a quick health check of the APIs.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Technologies used:</strong> The primary tool used was **Postman**, leveraging its built-in JavaScript engine for writing test scripts. The project focused on testing various **REST APIs**.</li>
+                    <li><strong>Challenges and solutions:</strong> A challenge was managing dynamic data between requests, such as extracting IDs from creation responses and using them in update or delete requests. This was solved by using Postman's environment and collection variables effectively. Another challenge was ensuring comprehensive test coverage, which was addressed by meticulously breaking down API functionalities into distinct test cases.</li>
+                    <li><strong>Learnings:</strong> This project significantly enhanced my understanding of API testing methodologies and best practices. I gained practical experience in using Postman's advanced features for automation, test script writing, and environment management, which are crucial skills for ensuring the quality and reliability of web services.</li>
+                    <li><strong>Future enhancements (optional):</strong> Future work could involve integrating this Postman collection into a CI/CD pipeline using Newman (Postman's command-line runner) for continuous API validation, and expanding test coverage to include performance and security testing.</li>
+                </ul>
+                <p>
+                    This API Testing Suite demonstrates a strong commitment to quality assurance and proficiency in utilizing Postman for efficient and reliable API validation.
+                </p>
+            </div>
+
+            <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mt-8 mb-4 dark:border-blue-700">Technologies Used</h3>
+            <div class="flex flex-wrap gap-2 text-sm">
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Postman</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">REST APIs</span>
+                <span class="bg-blue-
