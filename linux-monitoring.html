@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Monitoring Script (Linux) - Mani Sai Teja Bejjala</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f8fafc;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        body.dark {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        /* Dark mode specific styles for various elements */
+        body.dark .nav-link {
+            color: #cbd5e1;
+        }
+        body.dark .nav-link:hover {
+            color: #60a5fa;
+        }
+        body.dark .text-gray-900 {
+            color: #e2e8f0;
+        }
+        body.dark .text-gray-800 {
+            color: #e2e8f0;
+        }
+        body.dark .text-gray-600 {
+            color: #a0aec0;
+        }
+        body.dark .border-blue-200 {
+            border-color: #4a5568;
+        }
+        body.dark .bg-white {
+            background-color: #2d3748;
+        }
+        body.dark .bg-gray-100 {
+            background-color: #2d3748;
+        }
+        body.dark .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+        }
+        body.dark .text-blue-600 {
+            color: #60a5fa;
+        }
+        body.dark .bg-blue-600 {
+            background-color: #3b82f6;
+        }
+        body.dark .hover\:bg-blue-700:hover {
+            background-color: #2563eb;
+        }
+    </style>
+    <script>
+        // Set up Tailwind CSS for dark mode
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        // Define any custom colors if needed
+                    }
+                }
+            }
+        }
+
+        // Function to toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+            // Store user preference in local storage
+            if (document.body.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Apply theme on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.body.classList.add('dark');
+            }
+        });
+    </script>
+</head>
+<body class="text-gray-900">
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
+            <div class="space-x-6 flex items-center">
+                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link">About</a>
+                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link">Skills</a>
+                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link">Projects</a>
+                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link">Connect</a>
+                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link">Stats</a>
+                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link">Contact</a>
+                <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto py-12 px-4">
+        <section class="bg-white p-8 rounded-lg shadow-md mb-8 dark:bg-gray-800">
+            <h2 class="text-4xl font-bold text-blue-600 mb-4 dark:text-blue-400">Server Monitoring Script (Linux)</h2>
+            <p class="text-gray-700 text-lg mb-6 dark:text-gray-300">
+                A script to monitor server health and performance.
+            </p>
+
+            <div class="mb-6">
+                <img src="https://via.placeholder.com/800x450?text=Linux+Monitoring+Script" alt="Linux Server Monitoring Script" class="w-full h-auto rounded-lg shadow-lg">
+                <p class="text-center text-gray-500 text-sm mt-2 dark:text-gray-400">A screenshot of the script's output or a diagram of its operation.</p>
+            </div>
+
+            <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mb-4 dark:border-blue-700">Detailed Description</h3>
+            <div class="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
+                <p>
+                    This project involved developing a **Bash shell script** for Linux environments designed to **monitor key server health and performance metrics**. The script automates the collection of vital system information, providing insights into resource utilization and potential issues.
+                </p>
+                <ul>
+                    <li><strong>Problem Solved:</strong> Addressed the need for a simple, efficient, and customizable way to keep track of server performance indicators without relying on complex, resource-heavy monitoring tools. It provides quick diagnostic capabilities.</li>
+                    <li><strong>My Role:</strong> I designed, developed, and tested the Bash script, focusing on its modularity, ease of use, and integration with standard Linux commands. I also ensured it could be scheduled for regular execution via `cron`.</li>
+                    <li><strong>Key Features:</strong>
+                        <ul>
+                            <li>**CPU Usage Monitoring:** Gathers real-time and average CPU utilization.</li>
+                            <li>**Memory Usage Tracking:** Reports on RAM usage, including free, used, and cached memory.</li>
+                            <li>**Disk Space Analysis:** Monitors disk partition usage to prevent storage issues.</li>
+                            <li>**Network Activity Overview:** Provides basic network traffic statistics.</li>
+                            <li>**Process Monitoring:** Identifies top CPU/memory consuming processes.</li>
+                            <li>**Log File Monitoring:** Can be extended to scan important log files for errors or anomalies.</li>
+                            <li>**Alerting (Conceptual):** Designed with extensibility for email or notification alerts on critical thresholds.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Technologies Used:</strong>
+                        <ul>
+                            <li>**Linux:** The operating system environment for which the script is designed.</li>
+                            <li>**Bash Scripting:** The primary language used for writing the monitoring logic and interacting with system commands.</li>
+                            <li>**Standard Linux Utilities:** Commands like `top`, `free`, `df`, `netstat`, `grep`, `awk`, `sed`, etc., are heavily utilized.</li>
+                            <li>**Cron:** For scheduling the script to run at regular intervals.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Challenges and Solutions:</strong> A key challenge was parsing the output of various Linux commands consistently and reliably to extract the desired metrics. This was overcome by extensively using text processing tools like `awk` and `sed` to filter and format the data. Ensuring the script was non-intrusive and had minimal performance impact on the monitored server was also a crucial consideration.</li>
+                    <li><strong>Learnings:</strong> This project significantly enhanced my skills in **Bash scripting**, **Linux system administration**, **command-line tools**, and understanding the fundamentals of **server performance monitoring** and **automation**.</li>
+                </ul>
+            </div>
+
+            <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mt-8 mb-4 dark:border-blue-700">Technologies Used</h3>
+            <div class="flex flex-wrap gap-2 text-sm">
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Linux</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Bash</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Shell Scripting</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Cron</span>
+            </div>
+
+            <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mt-8 mb-4 dark:border-blue-700">Project Links</h3>
+            <div class="flex space-x-4">
+                <a href="https://github.com/manisaiteja2007/linux-monitoring-script-repo" target="_blank" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">GitHub Repo</a>
+            </div>
+        </section>
+
+        <div class="text-center mt-8">
+            <a href="index.html#projects" class="inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">← Back to Projects</a>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800">
+        <p>© 2025 Mani Sai Teja Bejjala. All rights reserved.</p>
+        <a href="#top" class="text-blue-400 hover:underline">Back to Top</a>
+    </footer>
+</body>
+</html>
