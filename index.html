@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mani Sai Teja Bejjala - Portfolio</title>
-    <link rel="icon" href="path/to/your/favicon.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -64,7 +63,7 @@
         body.dark .shadow-md {
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15); /* Darker shadow */
         }
-        body.dark .hover\\:shadow-xl:hover {
+        body.dark .hover\:shadow-xl:hover {
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
         }
         body.dark .text-blue-600 {
@@ -73,7 +72,7 @@
         body.dark .bg-blue-600 {
             background-color: #3b82f6; /* Adjust background for buttons */
         }
-        body.dark .hover\\:bg-blue-700:hover {
+        body.dark .hover\:bg-blue-700:hover {
             background-color: #2563eb; /* Adjust hover for buttons */
         }
     </style>
@@ -110,18 +109,16 @@
     </script>
 </head>
 <body class="text-gray-900">
-    <!-- Navigation -->
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
             <div class="space-x-6 flex items-center">
                 <a href="#about" class="text-gray-600 hover:text-blue-600 nav-link">About</a>
                 <a href="#skills" class="text-gray-600 hover:text-blue-600 nav-link">Skills</a>
-                <a href="#projects" class="text-gray-600 hover:text-blue-600 nav-link">Projects</a>
+                <a href="#projects" class="text-gray-600 hover:text-blue-600 nav-link">Featured Projects</a>
                 <a href="#connect" class="text-gray-600 hover:text-blue-600 nav-link">Connect</a>
                 <a href="#stats" class="text-gray-600 hover:text-blue-600 nav-link">Stats</a>
                 <a href="#contact" class="text-gray-600 hover:text-blue-600 nav-link">Contact</a>
-                <!-- Dark Mode Toggle Button -->
                 <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
@@ -131,13 +128,11 @@
         </div>
     </nav>
 
-    <!-- Header -->
     <header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-12 text-center">
         <h1 class="text-4xl md:text-5xl font-bold">Hi 👋, I'm Mani Sai Teja Bejjala</h1>
         <h3 class="text-xl md:text-2xl mt-2">Frontend Developer | B-Tech ECE Student | IIIT Sri City, Chittoor</h3>
     </header>
 
-    <!-- About Section -->
     <section id="about" class="max-w-6xl mx-auto py-12 px-4">
         <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">About Me</h3>
         <p class="text-lg leading-relaxed text-gray-900 dark:text-gray-200">
@@ -145,7 +140,6 @@
         </p>
     </section>
 
-    <!-- Skills Section -->
     <section id="skills" class="max-w-6xl mx-auto py-12 px-4">
         <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Languages and Tools</h3>
         <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
@@ -179,149 +173,45 @@
         </div>
     </section>
 
-    <!-- Projects Section -->
-  <section id="projects" class="max-w-6xl mx-auto py-12 px-4">
-    <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6">Projects</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <a href="angular-task-management.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Task Management App (Angular)</h4>
-        <p class="text-gray-600">A web app for managing tasks with real-time updates.</p>
-        <p class="mt-2"><strong>Tech:</strong> Angular, Firebase</p>
-      </a>
-      <a href="arduino-smart-home.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Smart Home IoT (Arduino)</h4>
-        <p class="text-gray-600">An IoT system to control home appliances.</p>
-        <p class="mt-2"><strong>Tech:</strong> Arduino, C, Bluetooth</p>
-      </a>
-      <a href="aws-serverless-api.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Serverless API (AWS)</h4>
-        <p class="text-gray-600">A serverless REST API for a todo app.</p>
-        <p class="mt-2"><strong>Tech:</strong> AWS Lambda, Node.js</p>
-      </a>
-      <a href="bash-automation.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Automation Script (Bash)</h4>
-        <p class="text-gray-600">A script to automate server setup.</p>
-        <p class="mt-2"><strong>Tech:</strong> Bash, Linux</p>
-      </a>
-      <a href="c-embedded-monitor.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Embedded System Monitor (C)</h4>
-        <p class="text-gray-600">A real-time monitoring system.</p>
-        <p class="mt-2"><strong>Tech:</strong> C, Arduino</p>
-      </a>
-      <a href="cpp-pathfinding.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Pathfinding Visualizer (C++)</h4>
-        <p class="text-gray-600">A desktop app for pathfinding algorithms.</p>
-        <p class="mt-2"><strong>Tech:</strong> C++, SFML</p>
-      </a>
-      <a href="css-ecommerce.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">E-Commerce UI (CSS)</h4>
-        <p class="text-gray-600">A responsive e-commerce website UI.</p>
-        <p class="mt-2"><strong>Tech:</strong> HTML, CSS</p>
-      </a>
-      <a href="d3js-dashboard.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Data Visualization Dashboard (D3.js)</h4>
-        <p class="text-gray-600">An interactive dashboard for sales data.</p>
-        <p class="mt-2"><strong>Tech:</strong> D3.js, JavaScript</p>
-      </a>
-      <a href="docker-microservices.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Microservices Deployment (Docker)</h4>
-        <p class="text-gray-600">Containerized a web app for deployment.</p>
-        <p class="mt-2"><strong>Tech:</strong> Docker, Node.js</p>
-      </a>
-      <a href="express-auth.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">User Authentication API (Express)</h4>
-        <p class="text-gray-600">A secure REST API with JWT.</p>
-        <p class="mt-2"><strong>Tech:</strong> Express, Node.js, MongoDB</p>
-      </a>
-      <a href="firebase-chat.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Real-Time Chat App (Firebase)</h4>
-        <p class="text-gray-600">A chat app with real-time messaging.</p>
-        <p class="mt-2"><strong>Tech:</strong> Firebase, React</p>
-      </a>
-      <a href="git-workflow.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Version Control Workflow (Git)</h4>
-        <p class="text-gray-600">A collaborative project with CI/CD.</p>
-        <p class="mt-2"><strong>Tech:</strong> Git, GitHub Actions</p>
-      </a>
-      <a href="html-portfolio.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Portfolio Website (HTML)</h4>
-        <p class="text-gray-600">A responsive personal portfolio.</p>
-        <p class="mt-2"><strong>Tech:</strong> HTML, Tailwind CSS</p>
-      </a>
-      <a href="java-inventory.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Inventory Management System (Java)</h4>
-        <p class="text-gray-600">A desktop app for inventory management.</p>
-        <p class="mt-2"><strong>Tech:</strong> Java, JavaFX</p>
-      </a>
-      <a href="javascript-weather.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Weather App (JavaScript)</h4>
-        <p class="text-gray-600">A web app for real-time weather data.</p>
-        <p class="mt-2"><strong>Tech:</strong> JavaScript, HTML, CSS</p>
-      </a>
-      <a href="jenkins-cicd.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">CI/CD Pipeline (Jenkins)</h4>
-        <p class="text-gray-600">Automated build and deployment pipeline.</p>
-        <p class="mt-2"><strong>Tech:</strong> Jenkins, Docker</p>
-      </a>
-      <a href="kubernetes-cluster.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Kubernetes Cluster Setup (Kubernetes)</h4>
-        <p class="text-gray-600">Deployed a scalable web app.</p>
-        <p class="mt-2"><strong>Tech:</strong> Kubernetes, Docker</p>
-      </a>
-      <a href="linux-monitoring.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Server Monitoring Script (Linux)</h4>
-        <p class="text-gray-600">A script to monitor server health.</p>
-        <p class="mt-2"><strong>Tech:</strong> Linux, Bash</p>
-      </a>
-      <a href="matlab-signal.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Signal Processing Tool (MATLAB)</h4>
-        <p class="text-gray-600">A tool for analyzing signal data.</p>
-        <p class="mt-2"><strong>Tech:</strong> MATLAB</p>
-      </a>
-      <a href="mongodb-blog.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Blog Platform Backend (MongoDB)</h4>
-        <p class="text-gray-600">A NoSQL backend for a blogging platform.</p>
-        <p class="mt-2"><strong>Tech:</strong> MongoDB, Express</p>
-      </a>
-      <a href="mysql-library.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Library Management System (MySQL)</h4>
-        <p class="text-gray-600">A database-driven app for library records.</p>
-        <p class="mt-2"><strong>Tech:</strong> MySQL, Java</p>
-      </a>
-      <a href="nodejs-events.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Event Management API (Node.js)</h4>
-        <p class="text-gray-600">A REST API for managing events.</p>
-        <p class="mt-2"><strong>Tech:</strong> Node.js, Express</p>
-      </a>
-      <a href="postgresql-elearning.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">E-Learning Platform (PostgreSQL)</h4>
-        <p class="text-gray-600">A database backend for e-learning.</p>
-        <p class="mt-2"><strong>Tech:</strong> PostgreSQL, Node.js</p>
-      </a>
-      <a href="postman-api.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">API Testing Suite (Postman)</h4>
-        <p class="text-gray-600">A collection of API tests.</p>
-        <p class="mt-2"><strong>Tech:</strong> Postman, REST APIs</p>
-      </a>
-      <a href="python-data.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Data Analysis Script (Python)</h4>
-        <p class="text-gray-600">A script for dataset analysis.</p>
-        <p class="mt-2"><strong>Tech:</strong> Python, Pandas, Matplotlib</p>
-      </a>
-      <a href="react-social.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">Social Media Dashboard (React)</h4>
-        <p class="text-gray-600">A dashboard for social media accounts.</p>
-        <p class="mt-2"><strong>Tech:</strong> React, Tailwind CSS</p>
-      </a>
-      <a href="unity-platformer.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-        <h4 class="text-xl font-semibold">2D Platformer Game (Unity)</h4>
-        <p class="text-gray-600">A 2D platformer game with custom levels.</p>
-        <p class="mt-2"><strong>Tech:</strong> Unity, C#</p>
-      </a>
-    </div>
-  </section>
+    <section id="projects" class="max-w-6xl mx-auto py-12 px-4">
+        <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Featured Projects</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <a href="angular-task-management.html" class="bg-white p-6 rounded-lg shadow-md project-card">
+                <h4 class="text-xl font-semibold">Task Management App (Angular)</h4>
+                <p class="text-gray-600 dark:text-gray-400">A web app for managing tasks with real-time updates.</p>
+                <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Angular, Firebase</p>
+            </a>
+            <a href="arduino-smart-home.html" class="bg-white p-6 rounded-lg shadow-md project-card">
+                <h4 class="text-xl font-semibold">Smart Home IoT (Arduino)</h4>
+                <p class="text-gray-600 dark:text-gray-400">An IoT system to control home appliances.</p>
+                <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Arduino, C, Bluetooth</p>
+            </a>
+            <a href="aws-serverless-api.html" class="bg-white p-6 rounded-lg shadow-md project-card">
+                <h4 class="text-xl font-semibold">Serverless API (AWS)</h4>
+                <p class="text-gray-600 dark:text-gray-400">A serverless REST API for a todo app.</p>
+                <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> AWS Lambda, Node.js</p>
+            </a>
+            <a href="bash-automation.html" class="bg-white p-6 rounded-lg shadow-md project-card">
+                <h4 class="text-xl font-semibold">Automation Script (Bash)</h4>
+                <p class="text-gray-600 dark:text-gray-400">A script to automate server setup.</p>
+                <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Bash, Linux</p>
+            </a>
+            <a href="c-embedded-monitor.html" class="bg-white p-6 rounded-lg shadow-md project-card">
+                <h4 class="text-xl font-semibold">Embedded System Monitor (C)</h4>
+                <p class="text-gray-600 dark:text-gray-400">A real-time monitoring system.</p>
+                <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> C, Arduino</p>
+            </a>
+            <a href="cpp-pathfinding.html" class="bg-white p-6 rounded-lg shadow-md project-card">
+                <h4 class="text-xl font-semibold">Pathfinding Visualizer (C++)</h4>
+                <p class="text-gray-600 dark:text-gray-400">A desktop app for pathfinding algorithms.</p>
+                <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> C++, SFML</p>
+            </a>
+            </div>
+        <div class="text-center mt-8">
+            <a href="all-projects.html" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition dark:bg-blue-700 dark:hover:bg-blue-600 text-lg font-medium">View All Projects (25+)</a>
+        </div>
+    </section>
 
-    <!-- Connect Section -->
     <section id="connect" class="max-w-6xl mx-auto py-12 px-4">
         <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Connect with Me</h3>
         <div class="flex space-x-4 flex-wrap gap-4">
@@ -336,23 +226,20 @@
         </div>
     </section>
 
-    <!-- Stats Section -->
     <section id="stats" class="max-w-6xl mx-auto py-12 px-4">
         <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">My GitHub Stats</h3>
-        <div class="flex flex-col space-y-4">
-            Note: GitHub stats images may need light/dark versions or adjust theme based on body.dark for optimal appearance
-            <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=manisaiteja2007&theme=aura&hide_border=true&include_all_commits=true&count_private=true&layout=compact&bg_color=ffffff00&text_color=333333&title_color=007bff" class="stats-img dark:hidden" style="width: 36%;" />
-            <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=manisaiteja2007&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true" class="stats-img hidden dark:block" style="width: 36%;" />
+        <div class="flex flex-col space-y-4 items-center"> <p class="text-gray-600 dark:text-gray-400">Note: GitHub stats images may need light/dark versions or adjust theme based on body.dark for optimal appearance.</p>
+            <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=manisaiteja2007&theme=aura&hide_border=true&include_all_commits=true&count_private=true&layout=compact&bg_color=ffffff00&text_color=333333&title_color=007bff" alt="GitHub Top Languages" class="stats-img dark:hidden" style="max-width: 380px; width: 100%;" />
+            <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=manisaiteja2007&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true" alt="GitHub Top Languages Dark" class="stats-img hidden dark:block" style="max-width: 380px; width: 100%;" />
 
-            <img src="https://github-readme-stats.vercel.app/api?username=manisaiteja2007&theme=aura&hide_border=true&include_all_commits=true&count_private=true&bg_color=ffffff00&text_color=333333&title_color=007bff" class="stats-img dark:hidden" style="width: 55%;" />
-            <img src="https://github-readme-stats.vercel.app/api?username=manisaiteja2007&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true" class="stats-img hidden dark:block" style="width: 55%;" />
+            <img src="https://github-readme-stats.vercel.app/api?username=manisaiteja2007&theme=aura&hide_border=true&include_all_commits=true&count_private=true&bg_color=ffffff00&text_color=333333&title_color=007bff" alt="GitHub Stats" class="stats-img dark:hidden" style="max-width: 500px; width: 100%;" />
+            <img src="https://github-readme-stats.vercel.app/api?username=manisaiteja2007&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true" alt="GitHub Stats Dark" class="stats-img hidden dark:block" style="max-width: 500px; width: 100%;" />
 
-            <img src="https://github-readme-streak-stats.herokuapp.com/?user=manisaiteja2007&theme=aura&hide_border=true&background=ffffff00&stroke=ffffff00&ring=007bff&fire=007bff&currStreakLabel=007bff&sideLabels=333333" class="stats-img dark:hidden" style="width: 50%;" />
-            <img src="https://github-readme-streak-stats.herokuapp.com/?user=manisaiteja2007&theme=tokyonight&hide_border=true" class="stats-img hidden dark:block" style="width: 50%;" />
+            <img src="https://github-readme-streak-stats.herokuapp.com/?user=manisaiteja2007&theme=aura&hide_border=true&background=ffffff00&stroke=ffffff00&ring=007bff&fire=007bff&currStreakLabel=007bff&sideLabels=333333" alt="GitHub Streak Stats" class="stats-img dark:hidden" style="max-width: 450px; width: 100%;" />
+            <img src="https://github-readme-streak-stats.herokuapp.com/?user=manisaiteja2007&theme=tokyonight&hide_border=true" alt="GitHub Streak Stats Dark" class="stats-img hidden dark:block" style="max-width: 450px; width: 100%;" />
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact" class="max-w-6xl mx-auto py-12 px-4">
         <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Contact Me</h3>
         <p class="text-lg mb-4 text-gray-900 dark:text-gray-200">
@@ -361,7 +248,6 @@
         <a href="mailto:manisaiteja2007@gmail.com" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition dark:bg-blue-700 dark:hover:bg-blue-600">Email Me</a>
     </section>
 
-    <!-- Fun Fact Section -->
     <section class="max-w-6xl mx-auto py-12 px-4">
         <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Fun Fact</h3>
         <p class="text-lg italic text-gray-600 dark:text-gray-400">
@@ -369,7 +255,6 @@
         </p>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800">
         <p>© 2025 Mani Sai Teja Bejjala. All rights reserved.</p>
         <a href="#top" class="text-blue-400 hover:underline">Back to Top</a>
