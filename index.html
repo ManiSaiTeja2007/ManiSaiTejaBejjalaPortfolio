@@ -6,258 +6,290 @@
     <title>Mani Sai Teja Bejjala - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Base styles & Font Fallbacks */
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #f8fafc;
-            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for dark mode */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f8fafc; /* Tailwind: bg-slate-50 */
+            color: #1a202c; /* Tailwind: text-gray-900 */
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
+
+        /* Dark Mode Specific Overrides */
         body.dark {
-            background-color: #1a202c; /* Dark background */
-            color: #e2e8f0; /* Light text for dark mode */
+            background-color: #1a202c; /* Tailwind: bg-gray-900 */
+            color: #e2e8f0; /* Tailwind: text-gray-200 */
         }
-        .icon {
-            transition: transform 0.2s ease-in-out;
+        body.dark .text-gray-900 { color: #e2e8f0; }
+        body.dark .text-gray-800 { color: #e2e8f0; }
+        body.dark .text-gray-600 { color: #a0aec0; } /* Tailwind: text-gray-400 */
+        body.dark .bg-white { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .bg-gray-100 { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .border-blue-200 { border-color: #4a5568; } /* Tailwind: border-gray-600 */
+        body.dark .text-blue-600 { color: #60a5fa; } /* Tailwind: text-blue-400 */
+        body.dark .bg-blue-600 { background-color: #3b82f6; } /* Tailwind: bg-blue-500 */
+        body.dark .hover\:bg-blue-700:hover { background-color: #2563eb; } /* Tailwind: hover:bg-blue-600 */
+        body.dark .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15); /* More visible shadow in dark mode */
+        }
+        body.dark .project-card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Custom Transitions & Transforms */
+        .icon, .nav-link, .project-card, .btn-primary {
+            transition: all 0.3s ease-in-out;
         }
         .icon:hover {
             transform: scale(1.1);
         }
-        .stats-img {
-            max-width: 100%;
-            margin-bottom: 1rem;
-        }
         .nav-link:hover {
-            color: #2563eb;
-        }
-        .project-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: #2563eb; /* text-blue-600 */
         }
         .project-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
-        /* Dark mode specific styles for various elements */
-        body.dark .nav-link {
-            color: #cbd5e1; /* Lighter gray for nav links in dark mode */
+        /* Mobile menu specific styles for smooth reveal */
+        #mobile-menu.hidden {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
         }
-        body.dark .nav-link:hover {
-            color: #60a5fa; /* Lighter blue on hover in dark mode */
-        }
-        body.dark .text-gray-900 {
-            color: #e2e8f0;
-        }
-        body.dark .text-gray-800 {
-            color: #e2e8f0;
-        }
-        body.dark .text-gray-600 {
-            color: #a0aec0;
-        }
-        body.dark .border-blue-200 {
-            border-color: #4a5568;
-        }
-        body.dark .bg-white {
-            background-color: #2d3748; /* Darker background for white elements */
-        }
-        body.dark .bg-gray-100 {
-            background-color: #2d3748; /* Darker background for gray-100 sections */
-        }
-        body.dark .shadow-md {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15); /* Darker shadow */
-        }
-        body.dark .hover\:shadow-xl:hover {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
-        }
-        body.dark .text-blue-600 {
-            color: #60a5fa; /* Lighter blue for primary accents */
-        }
-        body.dark .bg-blue-600 {
-            background-color: #3b82f6; /* Adjust background for buttons */
-        }
-        body.dark .hover\:bg-blue-700:hover {
-            background-color: #2563eb; /* Adjust hover for buttons */
+        #mobile-menu:not(.hidden) {
+            max-height: 300px; /* Adjust based on content height */
+            transition: max-height 0.3s ease-in;
         }
     </style>
     <script>
-        // Set up Tailwind CSS for dark mode
+        // Configure Tailwind CSS for dark mode
         tailwind.config = {
             darkMode: 'class', // Enable dark mode based on 'dark' class
             theme: {
                 extend: {
                     colors: {
-                        // Define any custom colors if needed
+                        // Example custom colors if needed, e.g., 'primary-blue': '#2563eb'
                     }
                 }
             }
-        }
+        };
 
-        // Function to toggle dark mode
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark');
-            // Store user preference in local storage
-            if (document.body.classList.contains('dark')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        // Apply theme on page load
         document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            // Dark Mode Logic
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme === 'dark' || (currentTheme === null && prefersDarkScheme.matches)) {
                 document.body.classList.add('dark');
+            }
+
+            document.getElementById('darkModeToggle').addEventListener('click', () => {
+                document.body.classList.toggle('dark');
+                localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+            });
+
+            // Mobile Menu Logic
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+                    menuButton.setAttribute('aria-expanded', !isExpanded);
+                });
+
+                // Close mobile menu when a link is clicked (smoother UX)
+                mobileMenu.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        menuButton.setAttribute('aria-expanded', 'false');
+                    });
+                });
             }
         });
     </script>
 </head>
-<body class="text-gray-900">
-    <nav class="bg-white shadow-md sticky top-0 z-50">
+<body class="antialiased">
+    <nav class="bg-white shadow-md sticky top-0 z-50 dark:bg-gray-800">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
-            <div class="space-x-6 flex items-center">
-                <a href="#about" class="text-gray-600 hover:text-blue-600 nav-link">About</a>
-                <a href="#skills" class="text-gray-600 hover:text-blue-600 nav-link">Skills</a>
-                <a href="#projects" class="text-gray-600 hover:text-blue-600 nav-link">Featured Projects</a>
-                <a href="#connect" class="text-gray-600 hover:text-blue-600 nav-link">Connect</a>
-                <a href="#stats" class="text-gray-600 hover:text-blue-600 nav-link">Stats</a>
-                <a href="#contact" class="text-gray-600 hover:text-blue-600 nav-link">Contact</a>
-                <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+            <div class="md:hidden flex items-center space-x-4">
+                <button id="darkModeToggle" aria-label="Toggle dark mode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+                <button id="menu-button" aria-label="Open main menu" aria-controls="mobile-menu" aria-expanded="false" class="text-gray-600 dark:text-gray-200 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="hidden md:flex space-x-6 items-center" id="nav-links-desktop">
+                <a href="#about" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">About</a>
+                <a href="#skills" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Skills</a>
+                <a href="#projects" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Projects</a>
+                <a href="#connect" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Connect</a>
+                <a href="#stats" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Stats</a>
+                <a href="#contact" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Contact</a>
+                <button id="darkModeToggle" aria-label="Toggle dark mode" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
                     </svg>
                 </button>
             </div>
         </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 py-2 shadow-inner">
+            <a href="#about" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">About</a>
+            <a href="#skills" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Skills</a>
+            <a href="#projects" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Featured Projects</a>
+            <a href="#connect" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Connect</a>
+            <a href="#stats" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Stats</a>
+            <a href="#contact" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Contact</a>
+        </div>
     </nav>
 
-    <header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-12 text-center">
-        <h1 class="text-4xl md:text-5xl font-bold">Hi 👋, I'm Mani Sai Teja Bejjala</h1>
-        <h3 class="text-xl md:text-2xl mt-2">Frontend Developer | B-Tech ECE Student | IIIT Sri City, Chittoor</h3>
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16 text-center px-4">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight">Hi 👋, I'm Mani Sai Teja Bejjala</h1>
+        <h3 class="text-xl sm:text-2xl md:text-3xl mt-3 font-light">Frontend Developer | B-Tech ECE Student | IIIT Sri City, Chittoor</h3>
     </header>
 
-    <section id="about" class="max-w-6xl mx-auto py-12 px-4">
-        <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">About Me</h3>
-        <p class="text-lg leading-relaxed text-gray-900 dark:text-gray-200">
-            I'm a B-Tech Electronics and Communication Engineering student at <strong>IIIT Sri City, Chittoor</strong>, with a passion for frontend development and innovative technology solutions. My expertise spans crafting responsive web interfaces and building IoT systems, leveraging my skills in modern web technologies and embedded systems. I strive to create seamless, user-centric applications that combine technical precision with creative design.
-        </p>
-    </section>
+    <main>
+        <section id="about" class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">About Me</h2>
+            <p class="text-lg sm:text-xl leading-relaxed text-gray-900 dark:text-gray-200">
+                I'm a B-Tech Electronics and Communication Engineering student at <strong>IIIT Sri City, Chittoor</strong>, driven by a passion for creating impactful web experiences and exploring innovative technology solutions. My expertise spans crafting responsive and intuitive web interfaces alongside building robust IoT systems. I thrive on combining technical precision with creative design to build seamless, user-centric applications.
+            </p>
+        </section>
 
-    <section id="skills" class="max-w-6xl mx-auto py-12 px-4">
-        <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Languages and Tools</h3>
-        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
-            <a href="https://angular.io" target="_blank" rel="noreferrer"><img src="https://angular.io/assets/images/logos/angular/angular.svg" alt="angular" class="w-10 h-10 icon" /></a>
-            <a href="https://www.arduino.cc/" target="_blank" rel="noreferrer"><img src="https://cdn.worldvectorlogo.com/logos/arduino-1.svg" alt="arduino" class="w-10 h-10 icon" /></a>
-            <a href="https://aws.amazon.com" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="aws" class="w-10 h-10 icon" /></a>
-            <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/gnu_bash/gnu_bash-icon.svg" alt="bash" class="w-10 h-10 icon" /></a>
-            <a href="https://www.cprogramming.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" alt="c" class="w-10 h-10 icon" /></a>
-            <a href="https://www.w3schools.com/cpp/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" alt="cplusplus" class="w-10 h-10 icon" /></a>
-            <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" class="w-10 h-10 icon" /></a>
-            <a href="https://d3js.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/d3js/d3js-original.svg" alt="d3js" class="w-10 h-10 icon" /></a>
-            <a href="https://www.docker.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" class="w-10 h-10 icon" /></a>
-            <a href="https://expressjs.com" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="express" class="w-10 h-10 icon" /></a>
-            <a href="https://firebase.google.com/" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="firebase" class="w-10 h-10 icon" /></a>
-            <a href="https://git-scm.com/" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" class="w-10 h-10 icon" /></a>
-            <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" class="w-10 h-10 icon" /></a>
-            <a href="https://www.java.com" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" class="w-10 h-10 icon" /></a>
-            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" class="w-10 h-10 icon" /></a>
-            <a href="https://www.jenkins.io" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/jenkins/jenkins-icon.svg" alt="jenkins" class="w-10 h-10 icon" /></a>
-            <a href="https://kubernetes.io" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/kubernetes/kubernetes-icon.svg" alt="kubernetes" class="w-10 h-10 icon" /></a>
-            <a href="https://www.linux.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" class="w-10 h-10 icon" /></a>
-            <a href="https://www.mathworks.com/" target="_blank" rel="noreferrer"><img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Matlab_Logo.png" alt="matlab" class="w-10 h-10 icon" /></a>
-            <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="mongodb" class="w-10 h-10 icon" /></a>
-            <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" class="w-10 h-10 icon" /></a>
-            <a href="https://nodejs.org" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" class="w-10 h-10 icon" /></a>
-            <a href="https://www.postgresql.org" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg" alt="postgresql" class="w-10 h-10 icon" /></a>
-            <a href="https://postman.com" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman" class="w-10 h-10 icon" /></a>
-            <a href="https://www.python.org" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" class="w-10 h-10 icon" /></a>
-            <a href="https://reactjs.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" class="w-10 h-10 icon" /></a>
-            <a href="https://unity.com/" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/unity3d/unity3d-icon.svg" alt="unity" class="w-10 h-10 icon" /></a>
-        </div>
-    </section>
-
-    <section id="projects" class="max-w-6xl mx-auto py-12 px-4">
-        <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Featured Projects</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <a href="angular-task-management.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                <h4 class="text-xl font-semibold">Task Management App (Angular)</h4>
-                <p class="text-gray-600 dark:text-gray-400">A web app for managing tasks with real-time updates.</p>
-                <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Angular, Firebase</p>
-            </a>
-            <a href="arduino-smart-home.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                <h4 class="text-xl font-semibold">Smart Home IoT (Arduino)</h4>
-                <p class="text-gray-600 dark:text-gray-400">An IoT system to control home appliances.</p>
-                <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Arduino, C, Bluetooth</p>
-            </a>
-            <a href="aws-serverless-api.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                <h4 class="text-xl font-semibold">Serverless API (AWS)</h4>
-                <p class="text-gray-600 dark:text-gray-400">A serverless REST API for a todo app.</p>
-                <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> AWS Lambda, Node.js</p>
-            </a>
-            <a href="bash-automation.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                <h4 class="text-xl font-semibold">Automation Script (Bash)</h4>
-                <p class="text-gray-600 dark:text-gray-400">A script to automate server setup.</p>
-                <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Bash, Linux</p>
-            </a>
-            <a href="c-embedded-monitor.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                <h4 class="text-xl font-semibold">Embedded System Monitor (C)</h4>
-                <p class="text-gray-600 dark:text-gray-400">A real-time monitoring system.</p>
-                <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> C, Arduino</p>
-            </a>
-            <a href="cpp-pathfinding.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                <h4 class="text-xl font-semibold">Pathfinding Visualizer (C++)</h4>
-                <p class="text-gray-600 dark:text-gray-400">A desktop app for pathfinding algorithms.</p>
-                <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> C++, SFML</p>
-            </a>
+        <section id="skills" class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Languages & Tools</h2>
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-6 justify-items-center">
+                <a href="https://angular.io" target="_blank" rel="noopener noreferrer" title="Angular"><img src="https://angular.io/assets/images/logos/angular/angular.svg" alt="Angular Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://www.arduino.cc/" target="_blank" rel="noopener noreferrer" title="Arduino"><img src="https://cdn.worldvectorlogo.com/logos/arduino-1.svg" alt="Arduino Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://aws.amazon.com" target="_blank" rel="noopener noreferrer" title="AWS"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noopener noreferrer" title="Bash"><img src="https://www.vectorlogo.zone/logos/gnu_bash/gnu_bash-icon.svg" alt="Bash Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://www.cprogramming.com/" target="_blank" rel="noopener noreferrer" title="C"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" alt="C Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://www.w3schools.com/cpp/" target="_blank" rel="noopener noreferrer" title="C++"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" alt="C++ Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://www.w3schools.com/css/" target="_blank" rel="noopener noreferrer" title="CSS3"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="CSS3 Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://d3js.org/" target="_blank" rel="noopener noreferrer" title="D3.js"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/d3js/d3js-original.svg" alt="D3.js Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://www.docker.com/" target="_blank" rel="noopener noreferrer" title="Docker"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="Docker Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://expressjs.com" target="_blank" rel="noopener noreferrer" title="Express.js"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="Express.js Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://firebase.google.com/" target="_blank" rel="noopener noreferrer" title="Firebase"><img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="Firebase Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer" title="Git"><img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="Git Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://www.w3.org/html/" target="_blank" rel="noopener noreferrer" title="HTML5"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="HTML5 Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://www.java.com" target="_blank" rel="noopener noreferrer" title="Java"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="Java Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer" title="JavaScript"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://www.jenkins.io" target="_blank" rel="noopener noreferrer" title="Jenkins"><img src="https://www.vectorlogo.zone/logos/jenkins/jenkins-icon.svg" alt="Jenkins Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://kubernetes.io" target="_blank" rel="noopener noreferrer" title="Kubernetes"><img src="https://www.vectorlogo.zone/logos/kubernetes/kubernetes-icon.svg" alt="Kubernetes Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://www.linux.org/" target="_blank" rel="noopener noreferrer" title="Linux"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="Linux Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://www.mathworks.com/" target="_blank" rel="noopener noreferrer" title="MATLAB"><img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Matlab_Logo.png" alt="MATLAB Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://www.mongodb.com/" target="_blank" rel="noopener noreferrer" title="MongoDB"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="MongoDB Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer" title="MySQL"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="MySQL Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://nodejs.org" target="_blank" rel="noopener noreferrer" title="Node.js"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="Node.js Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://www.postgresql.org" target="_blank" rel="noopener noreferrer" title="PostgreSQL"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg" alt="PostgreSQL Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://postman.com" target="_blank" rel="noopener noreferrer" title="Postman"><img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="Postman Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://www.python.org" target="_blank" rel="noopener noreferrer" title="Python"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="Python Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://reactjs.org/" target="_blank" rel="noopener noreferrer" title="React"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="React Logo" class="w-12 h-12 icon" /></a>
+                <a href="https://unity.com/" target="_blank" rel="noopener noreferrer" title="Unity"><img src="https://www.vectorlogo.zone/logos/unity3d/unity3d-icon.svg" alt="Unity Logo" class="w-12 h-12 icon" /></a>
             </div>
-        <div class="text-center mt-8">
-            <a href="all-projects.html" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition dark:bg-blue-700 dark:hover:bg-blue-600 text-lg font-medium">View All Projects (25+)</a>
-        </div>
-    </section>
+        </section>
 
-    <section id="connect" class="max-w-6xl mx-auto py-12 px-4">
-        <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Connect with Me</h3>
-        <div class="flex space-x-4 flex-wrap gap-4">
-            <a href="https://github.com/manisaiteja2007" target="_blank"><img src="https://www.vectorlogo.zone/logos/github/github-icon.svg" alt="GitHub" class="w-8 h-8 icon" /></a>
-            <a href="https://www.kaggle.com/bejjalamanisaiteja" target="_blank"><img src="https://www.vectorlogo.zone/logos/kaggle/kaggle-icon.svg" alt="Kaggle" class="w-8 h-8 icon" /></a>
-            <a href="https://manisaitejabejjala.hashnode.dev" target="_blank"><img src="https://www.vectorlogo.zone/logos/hashnode/hashnode-icon.svg" alt="Hashnode" class="w-8 h-8 icon" /></a>
-            <a href="https://discord.com/users/manisaiteja7509" target="_blank"><img src="https://www.vectorlogo.zone/logos/discord/discord-icon.svg" alt="Discord" class="w-8 h-8 icon" /></a>
-            <a href="https://codepen.io/bejjala-mani-sai-teja" target="_blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/codepen.svg" alt="CodePen" class="w-8 h-8 icon" /></a>
-            <a href="https://dev.to/manisaiteja2007" target="_blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/devto.svg" alt="Dev.to" class="w-8 h-8 icon" /></a>
-            <a href="https://twitter.com/manisaiteja_b" target="_blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="Twitter" class="w-8 h-8 icon" /></a>
-            <a href="https://linkedin.com/in/bejjala-mani-sai-teja" target="_blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="LinkedIn" class="w-8 h-8 icon" /></a>
-        </div>
-    </section>
+        <section id="projects" class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Featured Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <a href="angular-task-management.html" class="bg-white p-6 rounded-lg shadow-md project-card flex flex-col dark:bg-gray-700 dark:text-gray-200">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Task Management App (Angular)</h3>
+                    <p class="text-gray-600 dark:text-gray-400 flex-grow">A web app for managing tasks with real-time updates and a clean UI.</p>
+                    <p class="mt-3 text-gray-800 dark:text-gray-300 font-medium"><strong>Tech:</strong> Angular, Firebase</p>
+                </a>
+                <a href="arduino-smart-home.html" class="bg-white p-6 rounded-lg shadow-md project-card flex flex-col dark:bg-gray-700 dark:text-gray-200">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Smart Home IoT (Arduino)</h3>
+                    <p class="text-gray-600 dark:text-gray-400 flex-grow">An Internet of Things system to control home appliances remotely.</p>
+                    <p class="mt-3 text-gray-800 dark:text-gray-300 font-medium"><strong>Tech:</strong> Arduino, C, Bluetooth</p>
+                </a>
+                <a href="aws-serverless-api.html" class="bg-white p-6 rounded-lg shadow-md project-card flex flex-col dark:bg-gray-700 dark:text-gray-200">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Serverless API (AWS)</h3>
+                    <p class="text-gray-600 dark:text-gray-400 flex-grow">A scalable serverless REST API built on AWS for a todo application.</p>
+                    <p class="mt-3 text-gray-800 dark:text-gray-300 font-medium"><strong>Tech:</strong> AWS Lambda, Node.js</p>
+                </a>
+                <a href="bash-automation.html" class="bg-white p-6 rounded-lg shadow-md project-card flex flex-col dark:bg-gray-700 dark:text-gray-200">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Automation Script (Bash)</h3>
+                    <p class="text-gray-600 dark:text-gray-400 flex-grow">A powerful Bash script to automate server setup and deployment processes.</p>
+                    <p class="mt-3 text-gray-800 dark:text-gray-300 font-medium"><strong>Tech:</strong> Bash, Linux</p>
+                </a>
+                <a href="c-embedded-monitor.html" class="bg-white p-6 rounded-lg shadow-md project-card flex flex-col dark:bg-gray-700 dark:text-gray-200">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Embedded System Monitor (C)</h3>
+                    <p class="text-gray-600 dark:text-gray-400 flex-grow">A real-time monitoring system developed for embedded environments.</p>
+                    <p class="mt-3 text-gray-800 dark:text-gray-300 font-medium"><strong>Tech:</strong> C, Arduino</p>
+                </a>
+                <a href="cpp-pathfinding.html" class="bg-white p-6 rounded-lg shadow-md project-card flex flex-col dark:bg-gray-700 dark:text-gray-200">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Pathfinding Visualizer (C++)</h3>
+                    <p class="text-gray-600 dark:text-gray-400 flex-grow">A desktop application that visualizes various pathfinding algorithms.</p>
+                    <p class="mt-3 text-gray-800 dark:text-gray-300 font-medium"><strong>Tech:</strong> C++, SFML</p>
+                </a>
+            </div>
+            <div class="text-center mt-10">
+                <a href="all-projects.html" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 btn-primary font-medium text-lg dark:bg-blue-700 dark:hover:bg-blue-600">View All Projects (25+)</a>
+            </div>
+        </section>
 
-    <section id="stats" class="max-w-6xl mx-auto py-12 px-4">
-        <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">My GitHub Stats</h3>
-        <div class="flex flex-col space-y-4 items-center"> <p class="text-gray-600 dark:text-gray-400">Note: GitHub stats images may need light/dark versions or adjust theme based on body.dark for optimal appearance.</p>
-            <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=manisaiteja2007&theme=aura&hide_border=true&include_all_commits=true&count_private=true&layout=compact&bg_color=ffffff00&text_color=333333&title_color=007bff" alt="GitHub Top Languages" class="stats-img dark:hidden" style="max-width: 380px; width: 100%;" />
-            <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=manisaiteja2007&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true" alt="GitHub Top Languages Dark" class="stats-img hidden dark:block" style="max-width: 380px; width: 100%;" />
+        <section id="connect" class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Connect with Me</h2>
+            <div class="flex flex-wrap justify-center gap-6 md:justify-start">
+                <a href="https://github.com/manisaiteja2007" target="_blank" rel="noopener noreferrer" title="GitHub" class="icon"><img src="https://www.vectorlogo.zone/logos/github/github-icon.svg" alt="GitHub" class="w-10 h-10" /></a>
+                <a href="https://www.kaggle.com/bejjalamanisaiteja" target="_blank" rel="noopener noreferrer" title="Kaggle" class="icon"><img src="https://www.vectorlogo.zone/logos/kaggle/kaggle-icon.svg" alt="Kaggle" class="w-10 h-10" /></a>
+                <a href="https://manisaitejabejjala.hashnode.dev" target="_blank" rel="noopener noreferrer" title="Hashnode" class="icon"><img src="https://www.vectorlogo.zone/logos/hashnode/hashnode-icon.svg" alt="Hashnode" class="w-10 h-10" /></a>
+                <a href="https://discord.com/users/manisaiteja7509" target="_blank" rel="noopener noreferrer" title="Discord" class="icon"><img src="https://www.vectorlogo.zone/logos/discord/discord-icon.svg" alt="Discord" class="w-10 h-10" /></a>
+                <a href="https://codepen.io/bejjala-mani-sai-teja" target="_blank" rel="noopener noreferrer" title="CodePen" class="icon"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/codepen.svg" alt="CodePen" class="w-10 h-10" /></a>
+                <a href="https://dev.to/manisaiteja2007" target="_blank" rel="noopener noreferrer" title="Dev.to" class="icon"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/devto.svg" alt="Dev.to" class="w-10 h-10" /></a>
+                <a href="https://twitter.com/manisaiteja_b" target="_blank" rel="noopener noreferrer" title="Twitter" class="icon"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="Twitter" class="w-10 h-10" /></a>
+                <a href="https://linkedin.com/in/bejjala-mani-sai-teja" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="icon"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="LinkedIn" class="w-10 h-10" /></a>
+            </div>
+        </section>
 
-            <img src="https://github-readme-stats.vercel.app/api?username=manisaiteja2007&theme=aura&hide_border=true&include_all_commits=true&count_private=true&bg_color=ffffff00&text_color=333333&title_color=007bff" alt="GitHub Stats" class="stats-img dark:hidden" style="max-width: 500px; width: 100%;" />
-            <img src="https://github-readme-stats.vercel.app/api?username=manisaiteja2007&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true" alt="GitHub Stats Dark" class="stats-img hidden dark:block" style="max-width: 500px; width: 100%;" />
+        <section id="stats" class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">My GitHub Stats</h2>
+            <div class="flex flex-col space-y-6 items-center">
+                
+                <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=manisaiteja2007&theme=aura&hide_border=true&include_all_commits=true&count_private=true&layout=compact&bg_color=ffffff00&text_color=333333&title_color=007bff" alt="GitHub Top Languages (Light)" class="stats-img dark:hidden" />
+                <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=manisaiteja2007&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true&layout=compact" alt="GitHub Top Languages (Dark)" class="stats-img hidden dark:block" />
 
-            <img src="https://github-readme-streak-stats.herokuapp.com/?user=manisaiteja2007&theme=aura&hide_border=true&background=ffffff00&stroke=ffffff00&ring=007bff&fire=007bff&currStreakLabel=007bff&sideLabels=333333" alt="GitHub Streak Stats" class="stats-img dark:hidden" style="max-width: 450px; width: 100%;" />
-            <img src="https://github-readme-streak-stats.herokuapp.com/?user=manisaiteja2007&theme=tokyonight&hide_border=true" alt="GitHub Streak Stats Dark" class="stats-img hidden dark:block" style="max-width: 450px; width: 100%;" />
-        </div>
-    </section>
+                <img src="https://github-readme-stats.vercel.app/api?username=manisaiteja2007&theme=aura&hide_border=true&include_all_commits=true&count_private=true&bg_color=ffffff00&text_color=333333&title_color=007bff" alt="GitHub Stats (Light)" class="stats-img dark:hidden" />
+                <img src="https://github-readme-stats.vercel.app/api?username=manisaiteja2007&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true" alt="GitHub Stats (Dark)" class="stats-img hidden dark:block" />
 
-    <section id="contact" class="max-w-6xl mx-auto py-12 px-4">
-        <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Contact Me</h3>
-        <p class="text-lg mb-4 text-gray-900 dark:text-gray-200">
-            I'm open to new opportunities and collaborations. Reach out via email or connect with me on my social platforms above!
-        </p>
-        <a href="mailto:manisaiteja2007@gmail.com" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition dark:bg-blue-700 dark:hover:bg-blue-600">Email Me</a>
-    </section>
+                <img src="https://github-readme-streak-stats.herokuapp.com/?user=manisaiteja2007&theme=aura&hide_border=true&background=ffffff00&stroke=ffffff00&ring=007bff&fire=007bff&currStreakLabel=007bff&sideLabels=333333" alt="GitHub Streak Stats (Light)" class="stats-img dark:hidden" />
+                <img src="https://github-readme-streak-stats.herokuapp.com/?user=manisaiteja2007&theme=tokyonight&hide_border=true" alt="GitHub Streak Stats (Dark)" class="stats-img hidden dark:block" />
+            </div>
+        </section>
 
-    <section class="max-w-6xl mx-auto py-12 px-4">
-        <h3 class="text-3xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Fun Fact</h3>
-        <p class="text-lg italic text-gray-600 dark:text-gray-400">
-            🌟 I love blending my ECE background with frontend development, experimenting with new tech stacks to create innovative projects that bridge hardware and software!
-        </p>
-    </section>
+        <section id="contact" class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Contact Me</h2>
+            <p class="text-lg sm:text-xl mb-6 text-gray-900 dark:text-gray-200">
+                I'm always open to discussing new projects, potential collaborations, or just connecting for a chat. Feel free to reach out via email or connect with me on any of the social platforms listed above!
+            </p>
+            <a href="mailto:manisaiteja2007@gmail.com" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 btn-primary font-medium text-lg dark:bg-blue-700 dark:hover:bg-blue-600">Send an Email</a>
+        </section>
 
-    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800">
-        <p>© 2025 Mani Sai Teja Bejjala. All rights reserved.</p>
-        <a href="#top" class="text-blue-400 hover:underline">Back to Top</a>
+        <section class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Fun Fact</h2>
+            <p class="text-lg sm:text-xl italic text-gray-600 dark:text-gray-400">
+                🌟 I love blending my ECE background with frontend development, constantly experimenting with new tech stacks to create innovative projects that seamlessly bridge hardware and software!
+            </p>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800 mt-12">
+        <p class="text-sm">&copy; <span id="current-year"></span> Mani Sai Teja Bejjala. All rights reserved.</p>
+        <a href="#top" class="text-blue-400 hover:underline mt-2 inline-block">Back to Top</a>
     </footer>
+
+    <script>
+        // Update copyright year dynamically
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
