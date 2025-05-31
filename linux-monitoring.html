@@ -6,171 +6,250 @@
     <title>Server Monitoring Script (Linux) - Mani Sai Teja Bejjala</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Base styles & Font Fallbacks */
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #f8fafc;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f8fafc; /* Tailwind: bg-slate-50 */
+            color: #1a202c; /* Tailwind: text-gray-900 */
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+
+        /* Dark Mode Specific Overrides */
         body.dark {
-            background-color: #1a202c;
-            color: #e2e8f0;
+            background-color: #1a202c; /* Tailwind: bg-gray-900 */
+            color: #e2e8f0; /* Tailwind: text-gray-200 */
         }
-        /* Dark mode specific styles for various elements */
-        body.dark .nav-link {
-            color: #cbd5e1;
-        }
-        body.dark .nav-link:hover {
-            color: #60a5fa;
-        }
-        body.dark .text-gray-900 {
-            color: #e2e8f0;
-        }
-        body.dark .text-gray-800 {
-            color: #e2e8f0;
-        }
-        body.dark .text-gray-600 {
-            color: #a0aec0;
-        }
-        body.dark .border-blue-200 {
-            border-color: #4a5568;
-        }
-        body.dark .bg-white {
-            background-color: #2d3748;
-        }
-        body.dark .bg-gray-100 {
-            background-color: #2d3748;
-        }
+        body.dark .text-gray-900 { color: #e2e8f0; }
+        body.dark .text-gray-800 { color: #e2e8f0; }
+        body.dark .text-gray-600 { color: #a0aec0; } /* Tailwind: text-gray-400 */
+        body.dark .bg-white { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .bg-gray-100 { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .border-blue-200 { border-color: #4a5568; } /* Tailwind: border-gray-600 */
+        body.dark .text-blue-600 { color: #60a5fa; } /* Tailwind: text-blue-400 */
+        body.dark .bg-blue-600 { background-color: #3b82f6; } /* Tailwind: bg-blue-500 */
+        body.dark .hover\:bg-blue-700:hover { background-color: #2563eb; } /* Tailwind: hover:bg-blue-600 */
         body.dark .shadow-md {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15); /* More visible shadow in dark mode */
         }
-        body.dark .text-blue-600 {
-            color: #60a5fa;
+        body.dark .project-card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-        body.dark .bg-blue-600 {
-            background-color: #3b82f6;
+        body.dark .hover\:shadow-xl:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
         }
-        body.dark .hover\:bg-blue-700:hover {
-            background-color: #2563eb;
+        /* Prose styling for detailed descriptions */
+        .prose ul {
+            list-style-type: disc;
+            margin-left: 1.5em;
+        }
+        .prose li {
+            margin-bottom: 0.5em;
+        }
+
+        /* Custom Transitions & Transforms */
+        .icon, .nav-link, .btn-primary {
+            transition: all 0.3s ease-in-out;
+        }
+        .icon:hover {
+            transform: scale(1.1);
+        }
+        .nav-link:hover {
+            color: #2563eb; /* text-blue-600 */
+        }
+
+        /* Mobile menu specific styles for smooth reveal */
+        #mobile-menu.hidden {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        #mobile-menu:not(.hidden) {
+            max-height: 300px; /* Adjust based on content height */
+            transition: max-height 0.3s ease-in;
         }
     </style>
     <script>
         // Set up Tailwind CSS for dark mode
         tailwind.config = {
-            darkMode: 'class',
+            darkMode: 'class', // Enable dark mode based on 'dark' class
             theme: {
                 extend: {
                     colors: {
-                        // Define any custom colors if needed
+                        // Example custom colors if needed, e.g., 'primary-blue': '#2563eb'
                     }
                 }
             }
-        }
+        };
 
-        // Function to toggle dark mode
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark');
-            // Store user preference in local storage
-            if (document.body.classList.contains('dark')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        // Apply theme on page load
+        // Dark Mode & Mobile Menu Logic
         document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            // Dark Mode Logic
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme === 'dark' || (currentTheme === null && prefersDarkScheme.matches)) {
                 document.body.classList.add('dark');
+            }
+
+            document.getElementById('darkModeToggle').addEventListener('click', () => {
+                document.body.classList.toggle('dark');
+                localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+            });
+
+            // Mobile Menu Logic
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+                    menuButton.setAttribute('aria-expanded', !isExpanded);
+                });
+
+                // Close mobile menu when a link is clicked (smoother UX)
+                mobileMenu.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        menuButton.setAttribute('aria-expanded', 'false');
+                    });
+                });
             }
         });
     </script>
 </head>
-<body class="text-gray-900">
-    <nav class="bg-white shadow-md sticky top-0 z-50">
+<body class="antialiased">
+    <nav class="bg-white shadow-md sticky top-0 z-50 dark:bg-gray-800">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
-            <div class="space-x-6 flex items-center">
-                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link">About</a>
-                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link">Skills</a>
-                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link">Projects</a>
-                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link">Connect</a>
-                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link">Stats</a>
-                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link">Contact</a>
-                <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+            <div class="md:hidden flex items-center space-x-4">
+                <button id="darkModeToggle" aria-label="Toggle dark mode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+                <button id="menu-button" aria-label="Open main menu" aria-controls="mobile-menu" aria-expanded="false" class="text-gray-600 dark:text-gray-200 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="hidden md:flex space-x-6 items-center" id="nav-links-desktop">
+                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">About</a>
+                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Skills</a>
+                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Featured Projects</a>
+                <a href="all-projects.html" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">All Projects</a>
+                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Connect</a>
+                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Stats</a>
+                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Contact</a>
+                <button id="darkModeToggle" aria-label="Toggle dark mode" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
                     </svg>
                 </button>
             </div>
         </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 py-2 shadow-inner">
+            <a href="index.html#about" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">About</a>
+            <a href="index.html#skills" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Skills</a>
+            <a href="index.html#projects" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Featured Projects</a>
+            <a href="all-projects.html" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">All Projects</a>
+            <a href="index.html#connect" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Connect</a>
+            <a href="index.html#stats" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Stats</a>
+            <a href="index.html#contact" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Contact</a>
+        </div>
     </nav>
+
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16 text-center">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-3">Server Monitoring Script (Linux)</h1>
+            <p class="text-xl md:text-2xl font-light opacity-90">Automated health and performance checks for Linux servers.</p>
+            <div class="mt-6 flex justify-center">
+                <a href="https://github.com/manisaiteja2007/linux-monitoring-script-repo" target="_blank" class="bg-gray-800 text-white px-6 py-2 rounded-full text-lg font-semibold hover:bg-gray-700 transition shadow-md dark:bg-gray-900 dark:hover:bg-gray-700">
+                    GitHub Repo
+                </a>
+            </div>
+        </div>
+    </header>
 
     <main class="max-w-4xl mx-auto py-12 px-4">
         <section class="bg-white p-8 rounded-lg shadow-md mb-8 dark:bg-gray-800">
-            <h2 class="text-4xl font-bold text-blue-600 mb-4 dark:text-blue-400">Server Monitoring Script (Linux)</h2>
-            <p class="text-gray-700 text-lg mb-6 dark:text-gray-300">
-                A script to monitor server health and performance.
-            </p>
+            <h2 class="text-3xl font-bold text-blue-600 mb-6 dark:text-blue-400">Project Overview</h2>
 
-            <div class="mb-6">
-                <img src="https://via.placeholder.com/800x450?text=Linux+Monitoring+Script" alt="Linux Server Monitoring Script" class="w-full h-auto rounded-lg shadow-lg">
-                <p class="text-center text-gray-500 text-sm mt-2 dark:text-gray-400">A screenshot of the script's output or a diagram of its operation.</p>
+            <div class="mb-8">
+                <img src="https://via.placeholder.com/800x450?text=Linux+Monitoring+Script" alt="Screenshot of a Linux terminal displaying server monitoring script output" class="w-full h-auto rounded-lg shadow-lg">
+                <p class="text-center text-gray-500 text-sm mt-3 dark:text-gray-400">An example of the script's output or a conceptual diagram of its operation.</p>
             </div>
 
             <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mb-4 dark:border-blue-700">Detailed Description</h3>
             <div class="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
                 <p>
-                    This project involved developing a **Bash shell script** for Linux environments designed to **monitor key server health and performance metrics**. The script automates the collection of vital system information, providing insights into resource utilization and potential issues.
+                    This project involved developing a **robust and efficient Bash shell script** specifically tailored for **Linux environments**. Its primary function is to **automate the monitoring of key server health and performance metrics**, providing system administrators and developers with crucial insights into resource utilization and potential operational issues.
                 </p>
                 <ul>
-                    <li><strong>Problem Solved:</strong> Addressed the need for a simple, efficient, and customizable way to keep track of server performance indicators without relying on complex, resource-heavy monitoring tools. It provides quick diagnostic capabilities.</li>
-                    <li><strong>My Role:</strong> I designed, developed, and tested the Bash script, focusing on its modularity, ease of use, and integration with standard Linux commands. I also ensured it could be scheduled for regular execution via `cron`.</li>
+                    <li><strong>Problem Solved:</strong> This script directly addresses the need for a **lightweight, efficient, and highly customizable solution** for continuous server health checks. It provides immediate diagnostic capabilities without the overhead of installing and configuring complex, resource-heavy third-party monitoring tools, making it ideal for quick assessments and proactive problem detection.</li>
+                    <li><strong>My Role:</strong> I was responsible for the entire lifecycle of this script, including its **design, development, rigorous testing, and optimization**. My focus was on ensuring its **modularity, ease of use, and seamless integration** with standard Linux command-line utilities. I also implemented capabilities for it to be reliably scheduled for regular, automated execution via `cron`.</li>
                     <li><strong>Key Features:</strong>
                         <ul>
-                            <li>**CPU Usage Monitoring:** Gathers real-time and average CPU utilization.</li>
-                            <li>**Memory Usage Tracking:** Reports on RAM usage, including free, used, and cached memory.</li>
-                            <li>**Disk Space Analysis:** Monitors disk partition usage to prevent storage issues.</li>
-                            <li>**Network Activity Overview:** Provides basic network traffic statistics.</li>
-                            <li>**Process Monitoring:** Identifies top CPU/memory consuming processes.</li>
-                            <li>**Log File Monitoring:** Can be extended to scan important log files for errors or anomalies.</li>
-                            <li>**Alerting (Conceptual):** Designed with extensibility for email or notification alerts on critical thresholds.</li>
+                            <li>**Comprehensive CPU Usage Monitoring:** Gathers and presents both real-time and average CPU utilization, helping to identify performance bottlenecks.</li>
+                            <li>**Detailed Memory Usage Tracking:** Provides granular reports on RAM usage, distinguishing between free, used, cached, and buffered memory to give a complete picture of memory allocation.</li>
+                            <li>**Proactive Disk Space Analysis:** Monitors disk partition usage across the filesystem, offering alerts or flags to prevent critical storage issues and ensure sufficient space for operations.</li>
+                            <li>**Network Activity Overview:** Delivers essential statistics on network traffic, including inbound and outbound data, to help identify network-related performance concerns.</li>
+                            <li>**Intelligent Process Monitoring:** Identifies and reports on the top processes consuming significant CPU and memory resources, aiding in troubleshooting misbehaving applications.</li>
+                            <li>**Extensible Log File Monitoring:** Designed with the capability to be easily extended to scan and analyze important system or application log files for specific errors, warnings, or anomalies.</li>
+                            <li>**Alerting Mechanism (Conceptual/Extensible):** While the core script focuses on data collection, it's architected to facilitate integration with external alerting systems (e.g., email notifications, Slack webhooks) upon hitting predefined critical thresholds.</li>
                         </ul>
                     </li>
                     <li><strong>Technologies Used:</strong>
                         <ul>
-                            <li>**Linux:** The operating system environment for which the script is designed.</li>
-                            <li>**Bash Scripting:** The primary language used for writing the monitoring logic and interacting with system commands.</li>
-                            <li>**Standard Linux Utilities:** Commands like `top`, `free`, `df`, `netstat`, `grep`, `awk`, `sed`, etc., are heavily utilized.</li>
-                            <li>**Cron:** For scheduling the script to run at regular intervals.</li>
+                            <li>**Linux:** The foundational operating system for which this script is developed and optimized.</li>
+                            <li>**Bash Scripting:** The core programming language used to implement the monitoring logic, control flow, and interaction with the operating system.</li>
+                            <li>**Standard Linux Utilities:** Extensive utilization of powerful command-line tools such as `top` (for process and resource overview), `free` (for memory), `df` (for disk space), `netstat` or `ss` (for network connections/traffic), `grep` (for pattern matching), `awk` (for text processing and data extraction), and `sed` (for stream editing and transformations).</li>
+                            <li>**Cron:** Used for scheduling the script to run automatically at predetermined intervals (e.g., every 5 minutes, hourly, daily), enabling continuous, hands-off monitoring.</li>
                         </ul>
                     </li>
-                    <li><strong>Challenges and Solutions:</strong> A key challenge was parsing the output of various Linux commands consistently and reliably to extract the desired metrics. This was overcome by extensively using text processing tools like `awk` and `sed` to filter and format the data. Ensuring the script was non-intrusive and had minimal performance impact on the monitored server was also a crucial consideration.</li>
-                    <li><strong>Learnings:</strong> This project significantly enhanced my skills in **Bash scripting**, **Linux system administration**, **command-line tools**, and understanding the fundamentals of **server performance monitoring** and **automation**.</li>
+                    <li><strong>Challenges and Solutions:</strong>
+                        <ul>
+                            <li>**Consistent Output Parsing:** A significant challenge was reliably parsing the diverse and often inconsistently formatted outputs from various Linux commands to extract precise numerical metrics. This was overcome by employing advanced text processing techniques using combinations of `awk` and `sed` to filter, reformat, and extract specific data points.</li>
+                            <li>**Minimizing Performance Impact:** Ensuring the monitoring script itself did not impose a significant load on the monitored server was crucial. This was achieved by optimizing command usage, minimizing I/O operations, and carefully selecting efficient utilities.</li>
+                            <li>**Error Handling and Robustness:** Implementing robust error handling within the script to gracefully manage unexpected command outputs or system states.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Learnings:</strong> This project provided **invaluable hands-on experience** that significantly deepened my expertise in **Bash scripting**, **Linux system administration principles**, mastery of **command-line tools**, and a profound understanding of the fundamentals of **server performance monitoring** and **automation for operational efficiency**.</li>
                 </ul>
             </div>
 
             <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mt-8 mb-4 dark:border-blue-700">Technologies Used</h3>
             <div class="flex flex-wrap gap-2 text-sm">
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Linux</span>
-                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Bash</span>
-                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Shell Scripting</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Bash Scripting</span>
+                <span class="bg-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Shell Scripting</span>
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Cron</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">System Administration</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Automation</span>
             </div>
 
             <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mt-8 mb-4 dark:border-blue-700">Project Links</h3>
             <div class="flex space-x-4">
-                <a href="https://github.com/manisaiteja2007/linux-monitoring-script-repo" target="_blank" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">GitHub Repo</a>
+                <a href="https://github.com/manisaiteja2007/linux-monitoring-script-repo" target="_blank" class="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition shadow-md dark:bg-gray-900 dark:hover:bg-gray-700">GitHub Repo</a>
             </div>
         </section>
 
         <div class="text-center mt-8">
-            <a href="all-projects.html#linux-section" class="inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">← Back to Projects</a>
+            <a href="all-projects.html#linux-section" class="inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">← Back to All Projects</a>
         </div>
     </main>
 
-    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800">
-        <p>© 2025 Mani Sai Teja Bejjala. All rights reserved.</p>
-        <a href="#top" class="text-blue-400 hover:underline">Back to Top</a>
+    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800 mt-12">
+        <p class="text-sm">&copy; <span id="current-year"></span> Mani Sai Teja Bejjala. All rights reserved.</p>
+        <a href="#top" class="text-blue-400 hover:underline mt-2 inline-block">Back to Top</a>
     </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
