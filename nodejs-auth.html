@@ -6,149 +6,233 @@
     <title>User Authentication System (Node.js) - Mani Sai Teja Bejjala</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Base styles & Font Fallbacks */
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #f8fafc;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f8fafc; /* Tailwind: bg-slate-50 */
+            color: #1a202c; /* Tailwind: text-gray-900 */
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+
+        /* Dark Mode Specific Overrides */
         body.dark {
-            background-color: #1a202c;
-            color: #e2e8f0;
+            background-color: #1a202c; /* Tailwind: bg-gray-900 */
+            color: #e2e8f0; /* Tailwind: text-gray-200 */
         }
-        /* Dark mode specific styles for various elements */
-        body.dark .nav-link {
-            color: #cbd5e1;
-        }
-        body.dark .nav-link:hover {
-            color: #60a5fa;
-        }
-        body.dark .text-gray-900 {
-            color: #e2e8f0;
-        }
-        body.dark .text-gray-800 {
-            color: #e2e8f0;
-        }
-        body.dark .text-gray-600 {
-            color: #a0aec0;
-        }
-        body.dark .border-blue-200 {
-            border-color: #4a5568;
-        }
-        body.dark .bg-white {
-            background-color: #2d3748;
-        }
-        body.dark .bg-gray-100 {
-            background-color: #2d3748;
-        }
+        body.dark .text-gray-900 { color: #e2e8f0; }
+        body.dark .text-gray-800 { color: #e2e8f0; }
+        body.dark .text-gray-600 { color: #a0aec0; } /* Tailwind: text-gray-400 */
+        body.dark .bg-white { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .bg-gray-100 { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .border-blue-200 { border-color: #4a5568; } /* Tailwind: border-gray-600 */
+        body.dark .text-blue-600 { color: #60a5fa; } /* Tailwind: text-blue-400 */
+        body.dark .bg-blue-600 { background-color: #3b82f6; } /* Tailwind: bg-blue-500 */
+        body.dark .hover\:bg-blue-700:hover { background-color: #2563eb; } /* Tailwind: hover:bg-blue-600 */
         body.dark .shadow-md {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15); /* More visible shadow in dark mode */
         }
-        body.dark .text-blue-600 {
-            color: #60a5fa;
+        body.dark .project-card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-        body.dark .bg-blue-600 {
-            background-color: #3b82f6;
+        body.dark .hover\:shadow-xl:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
         }
-        body.dark .hover\:bg-blue-700:hover {
-            background-color: #2563eb;
+        /* Prose styling for detailed descriptions */
+        .prose ul {
+            list-style-type: disc;
+            margin-left: 1.5em;
+        }
+        .prose li {
+            margin-bottom: 0.5em;
+        }
+
+        /* Custom Transitions & Transforms */
+        .icon, .nav-link, .btn-primary {
+            transition: all 0.3s ease-in-out;
+        }
+        .icon:hover {
+            transform: scale(1.1);
+        }
+        .nav-link:hover {
+            color: #2563eb; /* text-blue-600 */
+        }
+
+        /* Mobile menu specific styles for smooth reveal */
+        #mobile-menu.hidden {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        #mobile-menu:not(.hidden) {
+            max-height: 300px; /* Adjust based on content height */
+            transition: max-height 0.3s ease-in;
         }
     </style>
     <script>
         // Set up Tailwind CSS for dark mode
         tailwind.config = {
-            darkMode: 'class',
+            darkMode: 'class', // Enable dark mode based on 'dark' class
             theme: {
                 extend: {
                     colors: {
-                        // Define any custom colors if needed
+                        // Example custom colors if needed, e.g., 'primary-blue': '#2563eb'
                     }
                 }
             }
-        }
+        };
 
-        // Function to toggle dark mode
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark');
-            // Store user preference in local storage
-            if (document.body.classList.contains('dark')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        // Apply theme on page load
+        // Dark Mode & Mobile Menu Logic
         document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            // Dark Mode Logic
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme === 'dark' || (currentTheme === null && prefersDarkScheme.matches)) {
                 document.body.classList.add('dark');
+            }
+
+            document.getElementById('darkModeToggle').addEventListener('click', () => {
+                document.body.classList.toggle('dark');
+                localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+            });
+
+            // Mobile Menu Logic
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+                    menuButton.setAttribute('aria-expanded', !isExpanded);
+                });
+
+                // Close mobile menu when a link is clicked (smoother UX)
+                mobileMenu.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        menuButton.setAttribute('aria-expanded', 'false');
+                    });
+                });
             }
         });
     </script>
 </head>
-<body class="text-gray-900">
-    <nav class="bg-white shadow-md sticky top-0 z-50">
+<body class="antialiased">
+    <nav class="bg-white shadow-md sticky top-0 z-50 dark:bg-gray-800">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
-            <div class="space-x-6 flex items-center">
-                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link">About</a>
-                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link">Skills</a>
-                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link">Projects</a>
-                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link">Connect</a>
-                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link">Stats</a>
-                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link">Contact</a>
-                <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+            <div class="md:hidden flex items-center space-x-4">
+                <button id="darkModeToggle" aria-label="Toggle dark mode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+                <button id="menu-button" aria-label="Open main menu" aria-controls="mobile-menu" aria-expanded="false" class="text-gray-600 dark:text-gray-200 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="hidden md:flex space-x-6 items-center" id="nav-links-desktop">
+                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">About</a>
+                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Skills</a>
+                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Featured Projects</a>
+                <a href="all-projects.html" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">All Projects</a>
+                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Connect</a>
+                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Stats</a>
+                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Contact</a>
+                <button id="darkModeToggle" aria-label="Toggle dark mode" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
                     </svg>
                 </button>
             </div>
         </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 py-2 shadow-inner">
+            <a href="index.html#about" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">About</a>
+            <a href="index.html#skills" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Skills</a>
+            <a href="index.html#projects" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Featured Projects</a>
+            <a href="all-projects.html" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">All Projects</a>
+            <a href="index.html#connect" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Connect</a>
+            <a href="index.html#stats" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Stats</a>
+            <a href="index.html#contact" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Contact</a>
+        </div>
     </nav>
+
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16 text-center">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-3">User Authentication System (Node.js)</h1>
+            <p class="text-xl md:text-2xl font-light opacity-90">Building a robust and secure backend for managing user access and data.</p>
+            <div class="mt-6 flex justify-center space-x-4">
+                <a href="#" target="_blank" class="bg-white text-blue-600 px-6 py-2 rounded-full text-lg font-semibold hover:bg-gray-100 transition shadow-md dark:bg-gray-700 dark:text-blue-300 dark:hover:bg-gray-600">
+                    Live Demo (if applicable)
+                </a>
+                <a href="https://github.com/manisaiteja2007/nodejs-authentication-repo" target="_blank" class="bg-gray-800 text-white px-6 py-2 rounded-full text-lg font-semibold hover:bg-gray-700 transition shadow-md dark:bg-gray-900 dark:hover:bg-gray-700">
+                    GitHub Repo
+                </a>
+            </div>
+        </div>
+    </header>
 
     <main class="max-w-4xl mx-auto py-12 px-4">
         <section class="bg-white p-8 rounded-lg shadow-md mb-8 dark:bg-gray-800">
-            <h2 class="text-4xl font-bold text-blue-600 mb-4 dark:text-blue-400">User Authentication System (Node.js)</h2>
-            <p class="text-gray-700 text-lg mb-6 dark:text-gray-300">
-                A secure backend for managing user registrations and logins.
-            </p>
+            <h2 class="text-3xl font-bold text-blue-600 mb-6 dark:text-blue-400">Project Overview</h2>
 
-            <div class="mb-6">
-                <img src="https://via.placeholder.com/800x450?text=Node.js+Auth+System" alt="Node.js Authentication System Diagram" class="w-full h-auto rounded-lg shadow-lg">
-                <p class="text-center text-gray-500 text-sm mt-2 dark:text-gray-400">A diagram illustrating the authentication flow or a screenshot of login/signup pages.</p>
+            <div class="mb-8">
+                <img src="https://via.placeholder.com/800x450?text=Node.js+Auth+System" alt="Node.js Authentication System Flow Diagram" class="w-full h-auto rounded-lg shadow-lg">
+                <p class="text-center text-gray-500 text-sm mt-3 dark:text-gray-400">A conceptual diagram of the authentication flow or a mock-up of user interfaces.</p>
             </div>
 
             <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mb-4 dark:border-blue-700">Detailed Description</h3>
             <div class="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
                 <p>
-                    This project involves the development of a robust and secure **User Authentication System** using **Node.js** as the backend. It handles essential functionalities like user registration, login, password hashing, and token-based authentication (e.g., JWT) to secure API endpoints.
+                    This project focuses on the development of a **robust and secure User Authentication System** using **Node.js** as the foundational backend technology. It comprehensively handles essential functionalities such as **user registration, secure login, advanced password hashing, and token-based authentication (specifically JWT)** to effectively secure API endpoints and manage user access.
                 </p>
                 <ul>
-                    <li><strong>Problem Solved:</strong> Provided a fundamental and secure layer for any web application requiring user accounts, ensuring data privacy and restricted access to protected resources.</li>
-                    <li><strong>My Role:</strong> I designed and implemented the backend API using Node.js and Express.js, configured database interactions for user data, implemented password hashing (e.g., bcrypt), and managed session or token-based authentication mechanisms.</li>
+                    <li><strong>Problem Solved:</strong> This system provides a **fundamental and highly secure layer** crucial for any web application requiring user accounts. It ensures **data privacy** for user credentials and enables **restricted access to protected resources**, forming the backbone of secure web applications.</li>
+                    <li><strong>My Role:</strong> I was fully responsible for the backend development, which encompassed:
+                        <ul>
+                            <li>**API Design and Implementation:** Developing RESTful API endpoints using Node.js and the Express.js framework.</li>
+                            <li>**Database Integration:** Configuring and managing interactions with the chosen database (e.g., MongoDB) for efficient user data storage and retrieval.</li>
+                            <li>**Password Security:** Implementing **industry-standard password hashing (e.g., bcrypt)** for storing passwords securely, preventing plaintext exposure.</li>
+                            <li>**Authentication Mechanisms:** Managing robust **token-based authentication (e.g., JSON Web Tokens - JWT)** for stateless session management and authorization.</li>
+                        </ul>
+                    </li>
                     <li><strong>Key Features:</strong>
                         <ul>
-                            <li>**User Registration:** Securely create new user accounts with input validation.</li>
-                            <li>**User Login:** Authenticate existing users and issue secure tokens.</li>
-                            <li>**Password Hashing:** Store passwords securely using industry-standard hashing algorithms (e.g., bcrypt).</li>
-                            <li>**JWT (JSON Web Token) Integration:** For stateless authentication and authorization of API requests.</li>
-                            <li>**Protected Routes:** Implement middleware to secure specific API endpoints, allowing access only to authenticated users.</li>
-                            <li>**Error Handling:** Robust error responses for invalid credentials, missing tokens, etc.</li>
-                            <li>**Database Integration:** Connects with a database (e.g., MongoDB, PostgreSQL, MySQL) to store user credentials.</li>
+                            <li>**User Registration:** Allows new users to securely create accounts with comprehensive **input validation** to prevent common vulnerabilities.</li>
+                            <li>**User Login:** Authenticates existing users by verifying credentials and issuing **secure, cryptographically signed tokens** (JWTs) for subsequent requests.</li>
+                            <li>**Password Hashing:** Utilizes strong, **adaptive hashing algorithms (like bcrypt)** to protect user passwords against brute-force attacks and database breaches.</li>
+                            <li>**JWT (JSON Web Token) Integration:** Implements JWT for efficient, stateless authentication and authorization, allowing scalable API security without server-side sessions.</li>
+                            <li>**Protected Routes/Middleware:** Integrates middleware to automatically verify tokens and secure specific API endpoints, ensuring only **authenticated and authorized users** can access sensitive data or functionalities.</li>
+                            <li>**Robust Error Handling:** Provides clear and secure error responses for various scenarios, including invalid credentials, missing tokens, or unauthorized access attempts.</li>
+                            <li>**Database Integration:** Seamlessly connects with a chosen database (e.g., MongoDB, PostgreSQL, MySQL) to persist user credentials and profiles.</li>
                         </ul>
                     </li>
                     <li><strong>Technologies Used:</strong>
                         <ul>
-                            <li>**Node.js:** The JavaScript runtime for building the backend.</li>
-                            <li>**Express.js:** A minimalist web framework for Node.js, used for API routing.</li>
-                            <li>**MongoDB (or other SQL/NoSQL DB):** For storing user data.</li>
-                            <li>**Mongoose (if MongoDB):** An ODM library for MongoDB and Node.js.</li>
-                            <li>**Bcrypt.js:** For password hashing and comparison.</li>
-                            <li>**jsonwebtoken (JWT):** For creating and verifying authentication tokens.</li>
-                            <li>**CORS:** For handling cross-origin resource sharing.</li>
+                            <li>**Node.js:** The JavaScript runtime environment, providing a scalable and efficient platform for the backend server.</li>
+                            <li>**Express.js:** A popular, minimalist web application framework for Node.js, used for building powerful APIs and handling routing.</li>
+                            <li>**MongoDB (or other SQL/NoSQL DB):** A NoSQL database (or a relational database like PostgreSQL/MySQL, depending on the implementation) for storing user data securely.</li>
+                            <li>**Mongoose (if MongoDB):** An elegant ODM (Object Data Modeling) library for Node.js and MongoDB, simplifying data schema definition and interactions.</li>
+                            <li>**Bcrypt.js:** A library for securely hashing passwords.</li>
+                            <li>**jsonwebtoken (JWT):** A library for implementing JSON Web Tokens for authentication.</li>
+                            <li>**CORS (Cross-Origin Resource Sharing) Middleware:** Configured to handle requests from different origins, crucial for frontend-backend communication.</li>
                         </ul>
                     </li>
-                    <li><strong>Challenges and Solutions:</strong> Ensuring strong security practices was the main challenge, particularly around password storage and handling sensitive data. I addressed this by strictly following best practices like salting and hashing passwords, using secure random token generation, and implementing proper input sanitization. Managing asynchronous operations inherent to Node.js was also a key focus.</li>
-                    <li><strong>Learnings:</strong> This project significantly enhanced my understanding of **backend development with Node.js**, **API design**, **database integration**, and crucial **web security principles** related to user authentication and authorization.</li>
+                    <li><strong>Challenges and Solutions:</strong> The primary challenge was ensuring **uncompromising security practices**, particularly concerning password storage and the handling of sensitive user data. This was meticulously addressed by:
+                        <ul>
+                            <li>Strictly following industry best practices for **salting and hashing passwords**.</li>
+                            <li>Implementing **secure random token generation** and robust JWT verification.</li>
+                            <li>Applying **proper input sanitization and validation** to mitigate injection attacks.</li>
+                            <li>Managing **asynchronous operations** inherent to Node.js effectively to prevent blocking and ensure high performance.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Learnings:</strong> This project profoundly enhanced my understanding of **backend development with Node.js and Express.js**, advanced **API design principles**, intricate **database integration techniques**, and, most importantly, crucial **web security principles** related to user authentication and authorization. It solidified my ability to build secure, scalable, and efficient backend systems.</li>
                 </ul>
             </div>
 
@@ -159,23 +243,29 @@
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">MongoDB</span>
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">JWT</span>
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Bcrypt.js</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Web Security</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">API Development</span>
             </div>
 
             <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mt-8 mb-4 dark:border-blue-700">Project Links</h3>
             <div class="flex space-x-4">
-                <a href="https://your-nodejs-auth-demo-url.com" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition dark:bg-blue-700 dark:hover:bg-blue-600">Live Demo (if applicable)</a>
-                <a href="https://github.com/manisaiteja2007/nodejs-authentication-repo" target="_blank" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">GitHub Repo</a>
+                <a href="#" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition dark:bg-blue-700 dark:hover:bg-blue-600">Live Demo (if applicable)</a>
+                <a href="https://github.com/manisaiteja2007/nodejs-authentication-repo" target="_blank" class="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition shadow-md dark:bg-gray-900 dark:hover:bg-gray-700">GitHub Repo</a>
             </div>
         </section>
 
         <div class="text-center mt-8">
-            <a href="all-projects.html#nodejs-section" class="inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">← Back to Projects</a>
+            <a href="all-projects.html#nodejs-section" class="inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">← Back to All Projects</a>
         </div>
     </main>
 
-    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800">
-        <p>© 2025 Mani Sai Teja Bejjala. All rights reserved.</p>
-        <a href="#top" class="text-blue-400 hover:underline">Back to Top</a>
+    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800 mt-12">
+        <p class="text-sm">&copy; <span id="current-year"></span> Mani Sai Teja Bejjala. All rights reserved.</p>
+        <a href="#top" class="text-blue-400 hover:underline mt-2 inline-block">Back to Top</a>
     </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
