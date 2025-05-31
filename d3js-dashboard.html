@@ -6,129 +6,227 @@
     <title>Data Visualization Dashboard (D3.js) - Mani Sai Teja Bejjala</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Base styles & Font Fallbacks */
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #f8fafc;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f8fafc; /* Tailwind: bg-slate-50 */
+            color: #1a202c; /* Tailwind: text-gray-900 */
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+
+        /* Dark Mode Specific Overrides */
         body.dark {
-            background-color: #1a202c;
-            color: #e2e8f0;
+            background-color: #1a202c; /* Tailwind: bg-gray-900 */
+            color: #e2e8f0; /* Tailwind: text-gray-200 */
         }
-        /* Dark mode specific styles for various elements */
-        body.dark .nav-link {
-            color: #cbd5e1;
-        }
-        body.dark .nav-link:hover {
-            color: #60a5fa;
-        }
-        body.dark .text-gray-900 {
-            color: #e2e8f0;
-        }
-        body.dark .text-gray-800 {
-            color: #e2e8f0;
-        }
-        body.dark .text-gray-600 {
-            color: #a0aec0;
-        }
-        body.dark .border-blue-200 {
-            border-color: #4a5568;
-        }
-        body.dark .bg-white {
-            background-color: #2d3748;
-        }
-        body.dark .bg-gray-100 {
-            background-color: #2d3748;
-        }
+        body.dark .text-gray-900 { color: #e2e8f0; }
+        body.dark .text-gray-800 { color: #e2e8f0; }
+        body.dark .text-gray-600 { color: #a0aec0; } /* Tailwind: text-gray-400 */
+        body.dark .bg-white { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .bg-gray-100 { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .border-blue-200 { border-color: #4a5568; } /* Tailwind: border-gray-600 */
+        body.dark .text-blue-600 { color: #60a5fa; } /* Tailwind: text-blue-400 */
+        body.dark .bg-blue-600 { background-color: #3b82f6; } /* Tailwind: bg-blue-500 */
+        body.dark .hover\:bg-blue-700:hover { background-color: #2563eb; } /* Tailwind: hover:bg-blue-600 */
         body.dark .shadow-md {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15); /* More visible shadow in dark mode */
         }
-        body.dark .text-blue-600 {
-            color: #60a5fa;
+        body.dark .project-card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-        body.dark .bg-blue-600 {
-            background-color: #3b82f6;
+        body.dark .hover\:shadow-xl:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
         }
-        body.dark .hover\:bg-blue-700:hover {
-            background-color: #2563eb;
+        /* Prose styling for detailed descriptions */
+        .prose ul {
+            list-style-type: disc;
+            margin-left: 1.5em;
+        }
+        .prose li {
+            margin-bottom: 0.5em;
+        }
+
+        /* Custom Transitions & Transforms */
+        .icon, .nav-link, .btn-primary {
+            transition: all 0.3s ease-in-out;
+        }
+        .icon:hover {
+            transform: scale(1.1);
+        }
+        .nav-link:hover {
+            color: #2563eb; /* text-blue-600 */
+        }
+
+        /* Mobile menu specific styles for smooth reveal */
+        #mobile-menu.hidden {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        #mobile-menu:not(.hidden) {
+            max-height: 300px; /* Adjust based on content height */
+            transition: max-height 0.3s ease-in;
         }
     </style>
     <script>
         // Set up Tailwind CSS for dark mode
         tailwind.config = {
-            darkMode: 'class',
+            darkMode: 'class', // Enable dark mode based on 'dark' class
             theme: {
                 extend: {
                     colors: {
-                        // Define any custom colors if needed
+                        // Example custom colors if needed, e.g., 'primary-blue': '#2563eb'
                     }
                 }
             }
-        }
+        };
 
-        // Function to toggle dark mode
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark');
-            // Store user preference in local storage
-            if (document.body.classList.contains('dark')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        // Apply theme on page load
+        // Dark Mode & Mobile Menu Logic
         document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            // Dark Mode Logic
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme === 'dark' || (currentTheme === null && prefersDarkScheme.matches)) {
                 document.body.classList.add('dark');
+            }
+
+            document.getElementById('darkModeToggle').addEventListener('click', () => {
+                document.body.classList.toggle('dark');
+                localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+            });
+
+            // Mobile Menu Logic
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+                    menuButton.setAttribute('aria-expanded', !isExpanded);
+                });
+
+                // Close mobile menu when a link is clicked (smoother UX)
+                mobileMenu.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        menuButton.setAttribute('aria-expanded', 'false');
+                    });
+                });
             }
         });
     </script>
 </head>
-<body class="text-gray-900">
-    <nav class="bg-white shadow-md sticky top-0 z-50">
+<body class="antialiased">
+    <nav class="bg-white shadow-md sticky top-0 z-50 dark:bg-gray-800">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
-            <div class="space-x-6 flex items-center">
-                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link">About</a>
-                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link">Skills</a>
-                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link">Projects</a>
-                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link">Connect</a>
-                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link">Stats</a>
-                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link">Contact</a>
-                <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+            <div class="md:hidden flex items-center space-x-4">
+                <button id="darkModeToggle" aria-label="Toggle dark mode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+                <button id="menu-button" aria-label="Open main menu" aria-controls="mobile-menu" aria-expanded="false" class="text-gray-600 dark:text-gray-200 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="hidden md:flex space-x-6 items-center" id="nav-links-desktop">
+                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">About</a>
+                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Skills</a>
+                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Featured Projects</a>
+                <a href="all-projects.html" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">All Projects</a>
+                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Connect</a>
+                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Stats</a>
+                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Contact</a>
+                <button id="darkModeToggle" aria-label="Toggle dark mode" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
                     </svg>
                 </button>
             </div>
         </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 py-2 shadow-inner">
+            <a href="index.html#about" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">About</a>
+            <a href="index.html#skills" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Skills</a>
+            <a href="index.html#projects" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Featured Projects</a>
+            <a href="all-projects.html" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">All Projects</a>
+            <a href="index.html#connect" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Connect</a>
+            <a href="index.html#stats" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Stats</a>
+            <a href="index.html#contact" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Contact</a>
+        </div>
     </nav>
+
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16 text-center">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-3">Data Visualization Dashboard (D3.js)</h1>
+            <p class="text-xl md:text-2xl font-light opacity-90">An interactive dashboard for transforming complex sales data into clear insights.</p>
+            <div class="mt-6 flex justify-center space-x-4">
+                <a href="https://your-d3js-dashboard-demo-url.com" target="_blank" class="bg-white text-blue-600 px-6 py-2 rounded-full text-lg font-semibold hover:bg-gray-100 transition shadow-md dark:bg-gray-700 dark:text-blue-300 dark:hover:bg-gray-600">
+                    View Live Demo
+                </a>
+                <a href="https://github.com/manisaiteja2007/d3js-dashboard-repo" target="_blank" class="bg-gray-800 text-white px-6 py-2 rounded-full text-lg font-semibold hover:bg-gray-700 transition shadow-md dark:bg-gray-900 dark:hover:bg-gray-700">
+                    GitHub Repo
+                </a>
+            </div>
+        </div>
+    </header>
 
     <main class="max-w-4xl mx-auto py-12 px-4">
         <section class="bg-white p-8 rounded-lg shadow-md mb-8 dark:bg-gray-800">
-            <h2 class="text-4xl font-bold text-blue-600 mb-4 dark:text-blue-400">Data Visualization Dashboard (D3.js)</h2>
-            <p class="text-gray-700 text-lg mb-6 dark:text-gray-300">
-                An interactive dashboard for sales data.
-            </p>
+            <h2 class="text-3xl font-bold text-blue-600 mb-6 dark:text-blue-400">Project Overview</h2>
 
-            <div class="mb-6">
-                <img src="https://via.placeholder.com/800x450?text=D3.js+Dashboard+Screenshot" alt="D3.js Data Visualization Dashboard" class="w-full h-auto rounded-lg shadow-lg">
-                <p class="text-center text-gray-500 text-sm mt-2 dark:text-gray-400">Screenshot of the interactive data dashboard.</p>
+            <div class="mb-8">
+                <img src="https://via.placeholder.com/800x450?text=D3.js+Dashboard+Screenshot" alt="D3.js Data Visualization Dashboard displaying various charts" class="w-full h-auto rounded-lg shadow-lg">
+                <p class="text-center text-gray-500 text-sm mt-3 dark:text-gray-400">A screenshot of the interactive data visualization dashboard in action.</p>
             </div>
 
             <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mb-4 dark:border-blue-700">Detailed Description</h3>
             <div class="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
                 <p>
-                    This project involved building an interactive data visualization dashboard using D3.js. It's designed to present complex sales data in an easily digestible and engaging format, allowing users to explore trends and insights.
+                    This project showcases an **interactive data visualization dashboard** built using the powerful **D3.js library**. It's expertly designed to transform complex sales data into **easily digestible and engaging visual representations**, empowering users to explore critical trends and derive actionable insights.
                 </p>
                 <ul>
-                    <li><strong>Problem Solved:</strong> Transformed raw sales data into interactive and insightful visual representations, making it easier for users to identify patterns and make data-driven decisions.</li>
-                    <li><strong>My Role:</strong> I was responsible for data parsing, designing the various chart types (bar charts, line graphs, pie charts), implementing interactive elements (tooltips, brushing, filtering), and ensuring the dashboard's responsiveness.</li>
-                    <li><strong>Key Features:</strong> Multiple linked visualizations (e.g., sales over time, product category breakdown, regional sales), interactive filtering and zooming, dynamic data loading, and a clean, responsive layout.</li>
-                    <li><strong>Technologies Used:</strong> D3.js for data-driven document manipulation and complex visualizations, JavaScript for logic and interactivity, HTML for structure, and CSS for styling.</li>
-                    <li><strong>Challenges and Solutions:</strong> Handling large datasets efficiently and ensuring smooth transitions during interactive operations were challenges. I optimized D3.js selections and transitions and implemented data aggregation techniques to improve performance.</li>
-                    <li><strong>Learnings:</strong> Gained deep expertise in D3.js, including its data binding model, scales, axes, and force layouts (if applicable). This project significantly enhanced my skills in data storytelling and interactive web graphics.</li>
+                    <li><strong>Problem Solved:</strong> This dashboard directly addresses the challenge of making sense of large, raw datasets. By providing **interactive and insightful visual representations**, it significantly simplifies the identification of patterns, anomalies, and key performance indicators, enabling **data-driven decision-making** for businesses or analysts.</li>
+                    <li><strong>My Role:</strong> I managed the full lifecycle of the dashboard's frontend development. This included:
+                        <ul>
+                            <li>**Data Parsing and Preparation:** Efficiently processing raw sales data for visualization.</li>
+                            <li>**Chart Design and Implementation:** Developing various chart types, including **responsive bar charts, dynamic line graphs, and insightful pie charts**.</li>
+                            <li>**Interactive Elements:** Implementing user-friendly features such as **informative tooltips on hover, data brushing for detailed selection, and dynamic filtering** capabilities.</li>
+                            <li>**Responsiveness and Layout:** Ensuring the dashboard provided an optimal viewing and interaction experience across diverse screen sizes.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Key Features:</strong>
+                        <ul>
+                            <li>**Multiple Linked Visualizations:** Interconnected charts that respond to user interactions, such as sales performance over time, detailed product category breakdowns, and regional sales comparisons.</li>
+                            <li>**Interactive Filtering and Zooming:** Users can drill down into specific data segments or timeframes for more granular analysis.</li>
+                            <li>**Dynamic Data Loading:** Capable of loading and updating visualizations with new data.</li>
+                            <li>**Clean and Responsive Layout:** A modern, intuitive design that adapts seamlessly to desktop and mobile devices.</li>
+                            <li>**Customizable Charts:** Ability to tailor chart properties and data inputs.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Technologies Used:</strong>
+                        <ul>
+                            <li>**D3.js (Data-Driven Documents):** The core library used for its unparalleled flexibility in data-driven document manipulation and creating highly custom, complex visualizations.</li>
+                            <li>**JavaScript:** Powers the dashboard's logic, interactivity, and dynamic data handling.</li>
+                            <li>**HTML5:** Provides the semantic structure and content foundation for the dashboard.</li>
+                            <li>**CSS3:** Styles the visualizations and layout, ensuring a polished and responsive design.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Challenges and Solutions:</strong>
+                        <ul>
+                            <li>**Efficiently Handling Large Datasets:** Managing and rendering large volumes of data without performance degradation was a key challenge. This was addressed by implementing **data aggregation techniques** and optimizing D3.js selections to render only necessary elements, significantly improving responsiveness.</li>
+                            <li>**Smooth Transitions and Interactivity:** Ensuring seamless and performant transitions during interactive operations (like filtering or zooming) required fine-tuning D3.js's built-in transition capabilities and animation properties.</li>
+                            <li>**Cross-Browser Compatibility for SVG:** Ensuring consistent rendering of SVG-based visualizations across different browsers.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Learnings:</strong> This project provided a **deep dive into D3.js**, fostering a comprehensive understanding of its data binding model, custom scales, axis generation, and various layout algorithms. It significantly enhanced my abilities in **data storytelling through compelling visuals** and my practical skills in **interactive web graphics development**.</li>
                 </ul>
             </div>
 
@@ -136,26 +234,31 @@
             <div class="flex flex-wrap gap-2 text-sm">
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">D3.js</span>
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">JavaScript</span>
-                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">HTML</span>
-                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">CSS</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">HTML5</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">CSS3</span>
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Data Visualization</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Interactive Graphics</span>
             </div>
 
             <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mt-8 mb-4 dark:border-blue-700">Project Links</h3>
             <div class="flex space-x-4">
                 <a href="https://your-d3js-dashboard-demo-url.com" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition dark:bg-blue-700 dark:hover:bg-blue-600">Live Demo</a>
-                <a href="https://github.com/manisaiteja2007/d3js-dashboard-repo" target="_blank" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">GitHub Repo</a>
+                <a href="https://github.com/manisaiteja2007/d3js-dashboard-repo" target="_blank" class="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition shadow-md dark:bg-gray-900 dark:hover:bg-gray-700">GitHub Repo</a>
             </div>
-        </div>
+        </section>
 
         <div class="text-center mt-8">
-            <a href="all-projects.html#d3js-section" class="inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">← Back to Projects</a>
+            <a href="all-projects.html#d3js-section" class="inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">← Back to All Projects</a>
         </div>
     </main>
 
-    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800">
-        <p>© 2025 Mani Sai Teja Bejjala. All rights reserved.</p>
-        <a href="#top" class="text-blue-400 hover:underline">Back to Top</a>
+    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800 mt-12">
+        <p class="text-sm">&copy; <span id="current-year"></span> Mani Sai Teja Bejjala. All rights reserved.</p>
+        <a href="#top" class="text-blue-400 hover:underline mt-2 inline-block">Back to Top</a>
     </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
