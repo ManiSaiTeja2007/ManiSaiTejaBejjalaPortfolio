@@ -3,145 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Testing Suite - Mani Sai Teja Bejjala</title>
+    <title>API Testing Suite (Postman) - Mani Sai Teja Bejjala</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Base styles & Font Fallbacks */
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #f8fafc;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f8fafc; /* Tailwind: bg-slate-50 */
+            color: #1a202c; /* Tailwind: text-gray-900 */
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+
+        /* Dark Mode Specific Overrides */
         body.dark {
-            background-color: #1a202c;
-            color: #e2e8f0;
+            background-color: #1a202c; /* Tailwind: bg-gray-900 */
+            color: #e2e8f0; /* Tailwind: text-gray-200 */
         }
-        /* Dark mode specific styles for various elements */
-        body.dark .nav-link {
-            color: #cbd5e1;
-        }
-        body.dark .nav-link:hover {
-            color: #60a5fa;
-        }
-        body.dark .text-gray-900 {
-            color: #e2e8f0;
-        }
-        body.dark .text-gray-800 {
-            color: #e2e8f0;
-        }
-        body.dark .text-gray-600 {
-            color: #a0aec0;
-        }
-        body.dark .border-blue-200 {
-            border-color: #4a5568;
-        }
-        body.dark .bg-white {
-            background-color: #2d3748;
-        }
-        body.dark .bg-gray-100 {
-            background-color: #2d3748;
-        }
+        body.dark .text-gray-900 { color: #e2e8f0; }
+        body.dark .text-gray-800 { color: #e2e8f0; }
+        body.dark .text-gray-600 { color: #a0aec0; } /* Tailwind: text-gray-400 */
+        body.dark .bg-white { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .bg-gray-100 { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .border-blue-200 { border-color: #4a5568; } /* Tailwind: border-gray-600 */
+        body.dark .text-blue-600 { color: #60a5fa; } /* Tailwind: text-blue-400 */
+        body.dark .bg-blue-600 { background-color: #3b82f6; } /* Tailwind: bg-blue-500 */
+        body.dark .hover\:bg-blue-700:hover { background-color: #2563eb; } /* Tailwind: hover:bg-blue-600 */
         body.dark .shadow-md {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15); /* More visible shadow in dark mode */
         }
-        body.dark .text-blue-600 {
-            color: #60a5fa;
+        body.dark .project-card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-        body.dark .bg-blue-600 {
-            background-color: #3b82f6;
+        body.dark .hover\:shadow-xl:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
         }
-        body.dark .hover\:bg-blue-700:hover {
-            background-color: #2563eb;
+        /* Prose styling for detailed descriptions */
+        .prose ul {
+            list-style-type: disc;
+            margin-left: 1.5em;
+        }
+        .prose li {
+            margin-bottom: 0.5em;
+        }
+
+        /* Custom Transitions & Transforms */
+        .icon, .nav-link, .btn-primary {
+            transition: all 0.3s ease-in-out;
+        }
+        .icon:hover {
+            transform: scale(1.1);
+        }
+        .nav-link:hover {
+            color: #2563eb; /* text-blue-600 */
+        }
+
+        /* Mobile menu specific styles for smooth reveal */
+        #mobile-menu.hidden {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        #mobile-menu:not(.hidden) {
+            max-height: 300px; /* Adjust based on content height */
+            transition: max-height 0.3s ease-in;
         }
     </style>
     <script>
         // Set up Tailwind CSS for dark mode
         tailwind.config = {
-            darkMode: 'class',
+            darkMode: 'class', // Enable dark mode based on 'dark' class
             theme: {
                 extend: {
                     colors: {
-                        // Define any custom colors if needed
+                        // Example custom colors if needed, e.g., 'primary-blue': '#2563eb'
                     }
                 }
             }
-        }
+        };
 
-        // Function to toggle dark mode
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark');
-            // Store user preference in local storage
-            if (document.body.classList.contains('dark')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        // Apply theme on page load
+        // Dark Mode & Mobile Menu Logic
         document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            // Dark Mode Logic
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme === 'dark' || (currentTheme === null && prefersDarkScheme.matches)) {
                 document.body.classList.add('dark');
+            }
+
+            document.getElementById('darkModeToggle').addEventListener('click', () => {
+                document.body.classList.toggle('dark');
+                localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+            });
+
+            // Mobile Menu Logic
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+                    menuButton.setAttribute('aria-expanded', !isExpanded);
+                });
+
+                // Close mobile menu when a link is clicked (smoother UX)
+                mobileMenu.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        menuButton.setAttribute('aria-expanded', 'false');
+                    });
+                });
             }
         });
     </script>
 </head>
-<body class="text-gray-900">
-    <nav class="bg-white shadow-md sticky top-0 z-50">
+<body class="antialiased">
+    <nav class="bg-white shadow-md sticky top-0 z-50 dark:bg-gray-800">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
-            <div class="space-x-6 flex items-center">
-                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link">About</a>
-                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link">Skills</a>
-                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link">Projects</a>
-                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link">Connect</a>
-                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link">Stats</a>
-                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link">Contact</a>
-                <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+            <div class="md:hidden flex items-center space-x-4">
+                <button id="darkModeToggle" aria-label="Toggle dark mode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+                <button id="menu-button" aria-label="Open main menu" aria-controls="mobile-menu" aria-expanded="false" class="text-gray-600 dark:text-gray-200 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="hidden md:flex space-x-6 items-center" id="nav-links-desktop">
+                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">About</a>
+                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Skills</a>
+                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Featured Projects</a>
+                <a href="all-projects.html" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">All Projects</a>
+                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Connect</a>
+                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Stats</a>
+                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Contact</a>
+                <button id="darkModeToggle" aria-label="Toggle dark mode" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
                     </svg>
                 </button>
             </div>
         </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 py-2 shadow-inner">
+            <a href="index.html#about" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">About</a>
+            <a href="index.html#skills" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Skills</a>
+            <a href="index.html#projects" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Featured Projects</a>
+            <a href="all-projects.html" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">All Projects</a>
+            <a href="index.html#connect" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Connect</a>
+            <a href="index.html#stats" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Stats</a>
+            <a href="index.html#contact" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Contact</a>
+        </div>
     </nav>
+
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16 text-center">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-3">API Testing Suite (Postman)</h1>
+            <p class="text-xl md:text-2xl font-light opacity-90">A comprehensive suite for automating API tests, ensuring reliability and functionality.</p>
+            <div class="mt-6 flex justify-center space-x-4">
+                <a href="#" target="_blank" class="bg-white text-blue-600 px-6 py-2 rounded-full text-lg font-semibold hover:bg-gray-100 transition shadow-md dark:bg-gray-700 dark:text-blue-300 dark:hover:bg-gray-600">
+                    View Demo (if applicable)
+                </a>
+                <a href="#" target="_blank" class="bg-gray-800 text-white px-6 py-2 rounded-full text-lg font-semibold hover:bg-gray-700 transition shadow-md dark:bg-gray-900 dark:hover:bg-gray-700">
+                    GitHub Repo (if available)
+                </a>
+            </div>
+        </div>
+    </header>
 
     <main class="max-w-4xl mx-auto py-12 px-4">
         <section class="bg-white p-8 rounded-lg shadow-md mb-8 dark:bg-gray-800">
-            <h2 class="text-4xl font-bold text-blue-600 mb-4 dark:text-blue-400">API Testing Suite (Postman)</h2>
-            <p class="text-gray-700 text-lg mb-6 dark:text-gray-300">
-                A comprehensive collection of automated API tests developed using Postman, ensuring the reliability and functionality of various RESTful APIs.
-            </p>
+            <h2 class="text-3xl font-bold text-blue-600 mb-6 dark:text-blue-400">Project Overview</h2>
 
-            <div class="mb-6">
-                <img src="https://via.placeholder.com/800x450?text=Postman+API+Testing+Screenshot" alt="Postman API Testing Screenshot" class="w-full h-auto rounded-lg shadow-lg">
-                <p class="text-center text-gray-500 text-sm mt-2 dark:text-gray-400">Screenshot of Postman test collection with executed requests.</p>
+            <div class="mb-8">
+                <img src="https://via.placeholder.com/800x450?text=Postman+API+Testing+Screenshot" alt="Postman API Testing Screenshot showing various test cases and results" class="w-full h-auto rounded-lg shadow-lg">
+                <p class="text-center text-gray-500 text-sm mt-3 dark:text-gray-400">A screenshot of the Postman test collection with executed requests and test results.</p>
             </div>
 
             <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mb-4 dark:border-blue-700">Detailed Description</h3>
             <div class="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
                 <p>
-                    This project involved creating a robust **API Testing Suite** using **Postman**, a popular API development and testing tool. The suite comprises a collection of requests and automated tests designed to validate the functionality, performance, and security of various **RESTful APIs**.
+                    This project involved creating a robust **API Testing Suite** using **Postman**, a leading platform for API development and testing. The suite is a comprehensive collection of requests and **automated tests** meticulously designed to validate the functionality, performance, and security of various **RESTful APIs**.
                 </p>
                 <ul>
-                    <li><strong>The problem it solves:</strong> Manually testing APIs is inefficient and prone to human error, especially as APIs evolve. This Postman collection automates the testing process, allowing for quick and repeatable verification of API endpoints, ensuring consistent behavior and data integrity.</li>
-                    <li><strong>Your role:</strong> I was responsible for designing the test scenarios, writing the individual API requests, and implementing the JavaScript test scripts within Postman. This also included setting up environments, variables, and collection runners for automated execution.</li>
-                    <li><strong>Key features:</strong> The testing suite includes:
+                    <li><strong>Problem Solved:</strong> Manually testing APIs, especially as they evolve and scale, is highly inefficient, time-consuming, and prone to human error. This Postman collection **automates the entire testing process**, enabling quick, repeatable, and reliable verification of API endpoints. This ensures consistent behavior, data integrity, and early detection of regressions, significantly **improving the overall quality and stability of the APIs**.</li>
+                    <li><strong>My Role:</strong> I took the lead in the development of this API testing suite. My responsibilities encompassed:
                         <ul>
-                            <li>**Functional Tests:** Validating correct responses for various HTTP methods (GET, POST, PUT, DELETE).</li>
-                            <li>**Data Validation:** Asserting that response bodies contain expected data types, formats, and values.</li>
-                            <li>**Status Code Checks:** Verifying that APIs return appropriate HTTP status codes (e.g., 200 OK, 404 Not Found, 500 Internal Server Error).</li>
-                            <li>**Authentication Tests:** Ensuring proper handling of authentication tokens and unauthorized access attempts.</li>
-                            <li>**Chained Requests:** Executing sequential requests where the output of one request serves as input for the next (e.g., login to get a token, then use token for subsequent requests).</li>
-                            <li>**Automated Runs:** Configured for running the entire collection automatically, providing a quick health check of the APIs.</li>
+                            <li>**Designing Test Scenarios:** Crafting comprehensive test cases that cover various API functionalities, edge cases, and error conditions.</li>
+                            <li>**Writing API Requests:** Developing and configuring individual API requests within Postman for different HTTP methods (GET, POST, PUT, DELETE, etc.).</li>
+                            <li>**Implementing JavaScript Test Scripts:** Writing robust and effective JavaScript test scripts within Postman to automate assertions and validations on API responses.</li>
+                            <li>**Environment & Variable Management:** Setting up and managing Postman environments and variables to handle different testing stages (e.g., development, staging, production) and dynamic data.</li>
+                            <li>**Collection Runner Configuration:** Configuring Postman's Collection Runner for automated execution of the entire test suite.</li>
                         </ul>
                     </li>
-                    <li><strong>Technologies used:</strong> The primary tool used was **Postman**, leveraging its built-in JavaScript engine for writing test scripts. The project focused on testing various **REST APIs**.</li>
-                    <li><strong>Challenges and solutions:</strong> A challenge was managing dynamic data between requests, such as extracting IDs from creation responses and using them in update or delete requests. This was solved by using Postman's environment and collection variables effectively. Another challenge was ensuring comprehensive test coverage, which was addressed by meticulously breaking down API functionalities into distinct test cases.</li>
-                    <li><strong>Learnings:</strong> This project significantly enhanced my understanding of API testing methodologies and best practices. I gained practical experience in using Postman's advanced features for automation, test script writing, and environment management, which are crucial skills for ensuring the quality and reliability of web services.</li>
-                    <li><strong>Future enhancements (optional):</strong> Future work could involve integrating this Postman collection into a CI/CD pipeline using Newman (Postman's command-line runner) for continuous API validation, and expanding test coverage to include performance and security testing.</li>
+                    <li><strong>Key Features:</strong> The testing suite is engineered with several critical features to ensure thorough API validation:
+                        <ul>
+                            <li>**Comprehensive Functional Tests:** Validating correct responses, data structures, and business logic for all implemented HTTP methods.</li>
+                            <li>**Rigorous Data Validation:** Asserting that response bodies adhere to expected data types, formats, values, and schema.</li>
+                            <li>**Accurate Status Code Checks:** Verifying that APIs return appropriate HTTP status codes (e.g., `200 OK`, `201 Created`, `400 Bad Request`, `404 Not Found`, `500 Internal Server Error`) under various conditions.</li>
+                            <li>**Robust Authentication Tests:** Ensuring proper handling of authentication mechanisms (e.g., API keys, OAuth tokens) and verifying that unauthorized access attempts are correctly rejected.</li>
+                            <li>**Chained Requests:** Implementing complex workflows where the output of one API request (e.g., an `ID` from a `POST` request) serves as the input for subsequent requests (`PUT` or `DELETE`), mimicking real-world user flows.</li>
+                            <li>**Automated Execution:** Designed for seamless execution of the entire collection, providing an immediate and comprehensive health check of the APIs, suitable for continuous integration.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Technologies Used:</strong> The primary tool and technology utilized for this project was **Postman**, leveraging its powerful **built-in JavaScript engine** for writing detailed and conditional test scripts. The project's focus was on rigorously testing various **REST APIs**.</li>
+                    <li><strong>Challenges and Solutions:</strong>
+                        <ul>
+                            <li>**Managing Dynamic Data:** A significant challenge was handling dynamic data flow between sequential requests, such as extracting newly generated IDs from creation responses and utilizing them in subsequent update or delete operations. This was effectively solved by leveraging **Postman's environment and collection variables**, along with `pm.environment.set()` and `pm.collectionVariables.set()` methods in pre-request and test scripts.</li>
+                            <li>**Ensuring Comprehensive Test Coverage:** Achieving exhaustive test coverage, especially for complex API functionalities and various error conditions, required meticulous planning. This was addressed by systematically breaking down API functionalities into distinct, manageable test cases and employing a combination of positive, negative, and edge-case testing scenarios.</li>
+                            <li>**Dealing with Asynchronous Operations:** For APIs with asynchronous behavior or delayed responses, I implemented strategies like using `setTimeout` in test scripts or Postman's `pm.sendRequest` with callbacks to handle eventual consistency.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Learnings:</strong> This project profoundly enhanced my understanding of **API testing methodologies**, **quality assurance best practices**, and the critical role of automation in the API development lifecycle. I gained extensive practical experience in utilizing Postman's advanced features for automation, intricate test script writing, environment management, and collection execution. These are crucial skills for ensuring the **quality, reliability, and maintainability of modern web services**.</li>
+                    <li><strong>Future Enhancements (optional):</strong> Future work could involve:
+                        <ul>
+                            <li>**CI/CD Integration:** Integrating this Postman collection into a CI/CD pipeline using **Newman** (Postman's command-line runner) for continuous, automated API validation with every code commit.</li>
+                            <li>**Performance Testing:** Expanding the suite to include basic performance tests to monitor API response times and throughput.</li>
+                            <li>**Security Testing:** Adding tests for common security vulnerabilities like injection flaws, broken authentication, and inadequate authorization.</li>
+                            <li>**Data-Driven Testing:** Utilizing external data files (e.g., CSV, JSON) to run tests with a large set of varied inputs.</li>
+                        </ul>
+                    </li>
                 </ul>
                 <p>
-                    This API Testing Suite demonstrates a strong commitment to quality assurance and proficiency in utilizing Postman for efficient and reliable API validation.
+                    This **API Testing Suite** stands as a testament to my commitment to **quality assurance** and my proficiency in utilizing **Postman** for efficient, reliable, and automated API validation.
                 </p>
             </div>
 
@@ -149,23 +240,30 @@
             <div class="flex flex-wrap gap-2 text-sm">
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Postman</span>
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">REST APIs</span>
-                </div>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">API Testing</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">JavaScript</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Quality Assurance</span>
+            </div>
 
             <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mt-8 mb-4 dark:border-blue-700">Project Links</h3>
             <div class="flex space-x-4">
-                <a href="#" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition dark:bg-blue-700 dark:hover:bg-blue-600">Live Demo (if applicable)</a>
-                <a href="#" target="_blank" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">GitHub Repo</a>
+                <a href="#" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition dark:bg-blue-700 dark:hover:bg-blue-600">View Demo (if applicable)</a>
+                <a href="#" target="_blank" class="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition shadow-md dark:bg-gray-900 dark:hover:bg-gray-700">GitHub Repo (if available)</a>
             </div>
         </section>
 
         <div class="text-center mt-8">
-            <a href="all-projects.html#postman-section" class="inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">← Back to Projects</a>
+            <a href="all-projects.html#postman-section" class="inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">← Back to All Projects</a>
         </div>
     </main>
 
-    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800">
-        <p>© 2025 Mani Sai Teja Bejjala. All rights reserved.</p>
-        <a href="#top" class="text-blue-400 hover:underline">Back to Top</a>
+    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800 mt-12">
+        <p class="text-sm">&copy; <span id="current-year"></span> Mani Sai Teja Bejjala. All rights reserved.</p>
+        <a href="#top" class="text-blue-400 hover:underline mt-2 inline-block">Back to Top</a>
     </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
