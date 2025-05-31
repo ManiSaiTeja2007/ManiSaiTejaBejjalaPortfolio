@@ -6,125 +6,152 @@
     <title>Mani Sai Teja Bejjala - All Projects</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Base styles & Font Fallbacks - COPIED from index.html */
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #f8fafc;
-            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for dark mode */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f8fafc; /* Tailwind: bg-slate-50 */
+            color: #1a202c; /* Tailwind: text-gray-900 */
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
+
+        /* Dark Mode Specific Overrides - COPIED from index.html */
         body.dark {
-            background-color: #1a202c; /* Dark background */
-            color: #e2e8f0; /* Light text for dark mode */
+            background-color: #1a202c; /* Tailwind: bg-gray-900 */
+            color: #e2e8f0; /* Tailwind: text-gray-200 */
         }
-        .icon {
-            transition: transform 0.2s ease-in-out;
+        body.dark .text-gray-900 { color: #e2e8f0; }
+        body.dark .text-gray-800 { color: #e2e8f0; }
+        body.dark .text-gray-600 { color: #a0aec0; } /* Tailwind: text-gray-400 */
+        body.dark .bg-white { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .bg-gray-100 { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .border-blue-200 { border-color: #4a5568; } /* Tailwind: border-gray-600 */
+        body.dark .text-blue-600 { color: #60a5fa; } /* Tailwind: text-blue-400 */
+        body.dark .bg-blue-600 { background-color: #3b82f6; } /* Tailwind: bg-blue-500 */
+        body.dark .hover\:bg-blue-700:hover { background-color: #2563eb; } /* Tailwind: hover:bg-blue-600 */
+        body.dark .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15); /* More visible shadow in dark mode */
+        }
+        body.dark .project-card:hover { /* This was already in your provided file, ensuring it's comprehensive */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        body.dark .hover\:shadow-xl:hover { /* Added from index.html */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Custom Transitions & Transforms - COPIED from index.html */
+        .icon, .nav-link, .project-card, .btn-primary {
+            transition: all 0.3s ease-in-out;
         }
         .icon:hover {
             transform: scale(1.1);
         }
-        .stats-img {
-            max-width: 100%;
-            margin-bottom: 1rem;
-        }
         .nav-link:hover {
-            color: #2563eb;
-        }
-        .project-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: #2563eb; /* text-blue-600 */
         }
         .project-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
-        /* Dark mode specific styles for various elements */
-        body.dark .nav-link {
-            color: #cbd5e1; /* Lighter gray for nav links in dark mode */
+        /* Mobile menu specific styles for smooth reveal - COPIED from index.html */
+        #mobile-menu.hidden {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
         }
-        body.dark .nav-link:hover {
-            color: #60a5fa; /* Lighter blue on hover in dark mode */
-        }
-        body.dark .text-gray-900 {
-            color: #e2e8f0;
-        }
-        body.dark .text-gray-800 {
-            color: #e2e8f0;
-        }
-        body.dark .text-gray-600 {
-            color: #a0aec0;
-        }
-        body.dark .border-blue-200 {
-            border-color: #4a5568;
-        }
-        body.dark .bg-white {
-            background-color: #2d3748; /* Darker background for white elements */
-        }
-        body.dark .bg-gray-100 {
-            background-color: #2d3748; /* Darker background for gray-100 sections */
-        }
-        body.dark .shadow-md {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15); /* Darker shadow */
-        }
-        body.dark .hover\:shadow-xl:hover {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
-        }
-        body.dark .text-blue-600 {
-            color: #60a5fa; /* Lighter blue for primary accents */
-        }
-        body.dark .bg-blue-600 {
-            background-color: #3b82f6; /* Adjust background for buttons */
-        }
-        body.dark .hover\:bg-blue-700:hover {
-            background-color: #2563eb; /* Adjust hover for buttons */
+        #mobile-menu:not(.hidden) {
+            max-height: 300px; /* Adjust based on content height */
+            transition: max-height 0.3s ease-in;
         }
     </style>
     <script>
-        // Set up Tailwind CSS for dark mode
+        // Set up Tailwind CSS for dark mode - COPIED from index.html
         tailwind.config = {
             darkMode: 'class', // Enable dark mode based on 'dark' class
             theme: {
                 extend: {
                     colors: {
-                        // Define any custom colors if needed
+                        // Example custom colors if needed, e.g., 'primary-blue': '#2563eb'
                     }
                 }
             }
-        }
+        };
 
-        // Function to toggle dark mode
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark');
-            // Store user preference in local storage
-            if (document.body.classList.contains('dark')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        // Apply theme on page load
+        // Dark Mode & Mobile Menu Logic - COPIED from index.html
         document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            // Dark Mode Logic
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme === 'dark' || (currentTheme === null && prefersDarkScheme.matches)) {
                 document.body.classList.add('dark');
+            }
+
+            document.getElementById('darkModeToggle').addEventListener('click', () => {
+                document.body.classList.toggle('dark');
+                localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+            });
+
+            // Mobile Menu Logic
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+                    menuButton.setAttribute('aria-expanded', !isExpanded);
+                });
+
+                // Close mobile menu when a link is clicked (smoother UX)
+                mobileMenu.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        menuButton.setAttribute('aria-expanded', 'false');
+                    });
+                });
             }
         });
     </script>
 </head>
-<body class="text-gray-900">
-    <nav class="bg-white shadow-md sticky top-0 z-50">
+<body class="antialiased"> <nav class="bg-white shadow-md sticky top-0 z-50 dark:bg-gray-800">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
-            <div class="space-x-6 flex items-center">
-                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link">About</a>
-                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link">Skills</a>
-                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link">Featured Projects</a>
-                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link">Connect</a>
-                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link">Stats</a>
-                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link">Contact</a>
-                <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+            <div class="md:hidden flex items-center space-x-4">
+                <button id="darkModeToggle" aria-label="Toggle dark mode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+                <button id="menu-button" aria-label="Open main menu" aria-controls="mobile-menu" aria-expanded="false" class="text-gray-600 dark:text-gray-200 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="hidden md:flex space-x-6 items-center" id="nav-links-desktop">
+                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">About</a>
+                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Skills</a>
+                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Featured Projects</a>
+                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Connect</a>
+                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Stats</a>
+                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Contact</a>
+                <button id="darkModeToggle" aria-label="Toggle dark mode" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
                     </svg>
                 </button>
             </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 py-2 shadow-inner">
+            <a href="index.html#about" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">About</a>
+            <a href="index.html#skills" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Skills</a>
+            <a href="index.html#projects" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Featured Projects</a>
+            <a href="index.html#connect" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Connect</a>
+            <a href="index.html#stats" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Stats</a>
+            <a href="index.html#contact" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Contact</a>
         </div>
     </nav>
 
@@ -139,8 +166,7 @@
         <div id="angular-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Angular</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="angular-task-management.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Task Management App</h5>
+                <a href="angular-task-management.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Task Management App</h5>
                     <p class="text-gray-600 dark:text-gray-400">A web app for managing tasks with real-time updates.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Angular, Firebase</p>
                 </a>
@@ -150,8 +176,7 @@
         <div id="arduino-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Arduino</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="arduino-smart-home.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Smart Home IoT</h5>
+                <a href="arduino-smart-home.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Smart Home IoT</h5>
                     <p class="text-gray-600 dark:text-gray-400">An IoT system to control home appliances.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Arduino, C, Bluetooth</p>
                 </a>
@@ -161,14 +186,12 @@
         <div id="aws-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">AWS</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="aws-serverless-api.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Serverless API</h5>
+                <a href="aws-serverless-api.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Serverless API</h5>
                     <p class="text-gray-600 dark:text-gray-400">A serverless REST API for a todo app.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> AWS Lambda, Node.js</p>
                 </a>
-           
-                <a href="aws-serverless-api.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">SageMaker Machine Learning</h5>
+                
+                <a href="aws-serverless-api.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">SageMaker Machine Learning</h5>
                     <p class="text-gray-600 dark:text-gray-400">Deployed and managed machine learning models in production using AWS SageMaker</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> AWS SageMaker, Docker, Python, AWS S3</p>
                 </a>
@@ -178,8 +201,7 @@
         <div id="bash-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Bash</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="bash-automation.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Automation Script</h5>
+                <a href="bash-automation.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Automation Script</h5>
                     <p class="text-gray-600 dark:text-gray-400">A script to automate server setup.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Bash, Linux</p>
                 </a>
@@ -189,8 +211,7 @@
         <div id="c-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">C</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="c-embedded-monitor.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Embedded System Monitor</h5>
+                <a href="c-embedded-monitor.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Embedded System Monitor</h5>
                     <p class="text-gray-600 dark:text-gray-400">A real-time monitoring system.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> C, Arduino</p>
                 </a>
@@ -200,8 +221,7 @@
         <div id="cpp-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">C++</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="cpp-pathfinding.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Pathfinding Visualizer</h5>
+                <a href="cpp-pathfinding.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Pathfinding Visualizer</h5>
                     <p class="text-gray-600 dark:text-gray-400">A desktop app for pathfinding algorithms.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> C++, SFML</p>
                 </a>
@@ -211,8 +231,7 @@
         <div id="css-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">CSS</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="css-ecommerce.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">E-Commerce UI</h5>
+                <a href="css-ecommerce.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">E-Commerce UI</h5>
                     <p class="text-gray-600 dark:text-gray-400">A responsive e-commerce website UI.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> HTML, CSS</p>
                 </a>
@@ -222,8 +241,7 @@
         <div id="d3js-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">D3.js</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="d3js-dashboard.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Data Visualization Dashboard</h5>
+                <a href="d3js-dashboard.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Data Visualization Dashboard</h5>
                     <p class="text-gray-600 dark:text-gray-400">An interactive dashboard for sales data.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> D3.js, JavaScript</p>
                 </a>
@@ -233,8 +251,7 @@
         <div id="docker-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Docker</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="docker-microservices.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Microservices Deployment</h5>
+                <a href="docker-microservices.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Microservices Deployment</h5>
                     <p class="text-gray-600 dark:text-gray-400">Containerized a web app for deployment.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Docker, Node.js</p>
                 </a>
@@ -244,8 +261,7 @@
         <div id="expressjs-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Express.js</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="express-auth.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">User Authentication API</h5>
+                <a href="express-auth.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">User Authentication API</h5>
                     <p class="text-gray-600 dark:text-gray-400">A secure REST API with JWT.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Express, Node.js, MongoDB</p>
                 </a>
@@ -255,8 +271,7 @@
         <div id="firebase-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Firebase</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="firebase-chat.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Real-Time Chat App</h5>
+                <a href="firebase-chat.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Real-Time Chat App</h5>
                     <p class="text-gray-600 dark:text-gray-400">A chat app with real-time messaging.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Firebase, React</p>
                 </a>
@@ -266,8 +281,7 @@
         <div id="git-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Git</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="git-workflow.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Version Control Workflow</h5>
+                <a href="git-workflow.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Version Control Workflow</h5>
                     <p class="text-gray-600 dark:text-gray-400">A collaborative project with CI/CD.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Git, GitHub Actions</p>
                 </a>
@@ -277,8 +291,7 @@
         <div id="htmlcss-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">HTML/CSS (Frontend)</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="html-portfolio.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Portfolio Website</h5>
+                <a href="html-portfolio.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Portfolio Website</h5>
                     <p class="text-gray-600 dark:text-gray-400">A responsive personal portfolio.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> HTML, Tailwind CSS</p>
                 </a>
@@ -288,8 +301,7 @@
         <div id="java-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Java</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="java-inventory.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Inventory Management System</h5>
+                <a href="java-inventory.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Inventory Management System</h5>
                     <p class="text-gray-600 dark:text-gray-400">A desktop app for inventory management.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Java, JavaFX</p>
                 </a>
@@ -299,8 +311,7 @@
         <div id="javascript-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">JavaScript</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="javascript-weather.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Weather App</h5>
+                <a href="javascript-weather.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Weather App</h5>
                     <p class="text-gray-600 dark:text-gray-400">A web app for real-time weather data.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> JavaScript, HTML, CSS</p>
                 </a>
@@ -310,8 +321,7 @@
         <div id="jenkins-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Jenkins</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="jenkins-cicd.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">CI/CD Pipeline</h5>
+                <a href="jenkins-cicd.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">CI/CD Pipeline</h5>
                     <p class="text-gray-600 dark:text-gray-400">Automated build and deployment pipeline.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Jenkins, Docker</p>
                 </a>
@@ -321,8 +331,7 @@
         <div id="kubernetes-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Kubernetes</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="kubernetes-cluster.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Kubernetes Cluster Setup</h5>
+                <a href="kubernetes-cluster.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Kubernetes Cluster Setup</h5>
                     <p class="text-gray-600 dark:text-gray-400">Deployed a scalable web app.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Kubernetes, Docker</p>
                 </a>
@@ -332,8 +341,7 @@
         <div id="linux-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Linux</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="linux-monitoring.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Server Monitoring Script</h5>
+                <a href="linux-monitoring.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Server Monitoring Script</h5>
                     <p class="text-gray-600 dark:text-gray-400">A script to monitor server health.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Linux, Bash</p>
                 </a>
@@ -343,8 +351,7 @@
         <div id="matlab-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">MATLAB</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="matlab-signal.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Signal Processing Tool</h5>
+                <a href="matlab-signal.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Signal Processing Tool</h5>
                     <p class="text-gray-600 dark:text-gray-400">A tool for analyzing signal data.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> MATLAB</p>
                 </a>
@@ -354,8 +361,7 @@
         <div id="mongodb-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">MongoDB</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="mongodb-blog.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Blog Platform Backend</h5>
+                <a href="mongodb-blog.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Blog Platform Backend</h5>
                     <p class="text-gray-600 dark:text-gray-400">A NoSQL backend for a blogging platform.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> MongoDB, Express</p>
                 </a>
@@ -365,8 +371,7 @@
         <div id="mysql-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">MySQL</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="mysql-library.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Library Management System</h5>
+                <a href="mysql-library.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Library Management System</h5>
                     <p class="text-gray-600 dark:text-gray-400">A database-driven app for library records.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> MySQL, Java</p>
                 </a>
@@ -376,14 +381,12 @@
         <div id="nodejs-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Node.js</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="nodejs-events.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Event Management API</h5>
+                <a href="nodejs-events.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Event Management API</h5>
                     <p class="text-gray-600 dark:text-gray-400">A REST API for managing events.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Node.js, Express</p>
                 </a>
                 
-                <a href="nodejs-events.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">User Authentication System</h5>
+                <a href="nodejs-events.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">User Authentication System</h5>
                     <p class="text-gray-600 dark:text-gray-400"> A secure backend for managing user registrations and logins.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Node.js, Express.js, MongoDB, Bcrypt.js, JWT</p>
                 </a>
@@ -393,8 +396,7 @@
         <div id="postgresql-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">PostgreSQL</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="postgresql-elearning.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">E-Learning Platform</h5>
+                <a href="postgresql-elearning.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">E-Learning Platform</h5>
                     <p class="text-gray-600 dark:text-gray-400">A database backend for e-learning.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> PostgreSQL, Node.js</p>
                 </a>
@@ -404,8 +406,7 @@
         <div id="postman-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Postman</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="postman-api.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">API Testing Suite</h5>
+                <a href="postman-api.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">API Testing Suite</h5>
                     <p class="text-gray-600 dark:text-gray-400">A collection of API tests.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Postman, REST APIs</p>
                 </a>
@@ -415,14 +416,12 @@
         <div id="python-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Python</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="python-data.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Data Analysis Script</h5>
+                <a href="python-data.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Data Analysis Script</h5>
                     <p class="text-gray-600 dark:text-gray-400">A script for dataset analysis.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Python, Pandas, Matplotlib</p>
                 </a>
-           
-                <a href="python-data.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Inventory Management System</h5>
+                
+                <a href="python-data.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Inventory Management System</h5>
                     <p class="text-gray-600 dark:text-gray-400">A Python-based system for tracking and managing inventory.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Python, SQLite3, SQL</p>
                 </a>
@@ -432,8 +431,7 @@
         <div id="react-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">React</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="react-social.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Social Media Dashboard</h5>
+                <a href="react-social.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Social Media Dashboard</h5>
                     <p class="text-gray-600 dark:text-gray-400">A dashboard for social media accounts.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> React, Tailwind CSS</p>
                 </a>
@@ -443,8 +441,7 @@
         <div id="unity-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Unity</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="unity-platformer.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">2D Platformer Game</h5>
+                <a href="unity-platformer.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">2D Platformer Game</h5>
                     <p class="text-gray-600 dark:text-gray-400">A 2D platformer game with custom levels.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Unity, C#</p>
                 </a>
@@ -454,8 +451,7 @@
         <div id="websocket-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">websocket</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="unity-platformer.html" class="bg-white p-6 rounded-lg shadow-md project-card">
-                    <h5 class="text-xl font-semibold">Real-time Chat Application</h5>
+                <a href="unity-platformer.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Real-time Chat Application</h5>
                     <p class="text-gray-600 dark:text-gray-400">Developed a real-time messaging platform using WebSockets.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> WebSocket, Node.js, Socket.IO, JavaScript</p>
                 </a>
@@ -467,9 +463,13 @@
         </div>
     </section>
 
-    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800">
-        <p>© 2025 Mani Sai Teja Bejjala. All rights reserved.</p>
-        <a href="#top" class="text-blue-400 hover:underline">Back to Top</a>
+    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800 mt-12">
+        <p class="text-sm">&copy; <span id="current-year"></span> Mani Sai Teja Bejjala. All rights reserved.</p>
+        <a href="#top" class="text-blue-400 hover:underline mt-2 inline-block">Back to Top</a>
     </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
