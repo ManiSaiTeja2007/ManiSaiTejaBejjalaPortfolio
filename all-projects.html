@@ -6,7 +6,7 @@
     <title>Mani Sai Teja Bejjala - All Projects</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Base styles & Font Fallbacks - COPIED from index.html */
+        /* Base styles & Font Fallbacks */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
             background-color: #f8fafc; /* Tailwind: bg-slate-50 */
@@ -14,7 +14,7 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Dark Mode Specific Overrides - COPIED from index.html */
+        /* Dark Mode Specific Overrides */
         body.dark {
             background-color: #1a202c; /* Tailwind: bg-gray-900 */
             color: #e2e8f0; /* Tailwind: text-gray-200 */
@@ -31,14 +31,14 @@
         body.dark .shadow-md {
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15); /* More visible shadow in dark mode */
         }
-        body.dark .project-card:hover { /* This was already in your provided file, ensuring it's comprehensive */
+        body.dark .project-card:hover {
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-        body.dark .hover\:shadow-xl:hover { /* Added from index.html */
+        body.dark .hover\:shadow-xl:hover {
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
         }
 
-        /* Custom Transitions & Transforms - COPIED from index.html */
+        /* Custom Transitions & Transforms */
         .icon, .nav-link, .project-card, .btn-primary {
             transition: all 0.3s ease-in-out;
         }
@@ -48,11 +48,15 @@
         .nav-link:hover {
             color: #2563eb; /* text-blue-600 */
         }
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease, max-height 0.3s ease; /* Added opacity and max-height for smooth hiding */
+            overflow: hidden; /* Ensure content is clipped during height transition */
+        }
         .project-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
-        /* Mobile menu specific styles for smooth reveal - COPIED from index.html */
+        /* Mobile menu specific styles for smooth reveal */
         #mobile-menu.hidden {
             max-height: 0;
             overflow: hidden;
@@ -62,9 +66,28 @@
             max-height: 300px; /* Adjust based on content height */
             transition: max-height 0.3s ease-in;
         }
+
+        /* --- NEW: Styles for hidden project cards --- */
+        .hidden-project-card {
+            display: none; /* Hidden by default */
+            opacity: 0;
+            max-height: 0;
+        }
+        /* When shown, apply these styles */
+        .project-card.visible {
+            display: block; /* Or flex, grid depending on parent */
+            opacity: 1;
+            max-height: 500px; /* A large enough value to accommodate card height */
+        }
+        /* Adjust grid behavior for transition - prevents gaps while hiding */
+        .project-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Use auto-fill for dynamic columns */
+            gap: 1.5rem; /* Equivalent to gap-6 */
+        }
     </style>
     <script>
-        // Set up Tailwind CSS for dark mode - COPIED from index.html
+        // Set up Tailwind CSS for dark mode
         tailwind.config = {
             darkMode: 'class', // Enable dark mode based on 'dark' class
             theme: {
@@ -76,7 +99,7 @@
             }
         };
 
-        // Dark Mode & Mobile Menu Logic - COPIED from index.html
+        // Dark Mode & Mobile Menu Logic
         document.addEventListener('DOMContentLoaded', () => {
             // Dark Mode Logic
             const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
@@ -110,10 +133,57 @@
                     });
                 });
             }
+
+            // --- NEW: Project Card Visibility Logic ---
+            document.querySelectorAll('.project-cards-grid').forEach(grid => {
+                const projectCards = grid.querySelectorAll('.project-card');
+                const showMoreButton = grid.nextElementSibling; // Get the button associated with this grid
+
+                if (projectCards.length > 3) {
+                    // Hide cards beyond the first 3 initially
+                    for (let i = 3; i < projectCards.length; i++) {
+                        projectCards[i].classList.add('hidden-project-card');
+                    }
+                    if (showMoreButton) {
+                        showMoreButton.style.display = 'block'; // Show the button if there are more than 3
+                    }
+                } else {
+                    if (showMoreButton) {
+                        showMoreButton.style.display = 'none'; // Hide the button if 3 or fewer projects
+                    }
+                }
+            });
+
+            document.querySelectorAll('.toggle-projects-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const grid = this.previousElementSibling; // The grid div before the button
+                    const projectCards = grid.querySelectorAll('.project-card');
+                    const isShowingAll = this.dataset.showingAll === 'true';
+
+                    if (isShowingAll) {
+                        // Hide all but the first 3
+                        for (let i = 3; i < projectCards.length; i++) {
+                            projectCards[i].classList.remove('visible');
+                            projectCards[i].classList.add('hidden-project-card');
+                        }
+                        this.textContent = 'Show More Projects';
+                        this.dataset.showingAll = 'false';
+                    } else {
+                        // Show all hidden cards
+                        for (let i = 3; i < projectCards.length; i++) {
+                            projectCards[i].classList.remove('hidden-project-card');
+                            projectCards[i].classList.add('visible'); // Added 'visible' class for transition
+                        }
+                        this.textContent = 'Show Less Projects';
+                        this.dataset.showingAll = 'true';
+                    }
+                });
+            });
         });
     </script>
 </head>
-<body class="antialiased"> <nav class="bg-white shadow-md sticky top-0 z-50 dark:bg-gray-800">
+<body class="antialiased">
+    <nav class="bg-white shadow-md sticky top-0 z-50 dark:bg-gray-800">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
 
@@ -165,297 +235,353 @@
 
         <div id="angular-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Angular</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="angular-task-management.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Task Management App</h5>
+            <div class="project-cards-grid"> <a href="angular-task-management.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Task Management App</h5>
                     <p class="text-gray-600 dark:text-gray-400">A web app for managing tasks with real-time updates.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Angular, Firebase</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="arduino-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Arduino</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="arduino-smart-home.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Smart Home IoT</h5>
+            <div class="project-cards-grid">
+                <a href="arduino-smart-home.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Smart Home IoT</h5>
                     <p class="text-gray-600 dark:text-gray-400">An IoT system to control home appliances.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Arduino, C, Bluetooth</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="aws-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">AWS</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="aws-serverless-api.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Serverless API</h5>
+            <div class="project-cards-grid">
+                <a href="aws-serverless-api.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Serverless API</h5>
                     <p class="text-gray-600 dark:text-gray-400">A serverless REST API for a todo app.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> AWS Lambda, Node.js</p>
                 </a>
                 
-                <a href="aws-serverless-api.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">SageMaker Machine Learning</h5>
+                <a href="aws-serverless-api.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">SageMaker Machine Learning</h5>
                     <p class="text-gray-600 dark:text-gray-400">Deployed and managed machine learning models in production using AWS SageMaker</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> AWS SageMaker, Docker, Python, AWS S3</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="bash-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Bash</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="bash-automation.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Automation Script</h5>
+            <div class="project-cards-grid">
+                <a href="bash-automation.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Automation Script</h5>
                     <p class="text-gray-600 dark:text-gray-400">A script to automate server setup.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Bash, Linux</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="c-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">C</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="c-embedded-monitor.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Embedded System Monitor</h5>
+            <div class="project-cards-grid">
+                <a href="c-embedded-monitor.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Embedded System Monitor</h5>
                     <p class="text-gray-600 dark:text-gray-400">A real-time monitoring system.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> C, Arduino</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="cpp-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">C++</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="cpp-pathfinding.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Pathfinding Visualizer</h5>
+            <div class="project-cards-grid">
+                <a href="cpp-pathfinding.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Pathfinding Visualizer</h5>
                     <p class="text-gray-600 dark:text-gray-400">A desktop app for pathfinding algorithms.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> C++, SFML</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="css-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">CSS</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="css-ecommerce.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">E-Commerce UI</h5>
+            <div class="project-cards-grid">
+                <a href="css-ecommerce.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">E-Commerce UI</h5>
                     <p class="text-gray-600 dark:text-gray-400">A responsive e-commerce website UI.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> HTML, CSS</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="d3js-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">D3.js</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="d3js-dashboard.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Data Visualization Dashboard</h5>
+            <div class="project-cards-grid">
+                <a href="d3js-dashboard.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Data Visualization Dashboard</h5>
                     <p class="text-gray-600 dark:text-gray-400">An interactive dashboard for sales data.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> D3.js, JavaScript</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="docker-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Docker</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="docker-microservices.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Microservices Deployment</h5>
+            <div class="project-cards-grid">
+                <a href="docker-microservices.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Microservices Deployment</h5>
                     <p class="text-gray-600 dark:text-gray-400">Containerized a web app for deployment.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Docker, Node.js</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="expressjs-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Express.js</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="express-auth.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">User Authentication API</h5>
+            <div class="project-cards-grid">
+                <a href="express-auth.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">User Authentication API</h5>
                     <p class="text-gray-600 dark:text-gray-400">A secure REST API with JWT.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Express, Node.js, MongoDB</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="firebase-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Firebase</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="firebase-chat.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Real-Time Chat App</h5>
+            <div class="project-cards-grid">
+                <a href="firebase-chat.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Real-Time Chat App</h5>
                     <p class="text-gray-600 dark:text-gray-400">A chat app with real-time messaging.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Firebase, React</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="git-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Git</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="git-workflow.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Version Control Workflow</h5>
+            <div class="project-cards-grid">
+                <a href="git-workflow.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Version Control Workflow</h5>
                     <p class="text-gray-600 dark:text-gray-400">A collaborative project with CI/CD.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Git, GitHub Actions</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="htmlcss-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">HTML/CSS (Frontend)</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="html-portfolio.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Portfolio Website</h5>
+            <div class="project-cards-grid">
+                <a href="html-portfolio.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Portfolio Website</h5>
                     <p class="text-gray-600 dark:text-gray-400">A responsive personal portfolio.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> HTML, Tailwind CSS</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="java-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Java</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="java-inventory.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Inventory Management System</h5>
+            <div class="project-cards-grid">
+                <a href="java-inventory.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Inventory Management System</h5>
                     <p class="text-gray-600 dark:text-gray-400">A desktop app for inventory management.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Java, JavaFX</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="javascript-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">JavaScript</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="javascript-weather.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Weather App</h5>
+            <div class="project-cards-grid">
+                <a href="javascript-weather.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Weather App</h5>
                     <p class="text-gray-600 dark:text-gray-400">A web app for real-time weather data.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> JavaScript, HTML, CSS</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="jenkins-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Jenkins</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="jenkins-cicd.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">CI/CD Pipeline</h5>
+            <div class="project-cards-grid">
+                <a href="jenkins-cicd.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">CI/CD Pipeline</h5>
                     <p class="text-gray-600 dark:text-gray-400">Automated build and deployment pipeline.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Jenkins, Docker</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="kubernetes-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Kubernetes</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="kubernetes-cluster.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Kubernetes Cluster Setup</h5>
+            <div class="project-cards-grid">
+                <a href="kubernetes-cluster.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Kubernetes Cluster Setup</h5>
                     <p class="text-gray-600 dark:text-gray-400">Deployed a scalable web app.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Kubernetes, Docker</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="linux-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Linux</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="linux-monitoring.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Server Monitoring Script</h5>
+            <div class="project-cards-grid">
+                <a href="linux-monitoring.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Server Monitoring Script</h5>
                     <p class="text-gray-600 dark:text-gray-400">A script to monitor server health.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Linux, Bash</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="matlab-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">MATLAB</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="matlab-signal.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Signal Processing Tool</h5>
+            <div class="project-cards-grid">
+                <a href="matlab-signal.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Signal Processing Tool</h5>
                     <p class="text-gray-600 dark:text-gray-400">A tool for analyzing signal data.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> MATLAB</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="mongodb-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">MongoDB</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="mongodb-blog.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Blog Platform Backend</h5>
+            <div class="project-cards-grid">
+                <a href="mongodb-blog.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Blog Platform Backend</h5>
                     <p class="text-gray-600 dark:text-gray-400">A NoSQL backend for a blogging platform.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> MongoDB, Express</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="mysql-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">MySQL</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="mysql-library.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Library Management System</h5>
+            <div class="project-cards-grid">
+                <a href="mysql-library.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Library Management System</h5>
                     <p class="text-gray-600 dark:text-gray-400">A database-driven app for library records.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> MySQL, Java</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="nodejs-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Node.js</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="nodejs-events.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Event Management API</h5>
+            <div class="project-cards-grid">
+                <a href="nodejs-events.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Event Management API</h5>
                     <p class="text-gray-600 dark:text-gray-400">A REST API for managing events.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Node.js, Express</p>
                 </a>
                 
-                <a href="nodejs-events.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">User Authentication System</h5>
+                <a href="nodejs-events.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">User Authentication System</h5>
                     <p class="text-gray-600 dark:text-gray-400"> A secure backend for managing user registrations and logins.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Node.js, Express.js, MongoDB, Bcrypt.js, JWT</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="postgresql-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">PostgreSQL</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="postgresql-elearning.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">E-Learning Platform</h5>
+            <div class="project-cards-grid">
+                <a href="postgresql-elearning.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">E-Learning Platform</h5>
                     <p class="text-gray-600 dark:text-gray-400">A database backend for e-learning.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> PostgreSQL, Node.js</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="postman-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Postman</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="postman-api.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">API Testing Suite</h5>
+            <div class="project-cards-grid">
+                <a href="postman-api.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">API Testing Suite</h5>
                     <p class="text-gray-600 dark:text-gray-400">A collection of API tests.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Postman, REST APIs</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="python-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Python</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="python-data.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Data Analysis Script</h5>
+            <div class="project-cards-grid">
+                <a href="python-data.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Data Analysis Script</h5>
                     <p class="text-gray-600 dark:text-gray-400">A script for dataset analysis.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Python, Pandas, Matplotlib</p>
                 </a>
                 
-                <a href="python-data.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Inventory Management System</h5>
+                <a href="python-data.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Inventory Management System</h5>
                     <p class="text-gray-600 dark:text-gray-400">A Python-based system for tracking and managing inventory.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Python, SQLite3, SQL</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="react-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">React</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="react-social.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Social Media Dashboard</h5>
+            <div class="project-cards-grid">
+                <a href="react-social.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">Social Media Dashboard</h5>
                     <p class="text-gray-600 dark:text-gray-400">A dashboard for social media accounts.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> React, Tailwind CSS</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="unity-section" class="mb-10">
             <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">Unity</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="unity-platformer.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">2D Platformer Game</h5>
+            <div class="project-cards-grid">
+                <a href="unity-platformer.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200">
+                    <h5 class="text-xl font-semibold">2D Platformer Game</h5>
                     <p class="text-gray-600 dark:text-gray-400">A 2D platformer game with custom levels.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> Unity, C#</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div id="websocket-section" class="mb-10">
-            <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">websocket</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="unity-platformer.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Real-time Chat Application</h5>
+            <h4 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-4">WebSockets</h4> <div class="project-cards-grid">
+                <a href="websocket-chat.html" class="bg-white p-6 rounded-lg shadow-md project-card dark:bg-gray-800 dark:text-gray-200"> <h5 class="text-xl font-semibold">Real-time Chat Application</h5>
                     <p class="text-gray-600 dark:text-gray-400">Developed a real-time messaging platform using WebSockets.</p>
                     <p class="mt-2 text-gray-800 dark:text-gray-300"><strong>Tech:</strong> WebSocket, Node.js, Socket.IO, JavaScript</p>
                 </a>
             </div>
+            <button class="toggle-projects-btn mt-6 w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600 hidden" data-showing-all="false">Show More Projects</button>
         </div>
 
         <div class="text-center mt-8">
