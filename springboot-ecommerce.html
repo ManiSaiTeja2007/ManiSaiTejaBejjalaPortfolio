@@ -6,149 +6,232 @@
     <title>E-commerce Backend (Spring Boot) - Mani Sai Teja Bejjala</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Base styles & Font Fallbacks */
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #f8fafc;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f8fafc; /* Tailwind: bg-slate-50 */
+            color: #1a202c; /* Tailwind: text-gray-900 */
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+
+        /* Dark Mode Specific Overrides */
         body.dark {
-            background-color: #1a202c;
-            color: #e2e8f0;
+            background-color: #1a202c; /* Tailwind: bg-gray-900 */
+            color: #e2e8f0; /* Tailwind: text-gray-200 */
         }
-        /* Dark mode specific styles for various elements */
-        body.dark .nav-link {
-            color: #cbd5e1;
-        }
-        body.dark .nav-link:hover {
-            color: #60a5fa;
-        }
-        body.dark .text-gray-900 {
-            color: #e2e8f0;
-        }
-        body.dark .text-gray-800 {
-            color: #e2e8f0;
-        }
-        body.dark .text-gray-600 {
-            color: #a0aec0;
-        }
-        body.dark .border-blue-200 {
-            border-color: #4a5568;
-        }
-        body.dark .bg-white {
-            background-color: #2d3748;
-        }
-        body.dark .bg-gray-100 {
-            background-color: #2d3748;
-        }
+        body.dark .text-gray-900 { color: #e2e8f0; }
+        body.dark .text-gray-800 { color: #e2e8f0; }
+        body.dark .text-gray-600 { color: #a0aec0; } /* Tailwind: text-gray-400 */
+        body.dark .bg-white { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .bg-gray-100 { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .border-blue-200 { border-color: #4a5568; } /* Tailwind: border-gray-600 */
+        body.dark .text-blue-600 { color: #60a5fa; } /* Tailwind: text-blue-400 */
+        body.dark .bg-blue-600 { background-color: #3b82f6; } /* Tailwind: bg-blue-500 */
+        body.dark .hover\:bg-blue-700:hover { background-color: #2563eb; } /* Tailwind: hover:bg-blue-600 */
         body.dark .shadow-md {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15); /* More visible shadow in dark mode */
         }
-        body.dark .text-blue-600 {
-            color: #60a5fa;
+        body.dark .project-card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-        body.dark .bg-blue-600 {
-            background-color: #3b82f6;
+        body.dark .hover\:shadow-xl:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
         }
-        body.dark .hover\:bg-blue-700:hover {
-            background-color: #2563eb;
+        /* Prose styling for detailed descriptions */
+        .prose ul {
+            list-style-type: disc;
+            margin-left: 1.5em;
+        }
+        .prose li {
+            margin-bottom: 0.5em;
+        }
+
+        /* Custom Transitions & Transforms */
+        .icon, .nav-link, .btn-primary {
+            transition: all 0.3s ease-in-out;
+        }
+        .icon:hover {
+            transform: scale(1.1);
+        }
+        .nav-link:hover {
+            color: #2563eb; /* text-blue-600 */
+        }
+
+        /* Mobile menu specific styles for smooth reveal */
+        #mobile-menu.hidden {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        #mobile-menu:not(.hidden) {
+            max-height: 300px; /* Adjust based on content height */
+            transition: max-height 0.3s ease-in;
         }
     </style>
     <script>
         // Set up Tailwind CSS for dark mode
         tailwind.config = {
-            darkMode: 'class',
+            darkMode: 'class', // Enable dark mode based on 'dark' class
             theme: {
                 extend: {
                     colors: {
-                        // Define any custom colors if needed
+                        // Example custom colors if needed, e.g., 'primary-blue': '#2563eb'
                     }
                 }
             }
-        }
+        };
 
-        // Function to toggle dark mode
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark');
-            // Store user preference in local storage
-            if (document.body.classList.contains('dark')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        // Apply theme on page load
+        // Dark Mode & Mobile Menu Logic
         document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            // Dark Mode Logic
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme === 'dark' || (currentTheme === null && prefersDarkScheme.matches)) {
                 document.body.classList.add('dark');
+            }
+
+            document.getElementById('darkModeToggle').addEventListener('click', () => {
+                document.body.classList.toggle('dark');
+                localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+            });
+
+            // Mobile Menu Logic
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+                    menuButton.setAttribute('aria-expanded', !isExpanded);
+                });
+
+                // Close mobile menu when a link is clicked (smoother UX)
+                mobileMenu.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        menuButton.setAttribute('aria-expanded', 'false');
+                    });
+                });
             }
         });
     </script>
 </head>
-<body class="text-gray-900">
-    <nav class="bg-white shadow-md sticky top-0 z-50">
+<body class="antialiased">
+    <nav class="bg-white shadow-md sticky top-0 z-50 dark:bg-gray-800">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
-            <div class="space-x-6 flex items-center">
-                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link">About</a>
-                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link">Skills</a>
-                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link">Projects</a>
-                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link">Connect</a>
-                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link">Stats</a>
-                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link">Contact</a>
-                <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+            <div class="md:hidden flex items-center space-x-4">
+                <button id="darkModeToggle" aria-label="Toggle dark mode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+                <button id="menu-button" aria-label="Open main menu" aria-controls="mobile-menu" aria-expanded="false" class="text-gray-600 dark:text-gray-200 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="hidden md:flex space-x-6 items-center" id="nav-links-desktop">
+                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">About</a>
+                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Skills</a>
+                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Featured Projects</a>
+                <a href="all-projects.html" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">All Projects</a>
+                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Connect</a>
+                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Stats</a>
+                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Contact</a>
+                <button id="darkModeToggle" aria-label="Toggle dark mode" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
                     </svg>
                 </button>
             </div>
         </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 py-2 shadow-inner">
+            <a href="index.html#about" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">About</a>
+            <a href="index.html#skills" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Skills</a>
+            <a href="index.html#projects" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Featured Projects</a>
+            <a href="all-projects.html" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">All Projects</a>
+            <a href="index.html#connect" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Connect</a>
+            <a href="index.html#stats" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Stats</a>
+            <a href="index.html#contact" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Contact</a>
+        </div>
     </nav>
+
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16 text-center">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-3">E-commerce Backend (Spring Boot)</h1>
+            <p class="text-xl md:text-2xl font-light opacity-90">Building a robust and scalable foundation for online shopping with Java and Spring Boot.</p>
+            <div class="mt-6 flex justify-center space-x-4">
+                <a href="https://your-ecommerce-backend-api-docs.com" target="_blank" class="bg-white text-blue-600 px-6 py-2 rounded-full text-lg font-semibold hover:bg-gray-100 transition shadow-md dark:bg-gray-700 dark:text-blue-300 dark:hover:bg-gray-600">
+                    View API Docs
+                </a>
+                <a href="https://github.com/manisaiteja2007/springboot-ecommerce-repo" target="_blank" class="bg-gray-800 text-white px-6 py-2 rounded-full text-lg font-semibold hover:bg-gray-700 transition shadow-md dark:bg-gray-900 dark:hover:bg-gray-700">
+                    GitHub Repo
+                </a>
+            </div>
+        </div>
+    </header>
 
     <main class="max-w-4xl mx-auto py-12 px-4">
         <section class="bg-white p-8 rounded-lg shadow-md mb-8 dark:bg-gray-800">
-            <h2 class="text-4xl font-bold text-blue-600 mb-4 dark:text-blue-400">E-commerce Backend (Spring Boot)</h2>
-            <p class="text-gray-700 text-lg mb-6 dark:text-gray-300">
-                Developed a robust backend for an e-commerce platform.
-            </p>
+            <h2 class="text-3xl font-bold text-blue-600 mb-6 dark:text-blue-400">Project Overview</h2>
 
-            <div class="mb-6">
-                <img src="https://via.placeholder.com/800x450?text=E-commerce+Backend+API" alt="E-commerce Backend Architecture Diagram" class="w-full h-auto rounded-lg shadow-lg">
-                <p class="text-center text-gray-500 text-sm mt-2 dark:text-gray-400">An architectural diagram or screenshot of API documentation (e.g., Swagger UI).</p>
+            <div class="mb-8">
+                <img src="https://via.placeholder.com/800x450?text=E-commerce+Backend+Architecture+Diagram" alt="E-commerce Backend Architecture Diagram showing APIs, Database, and services" class="w-full h-auto rounded-lg shadow-lg">
+                <p class="text-center text-gray-500 text-sm mt-3 dark:text-gray-400">An architectural diagram or screenshot of API documentation (e.g., Swagger UI) illustrating the backend structure.</p>
             </div>
 
             <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mb-4 dark:border-blue-700">Detailed Description</h3>
             <div class="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
                 <p>
-                    This project focuses on building a scalable and efficient **E-commerce Backend API** using **Spring Boot**. The backend serves as the foundation for an online shopping platform, managing core functionalities such as product catalogs, user accounts, shopping carts, and order processing.
+                    This project focuses on building a **scalable and efficient E-commerce Backend API** using **Spring Boot**. This robust backend serves as the foundational core for an online shopping platform, meticulously managing essential functionalities such as comprehensive product catalogs, secure user accounts, dynamic shopping carts, and seamless order processing.
                 </p>
                 <ul>
-                    <li><strong>Problem Solved:</strong> Created a robust and modular foundation for an e-commerce application, enabling complex business logic for product management, user interactions, and transaction processing.</li>
-                    <li><strong>My Role:</strong> I was responsible for designing the RESTful API endpoints, implementing business logic for various modules (products, users, orders, cart), integrating with a relational database, and ensuring data integrity and security.</li>
+                    <li><strong>Problem Solved:</strong> This project establishes a **robust and modular foundation for an e-commerce application**, effectively handling complex business logic for product management, user interactions, and secure transaction processing. It addresses the need for a reliable, performant, and maintainable backend capable of supporting a full-featured e-commerce experience.</li>
+                    <li><strong>My Role:</strong> I took the lead in the backend development, encompassing several critical areas:
+                        <ul>
+                            <li>**API Design:** Architecting and designing **RESTful API endpoints** that are intuitive, consistent, and well-documented for seamless integration with frontend applications.</li>
+                            <li>**Business Logic Implementation:** Developing the core business logic for various e-commerce modules, including **products, users, orders, and shopping cart management**.</li>
+                            <li>**Database Integration:** Integrating with a **relational database** (e.g., PostgreSQL/MySQL) to ensure persistent and reliable storage of all e-commerce data.</li>
+                            <li>**Data Integrity & Security:** Implementing mechanisms to ensure **data integrity** through proper validation and transaction management, and establishing **robust security measures** for user authentication and authorization.</li>
+                        </ul>
+                    </li>
                     <li><strong>Key Features:</strong>
                         <ul>
-                            <li>**Product Management API:** CRUD operations for products, categories, and inventory.</li>
-                            <li>**User Management API:** Secure user registration, authentication (e.g., JWT/Spring Security), and profile management.</li>
-                            <li>**Shopping Cart Functionality:** Add/remove items, update quantities, calculate totals.</li>
-                            <li>**Order Processing:** Create, manage, and track customer orders, including payment integration (conceptual).</li>
-                            <li>**Database Integration:** Persistent storage for all e-commerce data using a relational database.</li>
-                            <li>**API Documentation:** Exposed endpoints with clear documentation (e.g., Swagger UI).</li>
+                            <li>**Product Management API:** Comprehensive **CRUD (Create, Read, Update, Delete) operations** for products, categories, and real-time inventory updates.</li>
+                            <li>**User Management API:** Secure **user registration, robust authentication (leveraging JWT/Spring Security), and intuitive profile management** functionalities.</li>
+                            <li>**Shopping Cart Functionality:** Dynamic capabilities to **add/remove items, update quantities, and accurately calculate totals** within the shopping cart.</li>
+                            <li>**Order Processing:** A streamlined system to **create, manage, and track customer orders**, including conceptual integration points for payment gateways.</li>
+                            <li>**Database Integration:** Utilizes a **relational database** for highly structured and persistent storage of all e-commerce data.</li>
+                            <li>**API Documentation:** Thoroughly documented endpoints using **Swagger/OpenAPI**, providing clear specifications for frontend developers.</li>
                         </ul>
                     </li>
                     <li><strong>Technologies Used:</strong>
                         <ul>
-                            <li>**Spring Boot:** The primary framework for rapid application development and building REST APIs in Java.</li>
-                            <li>**Java:** The core programming language.</li>
-                            <li>**Maven/Gradle:** For build automation and dependency management.</li>
-                            <li>**PostgreSQL/MySQL (or other SQL DB):** For the relational database.</li>
-                            <li>**Spring Data JPA/Hibernate:** For ORM and database interaction.</li>
-                            <li>**Spring Security:** For authentication and authorization.</li>
-                            <li>**Lombok:** To reduce boilerplate code.</li>
-                            <li>**Swagger/OpenAPI:** For API documentation.</li>
+                            <li>**Spring Boot:** The primary framework for rapid application development and building robust REST APIs in Java.</li>
+                            <li>**Java:** The core programming language, known for its stability and enterprise-grade capabilities.</li>
+                            <li>**Maven/Gradle:** Utilized for efficient **build automation and dependency management**, ensuring a smooth development workflow.</li>
+                            <li>**PostgreSQL/MySQL (or other SQL DB):** The chosen relational database for reliable and structured data storage.</li>
+                            <li>**Spring Data JPA/Hibernate:** Employed for **Object-Relational Mapping (ORM)**, simplifying database interactions and persistence.</li>
+                            <li>**Spring Security:** Integrated for implementing comprehensive **authentication and authorization** mechanisms, securing the API.</li>
+                            <li>**Lombok:** Used to significantly **reduce boilerplate code**, enhancing code readability and maintainability.</li>
+                            <li>**Swagger/OpenAPI:** Leveraged for generating **interactive API documentation**, promoting clear communication between backend and frontend teams.</li>
                         </ul>
                     </li>
-                    <li><strong>Challenges and Solutions:</strong> A significant challenge was designing a robust and normalized database schema to handle complex e-commerce relationships (products, orders, users, many-to-many relationships). This was addressed by careful planning and iterative refinement of the schema. Implementing secure authentication and authorization with Spring Security was another key area, requiring understanding of various security contexts and filters.</li>
-                    <li><strong>Learnings:</strong> This project provided deep experience in **Spring Boot development**, **RESTful API design principles**, **database modeling (SQL)**, **ORM technologies (JPA/Hibernate)**, and implementing **enterprise-grade security** with Spring Security.</li>
+                    <li><strong>Challenges and Solutions:</strong>
+                        <ul>
+                            <li>**Database Schema Design:** A significant challenge was designing a **robust, normalized, and scalable database schema** to effectively handle complex e-commerce relationships (e.g., products, orders, users, many-to-many relationships for order items). This was addressed through **careful planning, iterative refinement of the schema**, and utilizing database design best practices.</li>
+                            <li>**Secure Authentication and Authorization:** Implementing enterprise-grade **security with Spring Security** was another key area. This required a deep understanding of various security contexts, filters, and authentication flows (e.g., JWT). Solutions involved configuring custom security filters and integrating with JWT for stateless authentication.</li>
+                            <li>**Performance Optimization:** Ensuring the API could handle high traffic and complex queries efficiently involved optimizing database queries and implementing caching strategies where appropriate.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Learnings:</strong> This project provided **deep and practical experience in Spring Boot development**, mastering **RESTful API design principles**, advanced **database modeling (SQL)**, proficient use of **ORM technologies (JPA/Hibernate)**, and the intricate process of implementing **enterprise-grade security with Spring Security**. It significantly enhanced my full-stack understanding, particularly in building scalable backend systems.</li>
                 </ul>
             </div>
 
@@ -159,23 +242,29 @@
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">PostgreSQL</span>
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Spring Data JPA</span>
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Spring Security</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">RESTful API</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Microservices (Implied)</span>
             </div>
 
             <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mt-8 mb-4 dark:border-blue-700">Project Links</h3>
             <div class="flex space-x-4">
                 <a href="https://your-ecommerce-backend-api-docs.com" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition dark:bg-blue-700 dark:hover:bg-blue-600">API Documentation (Swagger UI)</a>
-                <a href="https://github.com/manisaiteja2007/springboot-ecommerce-repo" target="_blank" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">GitHub Repo</a>
+                <a href="https://github.com/manisaiteja2007/springboot-ecommerce-repo" target="_blank" class="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition shadow-md dark:bg-gray-900 dark:hover:bg-gray-700">GitHub Repo</a>
             </div>
         </section>
 
         <div class="text-center mt-8">
-            <a href="index.html#projects" class="inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">← Back to Projects</a>
+            <a href="all-projects.html#ecommerce-section" class="inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">← Back to All Projects</a>
         </div>
     </main>
 
-    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800">
-        <p>© 2025 Mani Sai Teja Bejjala. All rights reserved.</p>
-        <a href="#top" class="text-blue-400 hover:underline">Back to Top</a>
+    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800 mt-12">
+        <p class="text-sm">&copy; <span id="current-year"></span> Mani Sai Teja Bejjala. All rights reserved.</p>
+        <a href="#top" class="text-blue-400 hover:underline mt-2 inline-block">Back to Top</a>
     </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
