@@ -6,154 +6,256 @@
     <title>Version Control Workflow (Git) - Mani Sai Teja Bejjala</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Base styles & Font Fallbacks */
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #f8fafc;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f8fafc; /* Tailwind: bg-slate-50 */
+            color: #1a202c; /* Tailwind: text-gray-900 */
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+
+        /* Dark Mode Specific Overrides */
         body.dark {
-            background-color: #1a202c;
-            color: #e2e8f0;
+            background-color: #1a202c; /* Tailwind: bg-gray-900 */
+            color: #e2e8f0; /* Tailwind: text-gray-200 */
         }
-        /* Dark mode specific styles for various elements */
-        body.dark .nav-link {
-            color: #cbd5e1;
-        }
-        body.dark .nav-link:hover {
-            color: #60a5fa;
-        }
-        body.dark .text-gray-900 {
-            color: #e2e8f0;
-        }
-        body.dark .text-gray-800 {
-            color: #e2e8f0;
-        }
-        body.dark .text-gray-600 {
-            color: #a0aec0;
-        }
-        body.dark .border-blue-200 {
-            border-color: #4a5568;
-        }
-        body.dark .bg-white {
-            background-color: #2d3748;
-        }
-        body.dark .bg-gray-100 {
-            background-color: #2d3748;
-        }
+        body.dark .text-gray-900 { color: #e2e8f0; }
+        body.dark .text-gray-800 { color: #e2e8f0; }
+        body.dark .text-gray-600 { color: #a0aec0; } /* Tailwind: text-gray-400 */
+        body.dark .bg-white { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .bg-gray-100 { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .border-blue-200 { border-color: #4a5568; } /* Tailwind: border-gray-600 */
+        body.dark .text-blue-600 { color: #60a5fa; } /* Tailwind: text-blue-400 */
+        body.dark .bg-blue-600 { background-color: #3b82f6; } /* Tailwind: bg-blue-500 */
+        body.dark .hover\:bg-blue-700:hover { background-color: #2563eb; } /* Tailwind: hover:bg-blue-600 */
         body.dark .shadow-md {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15); /* More visible shadow in dark mode */
         }
-        body.dark .text-blue-600 {
-            color: #60a5fa;
+        body.dark .project-card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-        body.dark .bg-blue-600 {
-            background-color: #3b82f6;
+        body.dark .hover\:shadow-xl:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
         }
-        body.dark .hover\:bg-blue-700:hover {
-            background-color: #2563eb;
+        /* Prose styling for detailed descriptions */
+        .prose ul {
+            list-style-type: disc;
+            margin-left: 1.5em;
+        }
+        .prose li {
+            margin-bottom: 0.5em;
+        }
+
+        /* Custom Transitions & Transforms */
+        .icon, .nav-link, .btn-primary {
+            transition: all 0.3s ease-in-out;
+        }
+        .icon:hover {
+            transform: scale(1.1);
+        }
+        .nav-link:hover {
+            color: #2563eb; /* text-blue-600 */
+        }
+
+        /* Mobile menu specific styles for smooth reveal */
+        #mobile-menu.hidden {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        #mobile-menu:not(.hidden) {
+            max-height: 300px; /* Adjust based on content height */
+            transition: max-height 0.3s ease-in;
         }
     </style>
     <script>
         // Set up Tailwind CSS for dark mode
         tailwind.config = {
-            darkMode: 'class',
+            darkMode: 'class', // Enable dark mode based on 'dark' class
             theme: {
                 extend: {
                     colors: {
-                        // Define any custom colors if needed
+                        // Example custom colors if needed, e.g., 'primary-blue': '#2563eb'
                     }
                 }
             }
-        }
+        };
 
-        // Function to toggle dark mode
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark');
-            // Store user preference in local storage
-            if (document.body.classList.contains('dark')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        // Apply theme on page load
+        // Dark Mode & Mobile Menu Logic
         document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            // Dark Mode Logic
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme === 'dark' || (currentTheme === null && prefersDarkScheme.matches)) {
                 document.body.classList.add('dark');
+            }
+
+            document.getElementById('darkModeToggle').addEventListener('click', () => {
+                document.body.classList.toggle('dark');
+                localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+            });
+
+            // Mobile Menu Logic
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+                    menuButton.setAttribute('aria-expanded', !isExpanded);
+                });
+
+                // Close mobile menu when a link is clicked (smoother UX)
+                mobileMenu.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        menuButton.setAttribute('aria-expanded', 'false');
+                    });
+                });
             }
         });
     </script>
 </head>
-<body class="text-gray-900">
-    <nav class="bg-white shadow-md sticky top-0 z-50">
+<body class="antialiased">
+    <nav class="bg-white shadow-md sticky top-0 z-50 dark:bg-gray-800">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
-            <div class="space-x-6 flex items-center">
-                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link">About</a>
-                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link">Skills</a>
-                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link">Projects</a>
-                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link">Connect</a>
-                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link">Stats</a>
-                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link">Contact</a>
-                <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+            <div class="md:hidden flex items-center space-x-4">
+                <button id="darkModeToggle" aria-label="Toggle dark mode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+                <button id="menu-button" aria-label="Open main menu" aria-controls="mobile-menu" aria-expanded="false" class="text-gray-600 dark:text-gray-200 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="hidden md:flex space-x-6 items-center" id="nav-links-desktop">
+                <a href="index.html#about" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">About</a>
+                <a href="index.html#skills" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Skills</a>
+                <a href="index.html#projects" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Featured Projects</a>
+                <a href="all-projects.html" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">All Projects</a>
+                <a href="index.html#connect" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Connect</a>
+                <a href="index.html#stats" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Stats</a>
+                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Contact</a>
+                <button id="darkModeToggle" aria-label="Toggle dark mode" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
                     </svg>
                 </button>
             </div>
         </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 py-2 shadow-inner">
+            <a href="index.html#about" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">About</a>
+            <a href="index.html#skills" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Skills</a>
+            <a href="index.html#projects" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Featured Projects</a>
+            <a href="all-projects.html" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">All Projects</a>
+            <a href="index.html#connect" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Connect</a>
+            <a href="index.html#stats" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Stats</a>
+            <a href="index.html#contact" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Contact</a>
+        </div>
     </nav>
+
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16 text-center">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-3">Version Control Workflow (Git)</h1>
+            <p class="text-xl md:text-2xl font-light opacity-90">Establishing robust, collaborative development with Git and CI/CD.</p>
+            <div class="mt-6 flex justify-center space-x-4">
+                <a href="https://github.com/manisaiteja2007/git-workflow-example-repo" target="_blank" class="bg-white text-blue-600 px-6 py-2 rounded-full text-lg font-semibold hover:bg-gray-100 transition shadow-md dark:bg-gray-700 dark:text-blue-300 dark:hover:bg-gray-600">
+                    View GitHub Repo
+                </a>
+            </div>
+        </div>
+    </header>
 
     <main class="max-w-4xl mx-auto py-12 px-4">
         <section class="bg-white p-8 rounded-lg shadow-md mb-8 dark:bg-gray-800">
-            <h2 class="text-4xl font-bold text-blue-600 mb-4 dark:text-blue-400">Version Control Workflow (Git)</h2>
-            <p class="text-gray-700 text-lg mb-6 dark:text-gray-300">
-                A collaborative project with CI/CD.
-            </p>
+            <h2 class="text-3xl font-bold text-blue-600 mb-6 dark:text-blue-400">Project Overview</h2>
 
-            <div class="mb-6">
-                <img src="https://via.placeholder.com/800x450?text=Git+Workflow+Diagram" alt="Git Workflow Diagram" class="w-full h-auto rounded-lg shadow-lg">
-                <p class="text-center text-gray-500 text-sm mt-2 dark:text-gray-400">Diagram illustrating the Git workflow with CI/CD.</p>
+            <div class="mb-8">
+                <img src="https://via.placeholder.com/800x450?text=Git+Workflow+Diagram" alt="Diagram illustrating a typical Git branching and CI/CD workflow" class="w-full h-auto rounded-lg shadow-lg">
+                <p class="text-center text-gray-500 text-sm mt-3 dark:text-gray-400">A conceptual diagram of the Git workflow integrated with CI/CD.</p>
             </div>
 
             <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mb-4 dark:border-blue-700">Detailed Description</h3>
             <div class="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
                 <p>
-                    This project demonstrates a robust version control and collaborative development workflow using Git and GitHub, integrated with Continuous Integration/Continuous Deployment (CI/CD) practices. It outlines how a team can efficiently manage code changes and deploy applications.
+                    This project exemplifies the design and implementation of a **robust version control and collaborative development workflow** using **Git and GitHub**, critically integrated with **Continuous Integration/Continuous Deployment (CI/CD)** practices. It serves as a blueprint for how development teams can efficiently manage code changes, collaborate seamlessly, and automate the journey of code from development to deployment.
                 </p>
                 <ul>
-                    <li><strong>Problem Solved:</strong> Established a clear and efficient process for team-based software development, preventing conflicts, enabling easy collaboration, and automating testing and deployment.</li>
-                    <li><strong>My Role:</strong> I designed and implemented the branching strategy (e.g., GitFlow or GitHub Flow), set up Git hooks, configured GitHub Actions for CI/CD, and educated team members on best practices for commits, merges, and pull requests.</li>
-                    <li><strong>Key Features:</strong> Feature branching, pull requests for code reviews, automated unit testing on every push, automated deployment to a staging/production environment upon merge, and rollback capabilities.</li>
-                    <li><strong>Technologies Used:</strong> Git for version control, GitHub for hosting repositories and managing pull requests, and GitHub Actions (or Jenkins/CircleCI) for CI/CD pipeline automation.</li>
-                    <li><strong>Challenges and Solutions:</strong> Ensuring team adherence to the chosen workflow and resolving merge conflicts efficiently were key challenges. I addressed this through clear documentation, training sessions, and using `rebase` and `merge --squash` judiciously.</li>
-                    <li><strong>Learnings:</strong> Deepened my understanding of advanced Git concepts, collaborative development workflows, and the principles of CI/CD. This project was crucial in learning how to build a scalable and reliable development pipeline.</li>
+                    <li><strong>Problem Solved:</strong> This workflow establishes a **clear, consistent, and efficient process for team-based software development**. It proactively addresses common challenges like merge conflicts, ensures code quality through automated testing, and enables rapid, reliable deployment, significantly **boosting team productivity and software delivery speed**.</li>
+                    <li><strong>My Role:</strong> I was responsible for architecting and executing this workflow. My contributions included:
+                        <ul>
+                            <li>**Branching Strategy Design:** Defining and implementing a suitable branching model (e.g., **GitFlow** or **GitHub Flow**) to manage feature development, releases, and hotfixes.</li>
+                            <li>**Git Hooks Setup:** Configuring custom Git hooks to enforce coding standards or trigger pre-commit/pre-push checks.</li>
+                            <li>**CI/CD Pipeline Configuration:** Setting up and optimizing **GitHub Actions** (or similar tools like Jenkins/CircleCI) to automate testing, build, and deployment processes.</li>
+                            <li>**Team Training & Best Practices:** Educating team members on effective practices for commits, branching, pull requests, and code reviews to ensure smooth collaboration and adherence to the workflow.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Key Features:</strong>
+                        <ul>
+                            <li>**Feature Branching:** Isolated development for new features, preventing instability in the main codebase.</li>
+                            <li>**Pull Requests (PRs) for Code Reviews:** A structured process for peer code review, enhancing code quality and knowledge sharing.</li>
+                            <li>**Automated Unit Testing:** Every code push triggers automated unit tests, providing immediate feedback on code integrity.</li>
+                            <li>**Automated Deployment:** Successful merges to specific branches (e.g., `main` or `release`) automatically trigger deployments to staging or production environments.</li>
+                            <li>**Rollback Capabilities:** The version control system allows for easy reverting to previous stable states if issues arise post-deployment.</li>
+                            <li>**Continuous Feedback Loop:** CI/CD pipelines provide instant feedback on build status and test results.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Technologies Used:</strong>
+                        <ul>
+                            <li><strong>Git:</strong> The distributed version control system for tracking code changes.</li>
+                            <li><strong>GitHub:</strong> Used for hosting the central repository, managing pull requests, issues, and discussions.</li>
+                            <li>**GitHub Actions (or Jenkins/CircleCI):** The chosen platform for defining and executing the CI/CD pipelines.</li>
+                            <li>**Command Line Interface (CLI):** For direct interaction with Git.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Challenges and Solutions:</strong>
+                        <ul>
+                            <li>**Ensuring Team Adherence:** Getting all team members to consistently follow the defined workflow was a significant challenge. This was addressed through clear, accessible documentation, hands-on training sessions, and continuous peer support.</li>
+                            <li>**Efficient Merge Conflict Resolution:** Large teams or parallel development could lead to frequent merge conflicts. Strategies like frequent small commits, regular rebasing, and strategic use of `git merge --squash` were employed to minimize and efficiently resolve conflicts.</li>
+                            <li>**Optimizing CI/CD Pipeline Speed:** Ensuring fast feedback loops from the CI/CD pipeline. This involved optimizing build steps, caching dependencies, and parallelizing tests.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Learnings:</strong> This project significantly **deepened my understanding of advanced Git concepts** (e.g., rebase, cherry-pick, reflog), **collaborative development workflows**, and the fundamental **principles and practices of CI/CD**. It was instrumental in learning how to design and build a **scalable, efficient, and reliable software development pipeline** that supports rapid iteration and high-quality releases.</li>
                 </ul>
             </div>
 
             <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mt-8 mb-4 dark:border-blue-700">Technologies Used</h3>
             <div class="flex flex-wrap gap-2 text-sm">
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Git</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">GitHub</span>
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">GitHub Actions</span>
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">CI/CD</span>
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">Version Control</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">DevOps</span>
             </div>
 
             <h3 class="text-2xl font-semibold border-b-2 border-blue-200 pb-2 mt-8 mb-4 dark:border-blue-700">Project Links</h3>
             <div class="flex space-x-4">
-                <a href="https://github.com/manisaiteja2007/git-workflow-example-repo" target="_blank" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">GitHub Repo</a>
+                <a href="https://github.com/manisaiteja2007/git-workflow-example-repo" target="_blank" class="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition shadow-md dark:bg-gray-900 dark:hover:bg-gray-700">GitHub Repo</a>
             </div>
         </section>
 
         <div class="text-center mt-8">
-            <a href="all-projects.html#git-section" class="inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">← Back to Projects</a>
+            <a href="all-projects.html#git-section" class="inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">← Back to All Projects</a>
         </div>
     </main>
 
-    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800">
-        <p>© 2025 Mani Sai Teja Bejjala. All rights reserved.</p>
-        <a href="#top" class="text-blue-400 hover:underline">Back to Top</a>
+    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800 mt-12">
+        <p class="text-sm">&copy; <span id="current-year"></span> Mani Sai Teja Bejjala. All rights reserved.</p>
+        <a href="#top" class="text-blue-400 hover:underline mt-2 inline-block">Back to Top</a>
     </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
