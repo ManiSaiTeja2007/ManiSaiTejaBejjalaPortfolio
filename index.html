@@ -112,7 +112,18 @@
         }
 
         .btn-primary {
-            @apply gradient-bg text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 ease-in-out inline-block;
+             background: linear-gradient(135deg, #4f46e5, #14b8a6); /* gradient-bg */
+    color: white; /* text-white */
+    padding-left: 2rem; /* px-8 */
+    padding-right: 2rem; /* px-8 */
+    padding-top: 1rem; /* py-4 */
+    padding-bottom: 1rem; /* py-4 */
+    border-radius: 0.5rem; /* rounded-lg */
+    font-weight: 600; /* font-semibold */
+    transition-property: all; /* transition-all */
+    transition-duration: 300ms; /* duration-300 */
+    transition-timing-function: ease-in-out; /* ease-in-out */
+    display: inline-block; /* inline-block */
         }
         .btn-primary:hover {
             box-shadow: 0 0 15px #dc2626; /* red-600 */
@@ -237,8 +248,8 @@
 
         /* Custom styles for hidden projects */
         .project-hidden {
-            display: none;
-        }
+    display: none;
+}
     </style>
 </head>
 <body class="font-inter min-h-screen">
