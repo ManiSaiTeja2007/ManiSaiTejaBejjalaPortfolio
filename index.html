@@ -1,296 +1,510 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" class="dark"> <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mani Sai Teja Bejjala - Portfolio</title>
+    <meta name="description" content="Portfolio of Mani Sai Teja Bejjala, Frontend Developer and B-Tech ECE Student at IIIT Sri City.">
+    <meta name="author" content="Mani Sai Teja Bejjala">
+    <meta property="og:title" content="Mani Sai Teja Bejjala Portfolio">
+    <meta property="og:description" content="Explore my projects in web development, IoT, and more.">
+    <meta property="og:image" content="/images/og-image.jpg"> <meta property="og:url" content="https://manisaiteja2007.github.io/ManiSaiTejaBejjalaPortfolio/">
+    <title>Mani Sai Teja Bejjala</title>
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon"> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
     <style>
-        /* Base styles & Font Fallbacks */
+        /* --- CSS Variables for Theming --- */
+        :root {
+            /* Light Mode Defaults */
+            --bg-body: #f9fafb; /* slate-50 */
+            --text-default: #1e293b; /* slate-900 */
+            --card-bg: #ffffff;
+            --section-bg: #f1f5f9; /* slate-100 */
+            --border-color: #e2e8f0; /* slate-200 */
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-hover: rgba(0, 0, 0, 0.15);
+        }
+
+        /* Dark Mode Overrides */
+        html.dark {
+            --bg-body: #0f172a; /* slate-900 */
+            --text-default: #e2e8f0; /* slate-200 */
+            --card-bg: #1e293b; /* slate-800 */
+            --section-bg: #1e293b; /* slate-800 */
+            --border-color: #475569; /* slate-600 */
+            --shadow-light: rgba(0, 0, 0, 0.3);
+            --shadow-hover: rgba(0, 0, 0, 0.4);
+        }
+
+        /* --- Global Base Styles --- */
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-            background-color: #f8fafc; /* Tailwind: bg-slate-50 */
-            color: #1a202c; /* Tailwind: text-gray-900 */
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-default);
             transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+
+        /* --- Utility & Component Styles --- */
+        .text-primary-brand { color: #4f46e5; } /* Tailwind indigo-600 */
+        .bg-primary-brand { background-color: #4f46e5; } /* Tailwind indigo-600 */
+        .gradient-bg { background: linear-gradient(135deg, #4f46e5, #14b8a6); } /* indigo-600 to teal-500 */
+        .flash-red { color: #dc2626; } /* Tailwind red-600 */
+
+        .bg-card {
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 6px -1px var(--shadow-light), 0 2px 4px -2px var(--shadow-light);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+            color: var(--text-default); /* Ensure card text also adapts */
         }
 
-        /* Dark Mode Specific Overrides */
-        body.dark {
-            background-color: #1a202c; /* Tailwind: bg-gray-900 */
-            color: #e2e8f0; /* Tailwind: text-gray-200 */
+        .bg-section {
+            background-color: var(--section-bg);
+            position: relative;
         }
-        body.dark .text-gray-900 { color: #e2e8f0; }
-        body.dark .text-gray-800 { color: #e2e8f0; }
-        body.dark .text-gray-600 { color: #a0aec0; } /* Tailwind: text-gray-400 */
-        body.dark .bg-white { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
-        body.dark .bg-gray-100 { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
-        body.dark .border-blue-200 { border-color: #4a5568; } /* Tailwind: border-gray-600 */
-        body.dark .text-blue-600 { color: #60a5fa; } /* Tailwind: text-blue-400 */
-        body.dark .bg-blue-600 { background-color: #3b82f6; } /* Tailwind: bg-blue-500 */
-        body.dark .hover\:bg-blue-700:hover { background-color: #2563eb; } /* Tailwind: hover:bg-blue-600 */
-        body.dark .shadow-md {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15); /* More visible shadow in dark mode */
-        }
-        body.dark .project-card:hover {
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.2);
+        .bg-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(135deg, #4f46e5, #14b8a6);
         }
 
-        /* Custom Transitions & Transforms */
-        .icon, .nav-link, .project-card, .btn-primary {
-            transition: all 0.3s ease-in-out;
+        .bg-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/images/hero-bg.jpg'); /* Use a specific image, ensure path is correct */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
         }
-        .icon:hover {
-            transform: scale(1.1);
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
         }
-        .nav-link:hover {
-            color: #2563eb; /* text-blue-600 */
-        }
-        .project-card:hover {
+
+        /* Hover Effects */
+        .hover-lift:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 12px var(--shadow-hover);
         }
-        /* Mobile menu specific styles for smooth reveal */
-        #mobile-menu.hidden {
+
+        .btn-primary {
+            @apply gradient-bg text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 ease-in-out inline-block;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 15px #dc2626; /* red-600 */
+            transform: translateY(-2px);
+        }
+
+        /* Skill & Social Icons */
+        .skill-icon, .social-icon {
+            object-fit: contain;
+            transition: transform 0.2s ease, filter 0.2s ease;
+            filter: grayscale(0%);
+        }
+        /* Removed the specific dark mode filter for skill/social icons */
+        .skill-icon:hover {
+            transform: scale(1.15);
+            filter: drop-shadow(0 0 8px #dc2626) grayscale(0%) brightness(100%); /* red-600 glow */
+        }
+        .social-icon:hover {
+            transform: scale(1.15);
+            filter: drop-shadow(0 0 8px #4f46e5) grayscale(0%) brightness(100%); /* indigo-600 glow */
+        }
+
+        /* Custom glow for the email button */
+        .email-button-glow:hover {
+            box-shadow: 0 0 20px rgba(255, 165, 0, 0.7); /* Orange glow */
+            transform: translateY(-2px); /* Maintain the lift effect */
+        }
+        /* Mobile Menu Transition */
+        #mobile-menu {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-out;
+            transition: max-height 0.4s ease-out;
         }
-        #mobile-menu:not(.hidden) {
-            max-height: 300px; /* Adjust based on content height */
-            transition: max-height 0.3s ease-in;
+        #mobile-menu.open {
+            max-height: 500px; /* Adjust as needed to cover content */
+            transition: max-height 0.4s ease-in;
+        }
+
+        /* Fix for potential image missing errors */
+        .skill-icon-placeholder, .social-icon-placeholder {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.5rem;
+            height: 3.5rem;
+            background-color: var(--card-bg); /* Use card background for consistency */
+            border-radius: 0.25rem;
+            color: var(--text-default);
+            font-size: 0.75rem; /* text-xs */
+            text-align: center;
+            line-height: 1;
+            padding: 0.25rem;
+            box-sizing: border-box;
+            border: 1px solid var(--border-color);
+        }
+        .skill-icon-placeholder::before, .social-icon-placeholder::before {
+            content: attr(alt);
+            white-space: normal;
+        }
+
+        /* Custom class for default text color */
+        .text-default-text {
+            color: var(--text-default);
         }
     </style>
-    <script>
-        // Configure Tailwind CSS for dark mode
-        tailwind.config = {
-            darkMode: 'class', // Enable dark mode based on 'dark' class
-            theme: {
-                extend: {
-                    colors: {
-                        // Example custom colors if needed, e.g., 'primary-blue': '#2563eb'
-                    }
-                }
-            }
-        };
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // Dark Mode Logic
-            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-            const currentTheme = localStorage.getItem('theme');
-
-            if (currentTheme === 'dark' || (currentTheme === null && prefersDarkScheme.matches)) {
-                document.body.classList.add('dark');
-            }
-
-            document.getElementById('darkModeToggle').addEventListener('click', () => {
-                document.body.classList.toggle('dark');
-                localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-            });
-
-            // Mobile Menu Logic
-            const menuButton = document.getElementById('menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-
-            if (menuButton && mobileMenu) {
-                menuButton.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
-                    menuButton.setAttribute('aria-expanded', !isExpanded);
-                });
-
-                // Close mobile menu when a link is clicked (smoother UX)
-                mobileMenu.querySelectorAll('.nav-link').forEach(link => {
-                    link.addEventListener('click', () => {
-                        mobileMenu.classList.add('hidden');
-                        menuButton.setAttribute('aria-expanded', 'false');
-                    });
-                });
-            }
-        });
-    </script>
 </head>
-<body class="antialiased">
-    <nav class="bg-white shadow-md sticky top-0 z-50 dark:bg-gray-800">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
+<body class="font-inter min-h-screen">
 
-            <div class="md:hidden flex items-center space-x-4">
-                <button id="darkModeToggle" aria-label="Toggle dark mode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-                    </svg>
-                </button>
-                <button id="menu-button" aria-label="Open main menu" aria-controls="mobile-menu" aria-expanded="false" class="text-gray-600 dark:text-gray-200 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+    <button id="theme-toggle" class="fixed top-4 right-4 z-50 p-3 rounded-full bg-primary-brand text-white shadow-lg hover:shadow-xl btn-primary transition-all duration-300 ease-in-out" aria-label="Toggle dark/light mode">
+        <svg id="sun-icon" class="w-6 h-6 block" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+        </svg>
+        <svg id="moon-icon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M6.3 15.7A6 6 0 1015.7 6.3 4 4 0 116.3 15.7z" clip-rule="evenodd"></path>
+        </svg>
+    </button>
+
+    <nav class="fixed top-0 w-full bg-card/95 backdrop-blur-md z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="/images/logo.png" alt="Mani Sai Teja Logo" class="h-8 w-8"
+                     onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22%234f46e5%22><rect width=%22100%22 height=%22100%22 fill=%22%23ffffff%22 /><text x=%2250%22 y=%2265%22 font-family=%22Poppins, sans-serif%22 font-size=%2260%22 font-weight=%22bold%22 text-anchor=%22middle%22 fill=%22%234f46e5%22>M</text></svg>'; this.classList.add('skill-icon-placeholder');"
+                >
+                <a href="#hero" class="text-2xl font-poppins font-bold text-primary-brand hidden md:block">
+    Mani Sai Teja <span class="md:inline lg:block">Bejjala</span>
+</a>
+</div>
+
+            <div class="md:hidden flex items-center ml-auto pr-16">
+                <button id="menu-toggle" aria-label="Open main menu" aria-controls="mobile-menu" aria-expanded="false" class="p-2 rounded-md text-default-text focus:outline-none focus:ring-2 focus:ring-primary-brand">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                 </button>
             </div>
 
-            <div class="hidden md:flex space-x-6 items-center" id="nav-links-desktop">
-                <a href="#about" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">About</a>
-                <a href="#skills" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Skills</a>
-                <a href="#projects" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Projects</a>
-                <a href="#connect" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Connect</a>
-                <a href="#stats" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Stats</a>
-                <a href="#contact" class="text-gray-600 hover:text-blue-600 nav-link dark:text-gray-300 dark:hover:text-blue-400">Contact</a>
-                <button id="darkModeToggle" aria-label="Toggle dark mode" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-                    </svg>
-                </button>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#about" class="font-semibold text-default hover:text-primary-brand transition-colors duration-200">About</a>
+                <a href="#skills" class="font-semibold text-default hover:text-primary-brand transition-colors duration-200">Skills</a>
+                <a href="#projects" class="font-semibold text-default hover:text-primary-brand transition-colors duration-200">Projects</a>
+                <a href="#connect" class="font-semibold text-default hover:text-primary-brand transition-colors duration-200">Connect</a>
+                <a href="#stats" class="font-semibold text-default hover:text-primary-brand transition-colors duration-200">Stats</a>
+                <a href="#contact" class="font-semibold text-default hover:text-primary-brand transition-colors duration-200">Contact</a>
             </div>
         </div>
 
-        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 py-2 shadow-inner">
-            <a href="#about" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">About</a>
-            <a href="#skills" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Skills</a>
-            <a href="#projects" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Featured Projects</a>
-            <a href="#connect" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Connect</a>
-            <a href="#stats" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Stats</a>
-            <a href="#contact" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 nav-link">Contact</a>
+        <div id="mobile-menu" class="md:hidden bg-card border-t border-border-color shadow-inner">
+            <a href="#about" class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200">About</a>
+            <a href="#skills" class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200">Skills</a>
+            <a href="#projects" class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200">Projects</a>
+            <a href="#connect" class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200">Connect</a>
+            <a href="#stats" class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200">Stats</a>
+            <a href="#contact" class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200">Contact</a>
         </div>
     </nav>
 
-    <header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16 text-center px-4">
-        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight">Hi 👋, I'm Mani Sai Teja Bejjala</h1>
-        <h3 class="text-xl sm:text-2xl md:text-3xl mt-3 font-light">Frontend Developer | B-Tech ECE Student | IIIT Sri City, Chittoor</h3>
-    </header>
+    <section id="hero" class="bg-hero min-h-screen flex items-center justify-center relative pt-20 md:pt-0">
+        <div id="particles-js"></div>
+        <div class="text-center max-w-4xl mx-auto px-4 z-10" data-aos="fade-up" data-aos-duration="800">
+            <h1 class="text-5xl md:text-7xl font-poppins font-bold mb-4 text-white">Hi 👋, I'm Mani Sai Teja Bejjala</h1>
+            <p class="text-xl md:text-3xl text-gray-200">Frontend Developer | B-Tech ECE Student | IIIT Sri City, Chittoor</p>
+        </div>
+    </section>
 
-    <main>
-        <section id="about" class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl sm:text-4xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">About Me</h2>
-            <p class="text-lg sm:text-xl leading-relaxed text-gray-900 dark:text-gray-200">
-                I'm a B-Tech Electronics and Communication Engineering student at <strong>IIIT Sri City, Chittoor</strong>, driven by a passion for creating impactful web experiences and exploring innovative technology solutions. My expertise spans crafting responsive and intuitive web interfaces alongside building robust IoT systems. I thrive on combining technical precision with creative design to build seamless, user-centric applications.
-            </p>
-        </section>
+    <section id="about" class="max-w-6xl mx-auto pt-28 pb-16 px-4 sm:px-6 lg:px-8">
+        <h2 class="text-4xl sm:text-5xl font-poppins font-bold text-center mb-8 text-primary-brand" data-aos="fade-up">About Me</h2>
+        <p class="text-lg sm:text-xl leading-relaxed text-center text-default-text" data-aos="fade-up" data-aos-delay="100">
+            I'm a B-Tech Electronics and Communication Engineering student at **IIIT Sri City, Chittoor**, driven by a passion for creating impactful web experiences and exploring innovative technology solutions. My expertise spans crafting responsive and intuitive web interfaces alongside building robust IoT systems. I thrive on combining technical precision with creative design to build seamless, user-centric applications.
+        </p>
+    </section>
 
-        <section id="skills" class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl sm:text-4xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Languages & Tools</h2>
-            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-6 justify-items-center">
-                <a href="https://angular.io" target="_blank" rel="noopener noreferrer" title="Angular"><img src="https://angular.io/assets/images/logos/angular/angular.svg" alt="Angular Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://www.arduino.cc/" target="_blank" rel="noopener noreferrer" title="Arduino"><img src="https://cdn.worldvectorlogo.com/logos/arduino-1.svg" alt="Arduino Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://aws.amazon.com" target="_blank" rel="noopener noreferrer" title="AWS"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noopener noreferrer" title="Bash"><img src="https://www.vectorlogo.zone/logos/gnu_bash/gnu_bash-icon.svg" alt="Bash Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://www.cprogramming.com/" target="_blank" rel="noopener noreferrer" title="C"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" alt="C Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://www.w3schools.com/cpp/" target="_blank" rel="noopener noreferrer" title="C++"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" alt="C++ Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://www.w3schools.com/css/" target="_blank" rel="noopener noreferrer" title="CSS3"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="CSS3 Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://d3js.org/" target="_blank" rel="noopener noreferrer" title="D3.js"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/d3js/d3js-original.svg" alt="D3.js Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://www.docker.com/" target="_blank" rel="noopener noreferrer" title="Docker"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="Docker Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://expressjs.com" target="_blank" rel="noopener noreferrer" title="Express.js"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="Express.js Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://firebase.google.com/" target="_blank" rel="noopener noreferrer" title="Firebase"><img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="Firebase Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer" title="Git"><img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="Git Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://www.w3.org/html/" target="_blank" rel="noopener noreferrer" title="HTML5"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="HTML5 Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://www.java.com" target="_blank" rel="noopener noreferrer" title="Java"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="Java Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer" title="JavaScript"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://www.jenkins.io" target="_blank" rel="noopener noreferrer" title="Jenkins"><img src="https://www.vectorlogo.zone/logos/jenkins/jenkins-icon.svg" alt="Jenkins Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://kubernetes.io" target="_blank" rel="noopener noreferrer" title="Kubernetes"><img src="https://www.vectorlogo.zone/logos/kubernetes/kubernetes-icon.svg" alt="Kubernetes Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://www.linux.org/" target="_blank" rel="noopener noreferrer" title="Linux"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="Linux Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://www.mathworks.com/" target="_blank" rel="noopener noreferrer" title="MATLAB"><img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Matlab_Logo.png" alt="MATLAB Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://www.mongodb.com/" target="_blank" rel="noopener noreferrer" title="MongoDB"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="MongoDB Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer" title="MySQL"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="MySQL Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://nodejs.org" target="_blank" rel="noopener noreferrer" title="Node.js"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="Node.js Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://www.postgresql.org" target="_blank" rel="noopener noreferrer" title="PostgreSQL"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg" alt="PostgreSQL Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://postman.com" target="_blank" rel="noopener noreferrer" title="Postman"><img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="Postman Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://www.python.org" target="_blank" rel="noopener noreferrer" title="Python"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="Python Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://reactjs.org/" target="_blank" rel="noopener noreferrer" title="React"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="React Logo" class="w-12 h-12 icon" /></a>
-                <a href="https://unity.com/" target="_blank" rel="noopener noreferrer" title="Unity"><img src="https://www.vectorlogo.zone/logos/unity3d/unity3d-icon.svg" alt="Unity Logo" class="w-12 h-12 icon" /></a>
+    <section id="skills" class="bg-section pt-28 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl sm:text-5xl font-poppins font-bold text-center mb-8 text-primary-brand" data-aos="fade-up">Languages & Tools</h2>
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-6 justify-items-center" data-aos="fade-up" data-aos-delay="100">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML5" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS3" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" alt="C" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" alt="C++" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="Java" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="MySQL" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" alt="VS Code" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="Figma" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angularjs/angularjs-original.svg" alt="Angular" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="Node.js" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" alt="MongoDB" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-plain.svg" alt="Firebase" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="Linux" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" alt="Bash" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg" alt="Arduino" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="projects" class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl sm:text-4xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Featured Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <a href="angular-task-management.html" class="bg-white p-6 rounded-lg shadow-md project-card flex flex-col dark:bg-gray-700 dark:text-gray-200">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Task Management App (Angular)</h3>
-                    <p class="text-gray-600 dark:text-gray-400 flex-grow">A web app for managing tasks with real-time updates and a clean UI.</p>
-                    <p class="mt-3 text-gray-800 dark:text-gray-300 font-medium"><strong>Tech:</strong> Angular, Firebase</p>
+    <section id="projects" class="pt-28 pb-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-4xl sm:text-5xl font-poppins font-bold text-center mb-8 text-primary-brand" data-aos="fade-up">Featured Projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <a href="#" class="bg-card p-6 rounded-xl hover-lift flex flex-col" data-aos="fade-up" data-aos-duration="600">
+                <h3 class="text-xl font-poppins font-semibold mb-2 text-default-text">Task Management App (Angular)</h3>
+                <p class="text-default-text flex-grow">A web app for managing tasks with real-time updates and a clean UI.</p>
+                <p class="mt-3 text-sm text-gray-500"><strong>Tech:</strong> Angular, Firebase</p>
+            </a>
+            <a href="#" class="bg-card p-6 rounded-xl hover-lift flex flex-col" data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
+                <h3 class="text-xl font-poppins font-semibold mb-2 text-default-text">Smart Home IoT (Arduino)</h3>
+                <p class="text-default-text flex-grow">An Internet of Things system to control home appliances remotely.</p>
+                <p class="mt-3 text-sm text-gray-500"><strong>Tech:</strong> Arduino, C, Bluetooth</p>
+            </a>
+            <a href="#" class="bg-card p-6 rounded-xl hover-lift flex flex-col" data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
+                <h3 class="text-xl font-poppins font-semibold mb-2 text-default-text">Serverless API (AWS)</h3>
+                <p class="text-default-text flex-grow">A scalable serverless REST API built on AWS for a todo application.</p>
+                <p class="mt-3 text-sm text-gray-500"><strong>Tech:</strong> AWS Lambda, Node.js</p>
+            </a>
+            <a href="#" class="bg-card p-6 rounded-xl hover-lift flex flex-col" data-aos="fade-up" data-aos-delay="300" data-aos-duration="600">
+                <h3 class="text-xl font-poppins font-semibold mb-2 text-default-text">Automation Script (Bash)</h3>
+                <p class="text-default-text flex-grow">A powerful Bash script to automate server setup and deployment processes.</p>
+                <p class="mt-3 text-sm text-gray-500"><strong>Tech:</strong> Bash, Linux</p>
+            </a>
+            <a href="#" class="bg-card p-6 rounded-xl hover-lift flex flex-col" data-aos="fade-up" data-aos-delay="400" data-aos-duration="600">
+                <h3 class="text-xl font-poppins font-semibold mb-2 text-default-text">Embedded System Monitor (C)</h3>
+                <p class="text-default-text flex-grow">A real-time monitoring system developed for embedded environments.</p>
+                <p class="mt-3 text-sm text-gray-500"><strong>Tech:</strong> C, Arduino</p>
+            </a>
+            <a href="#" class="bg-card p-6 rounded-xl hover-lift flex flex-col" data-aos="fade-up" data-aos-delay="500" data-aos-duration="600">
+                <h3 class="text-xl font-poppins font-semibold mb-2 text-default-text">Pathfinding Visualizer (C++)</h3>
+                <p class="text-default-text flex-grow">A desktop application that visualizes various pathfinding algorithms.</p>
+                <p class="mt-3 text-sm text-gray-500"><strong>Tech:</strong> C++, SFML</p>
+            </a>
+        </div>
+        <div class="flex justify-center mt-12" data-aos="fade-up" data-aos-delay="600">
+    <a href="all-projects.html" class="bg-section p-6 rounded-xl hover-lift shadow-lg text-center max-w-sm w-full flex flex-col justify-between btn-primary">
+        <h3 class="text-xl font-poppins font-semibold mb-4 text-default-text">Explore More</h3>
+        <p class="text-default-text mb-4 flex-grow">Discover all 25+ projects I've worked on.</p>
+        <span class="self-center">View All Projects (25+)</span>
+    </a>
+</div>
+        </div>
+    </section>
+
+    <section id="connect" class="bg-section pt-28 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl sm:text-5xl font-poppins font-bold text-center mb-8 text-primary-brand" data-aos="fade-up">Connect with Me</h2>
+            <div class="flex flex-wrap justify-center gap-6" data-aos="fade-up" data-aos-delay="100">
+                <a href="https://github.com/manisaiteja2007" target="_blank" rel="noopener noreferrer" title="GitHub" class="icon">
+                    <img src="https://www.vectorlogo.zone/logos/github/github-icon.svg" alt="GitHub" class="w-10 h-10 social-icon" />
                 </a>
-                <a href="arduino-smart-home.html" class="bg-white p-6 rounded-lg shadow-md project-card flex flex-col dark:bg-gray-700 dark:text-gray-200">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Smart Home IoT (Arduino)</h3>
-                    <p class="text-gray-600 dark:text-gray-400 flex-grow">An Internet of Things system to control home appliances remotely.</p>
-                    <p class="mt-3 text-gray-800 dark:text-gray-300 font-medium"><strong>Tech:</strong> Arduino, C, Bluetooth</p>
+                <a href="https://www.kaggle.com/bejjalamanisaiteja" target="_blank" rel="noopener noreferrer" title="Kaggle" class="icon">
+                    <img src="https://www.vectorlogo.zone/logos/kaggle/kaggle-icon.svg" alt="Kaggle" class="w-10 h-10 social-icon" />
                 </a>
-                <a href="aws-serverless-api.html" class="bg-white p-6 rounded-lg shadow-md project-card flex flex-col dark:bg-gray-700 dark:text-gray-200">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Serverless API (AWS)</h3>
-                    <p class="text-gray-600 dark:text-gray-400 flex-grow">A scalable serverless REST API built on AWS for a todo application.</p>
-                    <p class="mt-3 text-gray-800 dark:text-gray-300 font-medium"><strong>Tech:</strong> AWS Lambda, Node.js</p>
+                <a href="https://manisaitejabejjala.hashnode.dev" target="_blank" rel="noopener noreferrer" title="Hashnode" class="icon">
+                    <img src="https://www.vectorlogo.zone/logos/hashnode/hashnode-icon.svg" alt="Hashnode" class="w-10 h-10 social-icon" />
                 </a>
-                <a href="bash-automation.html" class="bg-white p-6 rounded-lg shadow-md project-card flex flex-col dark:bg-gray-700 dark:text-gray-200">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Automation Script (Bash)</h3>
-                    <p class="text-gray-600 dark:text-gray-400 flex-grow">A powerful Bash script to automate server setup and deployment processes.</p>
-                    <p class="mt-3 text-gray-800 dark:text-gray-300 font-medium"><strong>Tech:</strong> Bash, Linux</p>
+                <a href="https://discord.com/users/manisaiteja7509" target="_blank" rel="noopener noreferrer" title="Discord" class="icon">
+                    <img src="https://www.vectorlogo.zone/logos/discord/discord-icon.svg" alt="Discord" class="w-10 h-10 social-icon" />
                 </a>
-                <a href="c-embedded-monitor.html" class="bg-white p-6 rounded-lg shadow-md project-card flex flex-col dark:bg-gray-700 dark:text-gray-200">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Embedded System Monitor (C)</h3>
-                    <p class="text-gray-600 dark:text-gray-400 flex-grow">A real-time monitoring system developed for embedded environments.</p>
-                    <p class="mt-3 text-gray-800 dark:text-gray-300 font-medium"><strong>Tech:</strong> C, Arduino</p>
+                <a href="https://codepen.io/bejjala-mani-sai-teja" target="_blank" rel="noopener noreferrer" title="CodePen" class="icon">
+                    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/codepen.svg" alt="CodePen" class="w-10 h-10 social-icon" />
                 </a>
-                <a href="cpp-pathfinding.html" class="bg-white p-6 rounded-lg shadow-md project-card flex flex-col dark:bg-gray-700 dark:text-gray-200">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Pathfinding Visualizer (C++)</h3>
-                    <p class="text-gray-600 dark:text-gray-400 flex-grow">A desktop application that visualizes various pathfinding algorithms.</p>
-                    <p class="mt-3 text-gray-800 dark:text-gray-300 font-medium"><strong>Tech:</strong> C++, SFML</p>
+                <a href="https://dev.to/manisaiteja2007" target="_blank" rel="noopener noreferrer" title="Dev.to" class="icon">
+                    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/devto.svg" alt="Dev.to" class="w-10 h-10 social-icon" />
+                </a>
+                <a href="https://twitter.com/manisaiteja_b" target="_blank" rel="noopener noreferrer" title="Twitter" class="icon">
+                    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="Twitter" class="w-10 h-10 social-icon" />
+                </a>
+                <a href="https://linkedin.com/in/bejjala-mani-sai-teja" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="icon">
+                    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="LinkedIn" class="w-10 h-10 social-icon" />
                 </a>
             </div>
-            <div class="text-center mt-10">
-                <a href="all-projects.html" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 btn-primary font-medium text-lg dark:bg-blue-700 dark:hover:bg-blue-600">View All Projects (25+)</a>
+        </div>
+    </section>
+
+    <section id="stats" class="pt-28 pb-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-4xl sm:text-5xl font-poppins font-bold text-center mb-8 text-primary-brand" data-aos="fade-up">My GitHub Stats</h2>
+        <p class="text-lg leading-relaxed text-center mb-8 text-default-text" data-aos="fade-up" data-aos-delay="100">
+            These dynamic GitHub stats automatically switch themes to match your chosen light or dark mode, ensuring an optimal viewing experience.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center" data-aos="fade-up" data-aos-delay="200">
+            <div class="w-full max-w-md bg-card rounded-xl p-4 hover-lift">
+                <img id="github-stats-img" src="https://github-readme-stats.vercel.app/api?username=manisaiteja2007&show_icons=true&theme=default&hide_border=true&bg_color=ffffff&text_color=1e293b&title_color=4f46e5"
+                     alt="GitHub Stats" class="w-full rounded-lg">
             </div>
-        </section>
 
-        <section id="connect" class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl sm:text-4xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Connect with Me</h2>
-            <div class="flex flex-wrap justify-center gap-6 md:justify-start">
-                <a href="https://github.com/manisaiteja2007" target="_blank" rel="noopener noreferrer" title="GitHub" class="icon"><img src="https://www.vectorlogo.zone/logos/github/github-icon.svg" alt="GitHub" class="w-10 h-10" /></a>
-                <a href="https://www.kaggle.com/bejjalamanisaiteja" target="_blank" rel="noopener noreferrer" title="Kaggle" class="icon"><img src="https://www.vectorlogo.zone/logos/kaggle/kaggle-icon.svg" alt="Kaggle" class="w-10 h-10" /></a>
-                <a href="https://manisaitejabejjala.hashnode.dev" target="_blank" rel="noopener noreferrer" title="Hashnode" class="icon"><img src="https://www.vectorlogo.zone/logos/hashnode/hashnode-icon.svg" alt="Hashnode" class="w-10 h-10" /></a>
-                <a href="https://discord.com/users/manisaiteja7509" target="_blank" rel="noopener noreferrer" title="Discord" class="icon"><img src="https://www.vectorlogo.zone/logos/discord/discord-icon.svg" alt="Discord" class="w-10 h-10" /></a>
-                <a href="https://codepen.io/bejjala-mani-sai-teja" target="_blank" rel="noopener noreferrer" title="CodePen" class="icon"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/codepen.svg" alt="CodePen" class="w-10 h-10" /></a>
-                <a href="https://dev.to/manisaiteja2007" target="_blank" rel="noopener noreferrer" title="Dev.to" class="icon"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/devto.svg" alt="Dev.to" class="w-10 h-10" /></a>
-                <a href="https://twitter.com/manisaiteja_b" target="_blank" rel="noopener noreferrer" title="Twitter" class="icon"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="Twitter" class="w-10 h-10" /></a>
-                <a href="https://linkedin.com/in/bejjala-mani-sai-teja" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="icon"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="LinkedIn" class="w-10 h-10" /></a>
+            <div class="w-full max-w-md bg-card rounded-xl p-4 hover-lift">
+                <img id="top-langs-img" src="https://github-readme-stats.vercel.app/api/top-langs/?username=manisaiteja2007&layout=compact&theme=default&hide_border=true&bg_color=ffffff&text_color=1e293b&title_color=4f46e5"
+                     alt="Top Languages" class="w-full rounded-lg">
             </div>
-        </section>
 
-        <section id="stats" class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl sm:text-4xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">My GitHub Stats</h2>
-            <div class="flex flex-col space-y-6 items-center">
-                <p class="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">These dynamic GitHub stats automatically switch themes to match your chosen light or dark mode, ensuring an optimal viewing experience.</p>
-                
-                <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=manisaiteja2007&theme=aura&hide_border=true&include_all_commits=true&count_private=true&layout=compact&bg_color=ffffff00&text_color=333333&title_color=007bff" alt="GitHub Top Languages (Light)" class="stats-img dark:hidden" />
-                <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=manisaiteja2007&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true&layout=compact" alt="GitHub Top Languages (Dark)" class="stats-img hidden dark:block" />
-
-                <img src="https://github-readme-stats.vercel.app/api?username=manisaiteja2007&theme=aura&hide_border=true&include_all_commits=true&count_private=true&bg_color=ffffff00&text_color=333333&title_color=007bff" alt="GitHub Stats (Light)" class="stats-img dark:hidden" />
-                <img src="https://github-readme-stats.vercel.app/api?username=manisaiteja2007&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true" alt="GitHub Stats (Dark)" class="stats-img hidden dark:block" />
-
-                <img src="https://github-readme-streak-stats.herokuapp.com/?user=manisaiteja2007&theme=aura&hide_border=true&background=ffffff00&stroke=ffffff00&ring=007bff&fire=007bff&currStreakLabel=007bff&sideLabels=333333" alt="GitHub Streak Stats (Light)" class="stats-img dark:hidden" />
-                <img src="https://github-readme-streak-stats.herokuapp.com/?user=manisaiteja2007&theme=tokyonight&hide_border=true" alt="GitHub Streak Stats (Dark)" class="stats-img hidden dark:block" />
+            <div class="w-full max-w-md bg-card rounded-xl p-4 hover-lift">
+                <img id="streak-stats-img" src="https://github-readme-streak-stats.herokuapp.com/?user=manisaiteja2007&theme=default&hide_border=true&background=ffffff&stroke=4f46e5&ring=4f46e5&currStreakLabel=4f46e5&sideLabels=1e293b"
+                     alt="GitHub Streak" class="w-full rounded-lg">
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="contact" class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl sm:text-4xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Contact Me</h2>
-            <p class="text-lg sm:text-xl mb-6 text-gray-900 dark:text-gray-200">
-                I'm always open to discussing new projects, potential collaborations, or just connecting for a chat. Feel free to reach out via email or connect with me on any of the social platforms listed above!
-            </p>
-            <a href="mailto:manisaiteja2007@gmail.com" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 btn-primary font-medium text-lg dark:bg-blue-700 dark:hover:bg-blue-600">Send an Email</a>
-        </section>
+   <section id="contact" class="bg-section pt-28 pb-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl sm:text-5xl font-poppins font-bold text-center mb-8 text-primary-brand" data-aos="fade-up">Contact Me</h2>
+        <p class="text-lg sm:text-xl leading-relaxed text-center mb-8 text-default-text" data-aos="fade-up" data-aos-delay="100">
+            For inquiries, project discussions, or networking, please feel free to contact me.
+            You can reach me directly via email or connect through my social media profiles listed above.
+        </p>
+        <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+            <a href="mailto:manisaiteja2007@gmail.com"
+                class="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 font-medium text-lg dark:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-300 ease-in-out email-button-glow">
+                Send an Email
+            </a>
+        </div>
+    </div>
+</section>
 
-        <section class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl sm:text-4xl font-semibold border-b-2 border-blue-200 pb-2 mb-6 dark:border-blue-700">Fun Fact</h2>
-            <p class="text-lg sm:text-xl italic text-gray-600 dark:text-gray-400">
-                🌟 I love blending my ECE background with frontend development, constantly experimenting with new tech stacks to create innovative projects that seamlessly bridge hardware and software!
-            </p>
-        </section>
-    </main>
+    <section class="max-w-6xl mx-auto pt-28 pb-16 px-4 sm:px-6 lg:px-8">
+        <h2 class="text-4xl sm:text-5xl font-poppins font-bold text-center mb-8 text-primary-brand" data-aos="fade-up">Fun Fact</h2>
+        <p class="text-lg sm:text-xl italic text-center leading-relaxed text-default-text" data-aos="fade-up" data-aos-delay="100">
+            🌟 I love blending my ECE background with frontend development, constantly experimenting with new tech stacks to create innovative projects that seamlessly bridge hardware and software!
+        </p>
+    </section>
 
-    <footer class="bg-gray-900 text-white text-center py-6 dark:bg-gray-800 mt-12">
-        <p class="text-sm">&copy; <span id="current-year"></span> Mani Sai Teja Bejjala. All rights reserved.</p>
-        <a href="#top" class="text-blue-400 hover:underline mt-2 inline-block">Back to Top</a>
+    <footer class="bg-card text-center py-8 border-t border-border-color">
+        <p class="text-default-text text-sm mb-2">&copy; <span id="current-year"></span> Mani Sai Teja Bejjala. All rights reserved.</p>
+        <a href="#hero" class="text-primary-brand hover:underline text-base font-medium">Back to Top</a>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Update copyright year dynamically
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+        AOS.init({ duration: 800, once: true });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const html = document.documentElement;
+            const themeToggle = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+
+            // Get GitHub stats image elements
+            const githubStatsImg = document.getElementById('github-stats-img');
+            const topLangsImg = document.getElementById('top-langs-img');
+            const streakStatsImg = document.getElementById('streak-stats-img');
+
+            // Base URLs for light and dark themes
+            const lightStatsBase = 'https://github-readme-stats.vercel.app/api?username=manisaiteja2007&show_icons=true&hide_border=true';
+            const lightLangsBase = 'https://github-readme-stats.vercel.app/api/top-langs/?username=manisaiteja2007&layout=compact&hide_border=true';
+            const lightStreakBase = 'https://github-readme-streak-stats.herokuapp.com/?user=manisaiteja2007&hide_border=true';
+
+            const darkStatsTheme = '&theme=dracula&bg_color=0f172a&text_color=e2e8f0&title_color=4f46e5';
+            const darkLangsTheme = '&theme=dracula&bg_color=0f172a&text_color=e2e8f0&title_color=4f46e5';
+            const darkStreakTheme = '&theme=dracula&background=0f172a&stroke=4f46e5&ring=4f46e5&currStreakLabel=4f46e5&sideLabels=e2e8f0';
+
+            const lightStatsTheme = '&theme=default&bg_color=ffffff&text_color=1e293b&title_color=4f46e5';
+            const lightLangsTheme = '&theme=default&bg_color=ffffff&text_color=1e293b&title_color=4f46e5';
+            const lightStreakTheme = '&theme=default&background=ffffff&stroke=4f46e5&ring=4f46e5&currStreakLabel=4f46e5&sideLabels=1e293b';
+
+
+            // Function to set the theme
+            const setTheme = (theme) => {
+                if (theme === 'dark') {
+                    html.classList.add('dark');
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+
+                    // Update GitHub stats images to dark theme
+                    if (githubStatsImg) githubStatsImg.src = lightStatsBase + darkStatsTheme;
+                    if (topLangsImg) topLangsImg.src = lightLangsBase + darkLangsTheme;
+                    if (streakStatsImg) streakStatsImg.src = lightStreakBase + darkStreakTheme;
+
+                } else {
+                    html.classList.remove('dark');
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+
+                    // Update GitHub stats images to light theme
+                    if (githubStatsImg) githubStatsImg.src = lightStatsBase + lightStatsTheme;
+                    if (topLangsImg) topLangsImg.src = lightLangsBase + lightLangsTheme;
+                    if (streakStatsImg) streakStatsImg.src = lightStreakBase + lightStreakTheme;
+                }
+                localStorage.setItem('theme', theme);
+            };
+
+            // Initialize theme on load
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else if (prefersDark) {
+                setTheme('dark');
+            } else {
+                setTheme('light');
+            }
+
+            // Toggle theme on button click
+            themeToggle.addEventListener('click', () => {
+                const isDark = html.classList.contains('dark');
+                setTheme(isDark ? 'light' : 'dark');
+            });
+
+            // Mobile Menu Logic
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('open'); // Use 'open' class for transition
+                    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                    menuToggle.setAttribute('aria-expanded', !isExpanded);
+                });
+
+                // Close mobile menu when a link is clicked
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.remove('open');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+
+            // Particles.js Initialization
+            if (document.getElementById('particles-js')) {
+                particlesJS('particles-js', {
+                    particles: {
+                        number: { value: 60, density: { enable: true, value_area: 800 } },
+                        color: { value: ['#4f46e5', '#14b8a6', '#dc2626'] },
+                        shape: { type: 'circle' },
+                        opacity: { value: 0.5, random: true },
+                        size: { value: 2, random: true },
+                        line_linked: { enable: false },
+                        move: { enable: true, speed: 1.5, direction: 'none', random: true, straight: false, out_mode: 'out', bounce: false, attract: { enable: false } }
+                    },
+                    interactivity: {
+                        detect_on: 'canvas',
+                        events: { onhover: { enable: false }, onclick: { enable: false }, resize: true },
+                        modes: { repulse: { distance: 100 }, push: { particles_nb: 4 } }
+                    },
+                    retina_detect: true
+                });
+            }
+
+            // Update copyright year dynamically
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
     </script>
 </body>
 </html>
