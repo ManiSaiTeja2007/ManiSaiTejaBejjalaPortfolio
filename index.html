@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" class="dark"> <head>
+<html lang="en" class="dark">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Portfolio of Mani Sai Teja Bejjala, Frontend Developer and B-Tech ECE Student at IIIT Sri City.">
     <meta name="author" content="Mani Sai Teja Bejjala">
     <meta property="og:title" content="Mani Sai Teja Bejjala Portfolio">
     <meta property="og:description" content="Explore my projects in web development, IoT, and more.">
-    <meta property="og:image" content="/images/og-image.jpg"> <meta property="og:url" content="https://manisaiteja2007.github.io/ManiSaiTejaBejjalaPortfolio/">
+    <meta property="og:image" content="/images/og-image.jpg">
+    <meta property="og:url" content="https://manisaiteja2007.github.io/ManiSaiTejaBejjalaPortfolio/">
     <title>Mani Sai Teja Bejjala</title>
-    <link rel="icon" href="/images/favicon.ico" type="image/x-icon"> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
@@ -24,6 +27,10 @@
             --border-color: #e2e8f0; /* slate-200 */
             --shadow-light: rgba(0, 0, 0, 0.1);
             --shadow-hover: rgba(0, 0, 0, 0.15);
+            --secondary-brand-color: #14b8a6; /* Tailwind teal-500 */
+            --tag-bg: #e2e8f0; /* slate-200 */
+            --tag-text: #1e293b; /* slate-900 */
+            --moon-icon-color: #1e293b; /* Dark color for light mode, so it's visible if not hidden */
         }
 
         /* Dark Mode Overrides */
@@ -35,18 +42,22 @@
             --border-color: #475569; /* slate-600 */
             --shadow-light: rgba(0, 0, 0, 0.3);
             --shadow-hover: rgba(0, 0, 0, 0.4);
+            --secondary-brand-color: #2dd4bf; /* Tailwind teal-400 for dark mode */
+            --tag-bg: #475569; /* slate-600 */
+            --tag-text: #e2e8f0; /* slate-200 */
+            --moon-icon-color: #e2e8f0; /* Light color for dark mode */
         }
 
         /* --- Global Base Styles --- */
         body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-body);
-    color: var(--text-default);
-    transition: background-color 0.3s ease, color 0.3s ease;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    padding-top: 5rem; /* Adjust this value as needed based on your nav and button height */
-}
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-default);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding-top: 5rem; /* Adjust this value as needed based on your nav and button height */
+        }
         .font-poppins { font-family: 'Poppins', sans-serif; }
         .font-inter { font-family: 'Inter', sans-serif; }
 
@@ -110,12 +121,12 @@
 
         /* Skill & Social Icons */
         .skill-icon, .social-icon {
-    width: 40px; /* Reduced size */
-    height: 40px; /* Reduced size */
-    object-fit: contain;
-    transition: transform 0.2s ease, filter 0.2s ease;
-    filter: grayscale(0%);
-}
+            width: 40px; /* Reduced size */
+            height: 40px; /* Reduced size */
+            object-fit: contain;
+            transition: transform 0.2s ease, filter 0.2s ease;
+            filter: grayscale(0%);
+        }
         /* Removed the specific dark mode filter for skill/social icons */
         .skill-icon:hover {
             transform: scale(1.15);
@@ -128,7 +139,7 @@
 
         /* Custom glow for the email button */
         .email-button-glow:hover {
-            box-shadow: 0 0 20px rgba(255, 165, 0, 0.7); /* Orange glow */
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.7); /* Orange glow */
             transform: translateY(-2px); /* Maintain the lift effect */
         }
         /* Mobile Menu Transition */
@@ -143,7 +154,7 @@
         }
 
         /* Fix for potential image missing errors */
-        .skill-icon-placeholder, .social-icon-placeholder {
+        .skill-icon-placeholder, .social-icon-placeholder, .project-image-placeholder {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -163,10 +174,70 @@
             content: attr(alt);
             white-space: normal;
         }
+        .project-image-placeholder {
+            width: 100%; /* Match image width */
+            height: 12rem; /* Match image height (h-48) */
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color); /* Added border to match card */
+            color: var(--text-default);
+            font-size: 0.875rem; /* text-sm */
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .project-image-placeholder::before {
+            content: 'Image Unavailable'; /* Placeholder text */
+        }
+
 
         /* Custom class for default text color */
         .text-default-text {
             color: var(--text-default);
+        }
+
+        /* Custom secondary brand color */
+        .text-secondary-brand {
+            color: var(--secondary-brand-color);
+        }
+
+        /* Project tag styles */
+        .project-tag {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px; /* full rounded */
+            font-size: 0.875rem; /* text-sm */
+            line-height: 1.25rem;
+        }
+
+        /* Apply custom color to moon icon */
+        #moon-icon {
+            fill: var(--moon-icon-color);
+        }
+
+        html {
+    scroll-behavior: smooth;
+}
+        #back-to-top {
+            bottom: 1rem;
+            right: 1rem;
+            background-color: var(--card-bg);
+            color: var(--text-default);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* full rounded */
+            box-shadow: 0 4px 6px -1px var(--shadow-light), 0 2px 4px -2px var(--shadow-light);
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+        #back-to-top:hover {
+            background-color: var(--primary-brand);
+            color: white;
+            box-shadow: 0 8px 12px var(--shadow-hover);
+        }
+
+        /* Custom styles for hidden projects */
+        .project-hidden {
+            display: none;
         }
     </style>
 </head>
@@ -174,11 +245,10 @@
 
 <button id="theme-toggle" class="fixed top-20 right-4 z-50 p-3 rounded-full bg-primary-brand text-white shadow-lg hover:shadow-xl btn-primary transition-all duration-300 ease-in-out" aria-label="Toggle dark/light mode">
        <svg id="sun-icon" class="w-6 h-6 block" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707-.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
         </svg>
-        <svg id="moon-icon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M6.3 15.7A6 6 0 1015.7 6.3 4 4 0 116.3 15.7z" clip-rule="evenodd"></path>
-        </svg>
+        <svg id="moon-icon" class="w-6 h-6 hidden" viewBox="0 0 20 20"> <path fill-rule="evenodd" d="M6.3 15.7A6 6 0 1015.7 6.3 4 4 0 116.3 15.7z" clip-rule="evenodd"></path>
+</svg>
     </button>
 
     <nav class="fixed top-0 w-full bg-card/95 backdrop-blur-md z-40 shadow-sm">
@@ -207,16 +277,18 @@
                 <a href="#connect" class="font-semibold text-default hover:text-primary-brand transition-colors duration-200">Connect</a>
                 <a href="#stats" class="font-semibold text-default hover:text-primary-brand transition-colors duration-200">Stats</a>
                 <a href="#contact" class="font-semibold text-default hover:text-primary-brand transition-colors duration-200">Contact</a>
+                <a href="#fun-fact" class="font-semibold text-default hover:text-primary-brand transition-colors duration-200">Fun Fact</a>
             </div>
         </div>
 
-        <div id="mobile-menu" class="md:hidden bg-card border-t border-border-color shadow-inner">
+        <div id="mobile-menu" class="hidden md:hidden bg-card border-t border-border-color shadow-inner">
             <a href="#about" class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200">About</a>
             <a href="#skills" class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200">Skills</a>
             <a href="#projects" class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200">Projects</a>
             <a href="#connect" class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200">Connect</a>
             <a href="#stats" class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200">Stats</a>
             <a href="#contact" class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200">Contact</a>
+            <a href="#fun-fact" class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200">Fun Fact</a>
         </div>
     </nav>
 
@@ -239,103 +311,176 @@
         <div class="max-w-6xl mx-auto">
             <h2 class="text-4xl sm:text-5xl font-poppins font-bold text-center mb-8 text-primary-brand" data-aos="fade-up">Languages & Tools</h2>
             <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-6 justify-items-center" data-aos="fade-up" data-aos-delay="100">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML5" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS3" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" alt="C" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" alt="C++" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="Java" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="MySQL" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" alt="VS Code" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="Figma" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angularjs/angularjs-original.svg" alt="Angular" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="Node.js" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" alt="MongoDB" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-plain.svg" alt="Firebase" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="Linux" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" alt="Bash" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg" alt="Arduino" class="skill-icon" onerror="this.onerror=null; this.src=''; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML5" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS3" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" alt="C" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" alt="C++" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="Java" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="MySQL" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" alt="VS Code" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="Figma" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angularjs/angularjs-original.svg" alt="Angular" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="Node.js" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" alt="MongoDB" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-plain.svg" alt="Firebase" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="Linux" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" alt="Bash" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg" alt="Arduino" class="skill-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');">
             </div>
         </div>
     </section>
 
-     <section id="projects" class="pt-28 pb-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-4xl sm:text-5xl font-poppins font-bold text-center mb-8 text-primary-brand" data-aos="fade-up">Featured Projects</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <a href="angular-task-management.html" class="bg-card p-6 rounded-xl hover-lift flex flex-col" data-aos="fade-up" data-aos-duration="600">
-                <h3 class="text-xl font-poppins font-semibold mb-2 text-default-text">Task Management App (Angular)</h3>
-                <p class="text-default-text flex-grow">A web app for managing tasks with real-time updates and a clean UI.</p>
-                <p class="mt-3 text-sm text-gray-500"><strong>Tech:</strong> Angular, Firebase</p>
-            </a>
-            <a href="arduino-smart-home.html" class="bg-card p-6 rounded-xl hover-lift flex flex-col" data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
-                <h3 class="text-xl font-poppins font-semibold mb-2 text-default-text">Smart Home IoT (Arduino)</h3>
-                <p class="text-default-text flex-grow">An Internet of Things system to control home appliances remotely.</p>
-                <p class="mt-3 text-sm text-gray-500"><strong>Tech:</strong> Arduino, C, Bluetooth</p>
-            </a>
-            <a href="aws-serverless-api.html" class="bg-card p-6 rounded-xl hover-lift flex flex-col" data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
-                <h3 class="text-xl font-poppins font-semibold mb-2 text-default-text">Serverless API (AWS)</h3>
-                <p class="text-default-text flex-grow">A scalable serverless REST API built on AWS for a todo application.</p>
-                <p class="mt-3 text-sm text-gray-500"><strong>Tech:</strong> AWS Lambda, Node.js</p>
-            </a>
-            <a href="bash-automation.html" class="bg-card p-6 rounded-xl hover-lift flex flex-col" data-aos="fade-up" data-aos-delay="300" data-aos-duration="600">
-                <h3 class="text-xl font-poppins font-semibold mb-2 text-default-text">Automation Script (Bash)</h3>
-                <p class="text-default-text flex-grow">A powerful Bash script to automate server setup and deployment processes.</p>
-                <p class="mt-3 text-sm text-gray-500"><strong>Tech:</strong> Bash, Linux</p>
-            </a>
-            <a href="c-embedded-monitor.html" class="bg-card p-6 rounded-xl hover-lift flex flex-col" data-aos="fade-up" data-aos-delay="400" data-aos-duration="600">
-                <h3 class="text-xl font-poppins font-semibold mb-2 text-default-text">Embedded System Monitor (C)</h3>
-                <p class="text-default-text flex-grow">A real-time monitoring system developed for embedded environments.</p>
-                <p class="mt-3 text-sm text-gray-500"><strong>Tech:</strong> C, Arduino</p>
-            </a>
-            <a href="cpp-pathfinding.html" class="bg-card p-6 rounded-xl hover-lift flex flex-col" data-aos="fade-up" data-aos-delay="500" data-aos-duration="600">
-                <h3 class="text-xl font-poppins font-semibold mb-2 text-default-text">Pathfinding Visualizer (C++)</h3>
-                <p class="text-default-text flex-grow">A desktop application that visualizes various pathfinding algorithms.</p>
-                <p class="mt-3 text-sm text-gray-500"><strong>Tech:</strong> C++, SFML</p>
+    <section id="experience" class="py-16 md:py-24 px-4 bg-section border-t border-border-color">
+            <div class="max-w-7xl mx-auto" data-aos="fade-up">
+                <h2 class="text-4xl font-poppins font-bold text-primary-brand text-center mb-12">Experience</h2>
+                <div class="space-y-12">
+                    <div class="bg-card p-8 rounded-lg shadow-md flex flex-col md:flex-row items-start md:items-center">
+                        <div class="md:w-1/4 mb-4 md:mb-0">
+                            <h3 class="text-xl font-semibold text-secondary-brand">Web Development Intern</h3>
+                            <p class="text-gray-400">Company Name</p>
+                            <p class="text-sm text-gray-500">Jan 2024 - Mar 2024</p>
+                        </div>
+                        <div class="md:w-3/4 md:pl-8">
+                            <ul class="list-disc list-inside space-y-2 text-lg">
+                                <li>Developed and maintained responsive web applications using React.js and Tailwind CSS.</li>
+                                <li>Collaborated with a team to implement new features and improve user experience.</li>
+                                <li>Optimized website performance and ensured cross-browser compatibility.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="bg-card p-8 rounded-lg shadow-md flex flex-col md:flex-row items-start md:items-center">
+                        <div class="md:w-1/4 mb-4 md:mb-0">
+                            <h3 class="text-xl font-semibold text-secondary-brand">IoT Project Lead</h3>
+                            <p class="text-gray-400">University Project</p>
+                            <p class="text-sm text-gray-500">Sep 2023 - Dec 2023</p>
+                        </div>
+                        <div class="md:w-3/4 md:pl-8">
+                            <ul class="list-disc list-inside space-y-2 text-lg">
+                                <li>Led a team in developing a smart home automation system using Arduino and ESP32.</li>
+                                <li>Designed and implemented sensor integration for temperature, humidity, and motion detection.</li>
+                                <li>Created a mobile application interface for remote control and monitoring.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+       <section id="projects" class="pt-28 pb-16 px-4 bg-card border-t border-border-color">
+    <div class="max-w-7xl mx-auto" data-aos="fade-up">
+        <h2 class="text-4xl font-poppins font-bold text-primary-brand text-center mb-12">My Projects</h2>
+        <div class="flex justify-center"> <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+                <a href="angular-task-management.html" target="_blank" class="bg-card rounded-lg shadow-md overflow-hidden hover-lift block" data-aos="fade-up" data-aos-duration="600">
+                    <img src="/images/project-angular-task.jpg" alt="Task Management App (Angular)" class="w-full h-48 object-cover" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('project-image-placeholder');">
+                    <div class="p-8"> <h3 class="text-2xl font-semibold mb-2 text-default-text">Task Management App (Angular)</h3>
+                        <p class="text-gray-400 mb-4 text-default-text">A web app for managing tasks with real-time updates and a clean UI.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag">Angular</span>
+                            <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag">Firebase</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="arduino-smart-home.html" target="_blank" class="bg-card rounded-lg shadow-md overflow-hidden hover-lift block" data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
+                    <img src="/images/project-arduino-smart.jpg" alt="Smart Home IoT (Arduino)" class="w-full h-48 object-cover" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('project-image-placeholder');">
+                    <div class="p-8"> <h3 class="text-2xl font-semibold mb-2 text-default-text">Smart Home IoT (Arduino)</h3>
+                        <p class="text-gray-400 mb-4 text-default-text">An Internet of Things system to control home appliances remotely.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag">Arduino</span>
+                            <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag">C</span>
+                            <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag">Bluetooth</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="aws-serverless-api.html" target="_blank" class="bg-card rounded-lg shadow-md overflow-hidden hover-lift block" data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
+                    <img src="/images/project-aws-serverless.jpg" alt="Serverless API (AWS)" class="w-full h-48 object-cover" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('project-image-placeholder');">
+                    <div class="p-8"> <h3 class="text-2xl font-semibold mb-2 text-default-text">Serverless API (AWS)</h3>
+                        <p class="text-gray-400 mb-4 text-default-text">A scalable serverless REST API built on AWS for a todo application.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag">AWS Lambda</span>
+                            <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag">Node.js</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="bash-automation.html" target="_blank" class="bg-card rounded-lg shadow-md overflow-hidden hover-lift block" data-aos="fade-up" data-aos-delay="300" data-aos-duration="600">
+                    <img src="/images/project-bash-automation.jpg" alt="Automation Script (Bash)" class="w-full h-48 object-cover" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('project-image-placeholder');">
+                    <div class="p-8"> <h3 class="text-2xl font-semibold mb-2 text-default-text">Automation Script (Bash)</h3>
+                        <p class="text-gray-400 mb-4 text-default-text">A powerful Bash script to automate server setup and deployment processes.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag">Bash</span>
+                            <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag">Linux</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="c-embedded-monitor.html" target="_blank" class="bg-card rounded-lg shadow-md overflow-hidden hover-lift block" data-aos="fade-up" data-aos-delay="400" data-aos-duration="600">
+                    <img src="/images/project-c-embedded.jpg" alt="Embedded System Monitor (C)" class="w-full h-48 object-cover" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('project-image-placeholder');">
+                    <div class="p-8"> <h3 class="text-2xl font-semibold mb-2 text-default-text">Embedded System Monitor (C)</h3>
+                        <p class="text-gray-400 mb-4 text-default-text">A real-time monitoring system developed for embedded environments.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag">C</span>
+                            <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag">Arduino</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="cpp-pathfinding.html" target="_blank" class="bg-card rounded-lg shadow-md overflow-hidden hover-lift block" data-aos="fade-up" data-aos-delay="500" data-aos-duration="600">
+                    <img src="/images/project-cpp-pathfinding.jpg" alt="Pathfinding Visualizer (C++)" class="w-full h-48 object-cover" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('project-image-placeholder');">
+                    <div class="p-8"> <h3 class="text-2xl font-semibold mb-2 text-default-text">Pathfinding Visualizer (C++)</h3>
+                        <p class="text-gray-400 mb-4 text-default-text">A desktop application that visualizes various pathfinding algorithms.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag">C++</span>
+                            <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag">SFML</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="flex justify-center mt-12 space-x-4" data-aos="fade-up" data-aos-delay="600">
+            <button id="show-more-initial" class="bg-primary-brand text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 ease-in-out inline-block hover:shadow-xl hover:translate-y-[-2px]">
+                More
+            </button>
+            <a href="all-projects.html" id="explore-all-projects" class="bg-section p-6 rounded-xl hover-lift shadow-lg text-center max-w-sm w-full flex flex-col justify-between btn-primary">
+                <h3 class="text-xl font-poppins font-semibold mb-4 text-default-text">Explore More</h3>
+                <p class="text-default-text mb-4 flex-grow">Discover all 25+ projects I've worked on.</p>
+                <span class="self-center">View All Projects (25+)</span>
             </a>
         </div>
-        <div class="flex justify-center mt-12" data-aos="fade-up" data-aos-delay="600">
-    <a href="all-projects.html" class="bg-section p-6 rounded-xl hover-lift shadow-lg text-center max-w-sm w-full flex flex-col justify-between btn-primary">
-        <h3 class="text-xl font-poppins font-semibold mb-4 text-default-text">Explore More</h3>
-        <p class="text-default-text mb-4 flex-grow">Discover all 25+ projects I've worked on.</p>
-        <span class="self-center">View All Projects (25+)</span>
-    </a>
-</div>
-        </div>
-    </section>
+    </div>
+</section>
 
     <section id="connect" class="bg-section pt-28 pb-16 px-4 sm:px-6 lg:px-8">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-4xl sm:text-5xl font-poppins font-bold text-center mb-8 text-primary-brand" data-aos="fade-up">Connect with Me</h2>
             <div class="flex flex-wrap justify-center gap-6" data-aos="fade-up" data-aos-delay="100">
                 <a href="https://github.com/manisaiteja2007" target="_blank" rel="noopener noreferrer" title="GitHub" class="icon">
-                    <img src="https://www.vectorlogo.zone/logos/github/github-icon.svg" alt="GitHub" class="w-10 h-10 social-icon" />
+                    <img src="https://www.vectorlogo.zone/logos/github/github-icon.svg" alt="GitHub" class="w-10 h-10 social-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('social-icon-placeholder');" />
                 </a>
                 <a href="https://www.kaggle.com/bejjalamanisaiteja" target="_blank" rel="noopener noreferrer" title="Kaggle" class="icon">
-                    <img src="https://www.vectorlogo.zone/logos/kaggle/kaggle-icon.svg" alt="Kaggle" class="w-10 h-10 social-icon" />
+                    <img src="https://www.vectorlogo.zone/logos/kaggle/kaggle-icon.svg" alt="Kaggle" class="w-10 h-10 social-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('social-icon-placeholder');" />
                 </a>
                 <a href="https://manisaitejabejjala.hashnode.dev" target="_blank" rel="noopener noreferrer" title="Hashnode" class="icon">
-                    <img src="https://www.vectorlogo.zone/logos/hashnode/hashnode-icon.svg" alt="Hashnode" class="w-10 h-10 social-icon" />
+                    <img src="https://www.vectorlogo.zone/logos/hashnode/hashnode-icon.svg" alt="Hashnode" class="w-10 h-10 social-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('social-icon-placeholder');" />
                 </a>
                 <a href="https://discord.com/users/manisaiteja7509" target="_blank" rel="noopener noreferrer" title="Discord" class="icon">
-                    <img src="https://www.vectorlogo.zone/logos/discord/discord-icon.svg" alt="Discord" class="w-10 h-10 social-icon" />
+                    <img src="https://www.vectorlogo.zone/logos/discord/discord-icon.svg" alt="Discord" class="w-10 h-10 social-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('social-icon-placeholder');" />
                 </a>
                 <a href="https://codepen.io/bejjala-mani-sai-teja" target="_blank" rel="noopener noreferrer" title="CodePen" class="icon">
-                    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/codepen.svg" alt="CodePen" class="w-10 h-10 social-icon" />
+                    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/codepen.svg" alt="CodePen" class="w-10 h-10 social-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('social-icon-placeholder');" />
                 </a>
                 <a href="https://dev.to/manisaiteja2007" target="_blank" rel="noopener noreferrer" title="Dev.to" class="icon">
-                    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/devto.svg" alt="Dev.to" class="w-10 h-10 social-icon" />
+                    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/devto.svg" alt="Dev.to" class="w-10 h-10 social-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('social-icon-placeholder');" />
                 </a>
                 <a href="https://twitter.com/manisaiteja_b" target="_blank" rel="noopener noreferrer" title="Twitter" class="icon">
-                    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="Twitter" class="w-10 h-10 social-icon" />
+                    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="Twitter" class="w-10 h-10 social-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('social-icon-placeholder');" />
                 </a>
                 <a href="https://linkedin.com/in/bejjala-mani-sai-teja" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="icon">
-                    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="LinkedIn" class="w-10 h-10 social-icon" />
+                    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="LinkedIn" class="w-10 h-10 social-icon" onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('social-icon-placeholder');" />
                 </a>
             </div>
         </div>
@@ -380,7 +525,7 @@
     </div>
 </section>
 
-    <section class="max-w-6xl mx-auto pt-28 pb-16 px-4 sm:px-6 lg:px-8">
+    <section id="fun-fact" class="max-w-6xl mx-auto pt-28 pb-16 px-4 sm:px-6 lg:px-8">
         <h2 class="text-4xl sm:text-5xl font-poppins font-bold text-center mb-8 text-primary-brand" data-aos="fade-up">Fun Fact</h2>
         <p class="text-lg sm:text-xl italic text-center leading-relaxed text-default-text" data-aos="fade-up" data-aos-delay="100">
             🌟 I love blending my ECE background with frontend development, constantly experimenting with new tech stacks to create innovative projects that seamlessly bridge hardware and software!
@@ -388,9 +533,9 @@
     </section>
 
     <footer class="bg-card text-center py-8 border-t border-border-color">
-        <p class="text-default-text text-sm mb-2">&copy; <span id="current-year"></span> Mani Sai Teja Bejjala. All rights reserved.</p>
-        <a href="#hero" class="text-primary-brand hover:underline text-base font-medium">Back to Top</a>
-    </footer>
+    <p class="text-default-text text-sm mb-2">&copy; <span id="current-year"></span> Mani Sai Teja Bejjala. All rights reserved.</p>
+    <a href="#" id="back-to-top" class="text-primary-brand hover:underline text-base font-medium">Back to Top</a>
+</footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
@@ -507,6 +652,59 @@
 
             // Update copyright year dynamically
             document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        
+// Project Display Logic
+            const projectItems = document.querySelectorAll('#projects .grid > a'); // Select direct children of the grid
+            const showMoreInitialButton = document.getElementById('show-more-initial');
+            const exploreAllProjectsButton = document.getElementById('explore-all-projects');
+
+            const initialProjectsToShow = 2; // Show only the first 2 projects initially
+            const totalProjectsAfterMoreClick = 6; // Total projects visible after "More" is clicked
+
+            let isMoreClicked = false; // Flag to track if "More" button has been clicked
+
+            const updateProjectVisibility = () => {
+                projectItems.forEach((item, index) => {
+                    if (!isMoreClicked && index < initialProjectsToShow) {
+                        item.classList.remove('project-hidden');
+                    } else if (isMoreClicked && index < totalProjectsAfterMoreClick) {
+                        item.classList.remove('project-hidden');
+                    } else {
+                        item.classList.add('project-hidden');
+                    }
+                });
+
+                // Manage button visibility
+                if (!isMoreClicked) {
+                    // Initial stage: show "More" button, hide "Explore More"
+                    showMoreInitialButton.style.display = 'inline-block';
+                    exploreAllProjectsButton.style.display = 'none';
+                } else {
+                    // Final stage: hide "More" button, show "Explore More"
+                    showMoreInitialButton.style.display = 'none';
+                    exploreAllProjectsButton.style.display = 'flex'; // Use 'flex' as per your HTML for btn-primary
+                }
+
+                // Edge case: if there are 2 or fewer projects total, hide both buttons
+                if (projectItems.length <= initialProjectsToShow) {
+                    showMoreInitialButton.style.display = 'none';
+                    exploreAllProjectsButton.style.display = 'none';
+                }
+            };
+
+            // Initial display on load
+            updateProjectVisibility();
+
+            showMoreInitialButton.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent default link behavior if it's a button
+
+                isMoreClicked = true; // Set the flag to true
+                updateProjectVisibility(); // Update visibility based on the new flag state
+            });
+
+            // "Explore More" button's click listener remains the same, as it's a link to another page.
+            // No changes needed here.
         });
     </script>
 </body>
