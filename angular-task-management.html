@@ -4,86 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Management App (Angular) - Mani Sai Teja Bejjala</title>
-
-    <script>
-        // Define tailwind config early
-        tailwind = {
-            config: {
-                darkMode: 'class', // Enable dark mode based on 'dark' class
-                theme: {
-                    extend: {
-                        // Example custom colors if needed, e.g., 'primary-blue': '#2563eb'
-                    }
-                }
-            }
-        };
-
-        // This script runs synchronously and before any rendering.
-        // It checks user preference and sets a temporary dark background
-        // to prevent the flash of light content.
-        (function() {
-            try {
-                const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-                const currentTheme = localStorage.getItem('theme');
-                const htmlElement = document.documentElement;
-
-                if (currentTheme === 'dark' || (currentTheme === null && prefersDarkScheme.matches)) {
-                    // Apply dark class immediately
-                    htmlElement.classList.add('dark');
-                    // Set temporary dark background color to prevent flash
-                    // This color should match your primary dark background in Tailwind/CSS
-                    htmlElement.style.backgroundColor = '#1a202c'; // bg-gray-900 equivalent
-                    htmlElement.style.color = '#e2e8f0'; // text-gray-200 equivalent
-                } else if (currentTheme === 'light') {
-                    htmlElement.classList.remove('dark');
-                    // Ensure default light background if explicitly light
-                    htmlElement.style.backgroundColor = '#f8fafc'; // bg-slate-50 equivalent
-                    htmlElement.style.color = '#1a202c'; // text-gray-900 equivalent
-                }
-            } catch (e) {
-                console.warn("Dark mode pre-emption script failed:", e);
-            }
-        })();
-    </script>
-
     <script src="https://cdn.tailwindcss.com"></script>
-
     <style>
         /* This entire style block is COPIED from index.html */
         /* Base styles & Font Fallbacks */
-        /* Remove initial background-color and color from body, let html handle it or Tailwind */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-            /* background-color: #f8fafc; /* Removed, handled by immediate script or Tailwind */
-            /* color: #1a202c; /* Removed, handled by immediate script or Tailwind */
+            background-color: #f8fafc; /* Tailwind: bg-slate-50 */
+            color: #1a202c; /* Tailwind: text-gray-900 */
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Set base theme on HTML for more global control and to allow script to apply immediately */
-        html {
-             background-color: #f8fafc; /* Tailwind: bg-slate-50 */
-             color: #1a202c; /* Tailwind: text-gray-900 */
-        }
-
-
-        /* Dark Mode Specific Overrides - IMPORTANT: Target html.dark */
-        html.dark {
+        /* Dark Mode Specific Overrides */
+        body.dark {
             background-color: #1a202c; /* Tailwind: bg-gray-900 */
             color: #e2e8f0; /* Tailwind: text-gray-200 */
         }
-        html.dark .text-gray-900 { color: #e2e8f0; }
-        html.dark .text-gray-800 { color: #e2e8f0; }
-        html.dark .text-gray-600 { color: #a0aec0; } /* Tailwind: text-gray-400 */
-        html.dark .bg-white { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
-        html.dark .bg-gray-100 { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
-        html.dark .border-blue-200 { border-color: #4a5568; } /* Tailwind: border-gray-600 */
-        html.dark .text-blue-600 { color: #60a5fa; } /* Tailwind: text-blue-400 */
-        html.dark .bg-blue-600 { background-color: #3b82f6; } /* Tailwind: bg-blue-500 */
-        html.dark .hover\:bg-blue-700:hover { background-color: #2563eb; } /* Tailwind: hover:bg-blue-600 */
-        html.dark .shadow-md {
+        body.dark .text-gray-900 { color: #e2e8f0; }
+        body.dark .text-gray-800 { color: #e2e8f0; }
+        body.dark .text-gray-600 { color: #a0aec0; } /* Tailwind: text-gray-400 */
+        body.dark .bg-white { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .bg-gray-100 { background-color: #2d3748; } /* Tailwind: bg-gray-800 */
+        body.dark .border-blue-200 { border-color: #4a5568; } /* Tailwind: border-gray-600 */
+        body.dark .text-blue-600 { color: #60a5fa; } /* Tailwind: text-blue-400 */
+        body.dark .bg-blue-600 { background-color: #3b82f6; } /* Tailwind: bg-blue-500 */
+        body.dark .hover\:bg-blue-700:hover { background-color: #2563eb; } /* Tailwind: hover:bg-blue-600 */
+        body.dark .shadow-md {
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15); /* More visible shadow in dark mode */
         }
-        html.dark .project-card:hover {
+        body.dark .project-card:hover {
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.2);
         }
 
@@ -112,9 +61,56 @@
             transition: max-height 0.3s ease-in;
         }
     </style>
+    <script>
+        // This entire script block is COPIED from index.html
+        tailwind.config = {
+            darkMode: 'class', // Enable dark mode based on 'dark' class
+            theme: {
+                extend: {
+                    colors: {
+                        // Example custom colors if needed, e.g., 'primary-blue': '#2563eb'
+                    }
+                }
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dark Mode Logic
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme === 'dark' || (currentTheme === null && prefersDarkScheme.matches)) {
+                document.body.classList.add('dark');
+            }
+
+            document.getElementById('darkModeToggle').addEventListener('click', () => {
+                document.body.classList.toggle('dark');
+                localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+            });
+
+            // Mobile Menu Logic
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+                    menuButton.setAttribute('aria-expanded', !isExpanded);
+                });
+
+                // Close mobile menu when a link is clicked (smoother UX)
+                mobileMenu.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        menuButton.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+        });
+    </script>
 </head>
-<body class="antialiased">
-    <nav class="bg-white shadow-md sticky top-0 z-50 dark:bg-gray-800">
+<body class="antialiased"> <nav class="bg-white shadow-md sticky top-0 z-50 dark:bg-gray-800">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
 
@@ -210,45 +206,8 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Dark Mode Toggle Logic
-            document.getElementById('darkModeToggle').addEventListener('click', () => {
-                const htmlElement = document.documentElement;
-                htmlElement.classList.toggle('dark');
-                localStorage.setItem('theme', htmlElement.classList.contains('dark') ? 'dark' : 'light');
-
-                // Remove inline style once Tailwind/CSS has applied proper styles
-                htmlElement.style.backgroundColor = '';
-                htmlElement.style.color = '';
-            });
-
-            // Mobile Menu Logic
-            const menuButton = document.getElementById('menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-
-            if (menuButton && mobileMenu) {
-                menuButton.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
-                    menuButton.setAttribute('aria-expanded', !isExpanded);
-                });
-
-                // Close mobile menu when a link is clicked (smoother UX)
-                mobileMenu.querySelectorAll('.nav-link').forEach(link => {
-                    link.addEventListener('click', () => {
-                        mobileMenu.classList.add('hidden');
-                        menuButton.setAttribute('aria-expanded', 'false');
-                    });
-                });
-            }
-
-            document.getElementById('current-year').textContent = new Date().getFullYear();
-
-            // Clear the temporary inline style after the DOM is fully loaded and
-            // Tailwind/CSS styles are applied. This prevents style attribute conflicts.
-            document.documentElement.style.backgroundColor = '';
-            document.documentElement.style.color = '';
-        });
+        // This script is COPIED from index.html
+        document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
