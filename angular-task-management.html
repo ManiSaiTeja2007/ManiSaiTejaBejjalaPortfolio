@@ -62,7 +62,7 @@
         }
     </style>
     <script>
-        // This entire script block is COPIED from index.html
+        // Tailwind config moved here as it needs to be available before body content
         tailwind.config = {
             darkMode: 'class', // Enable dark mode based on 'dark' class
             theme: {
@@ -74,18 +74,21 @@
             }
         };
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Dark Mode Logic
+        // Immediate Dark Mode Logic (to prevent flash)
+        (function() {
             const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
             const currentTheme = localStorage.getItem('theme');
 
             if (currentTheme === 'dark' || (currentTheme === null && prefersDarkScheme.matches)) {
-                document.body.classList.add('dark');
+                document.documentElement.classList.add('dark'); // Apply to document.documentElement for Tailwind darkMode: 'class'
             }
+        })();
 
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dark Mode Toggle Logic (remains in DOMContentLoaded)
             document.getElementById('darkModeToggle').addEventListener('click', () => {
-                document.body.classList.toggle('dark');
-                localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+                document.documentElement.classList.toggle('dark'); // Apply to document.documentElement
+                localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
             });
 
             // Mobile Menu Logic
@@ -110,14 +113,15 @@
         });
     </script>
 </head>
-<body class="antialiased"> <nav class="bg-white shadow-md sticky top-0 z-50 dark:bg-gray-800">
+<body class="antialiased">
+    <nav class="bg-white shadow-md sticky top-0 z-50 dark:bg-gray-800">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-blue-600">Mani Sai Teja Bejjala</h1>
 
             <div class="md:hidden flex items-center space-x-4">
                 <button id="darkModeToggle" aria-label="Toggle dark mode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8 0 1010.586 10.586z"></path>
                     </svg>
                 </button>
                 <button id="menu-button" aria-label="Open main menu" aria-controls="mobile-menu" aria-expanded="false" class="text-gray-600 dark:text-gray-200 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 hover:scale-105">
