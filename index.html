@@ -132,13 +132,23 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            flex-wrap: wrap;
+        }
+        #theme-toggle {
+            top: 1rem;
+            right: 1rem;
+            z-index: 60;
         }
         @media (max-width: 768px) {
             .nav-container {
                 justify-content: space-between;
+                padding-top: 3.5rem;
+            }
+            #theme-toggle {
+                top: 3.5rem;
             }
         }
-        @media (max-width: 768px) {
+        @media (min-width: 769px) {
             .desktop-nav {
                 margin-left: auto;
             }
@@ -157,7 +167,7 @@
     </svg>
 
     <!-- Dark Mode Toggle -->
-    <button id="theme-toggle" class="fixed top-4 right-4 z-50 p-3 rounded-full bg-primary text-white hover:bg-secondary btn-glow flash-transition" aria-label="Toggle dark/light mode">
+    <button id="theme-toggle" class="fixed p-3 rounded-full bg-primary text-white hover:bg-secondary btn-glow flash-transition" aria-label="Toggle dark/light mode">
         <svg id="theme-icon" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
             <path id="sun" fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" class="block"></path>
             <path id="moon" fill-rule="evenodd" d="M6.3 15.7A6 6 0 1015.7 6.3 4 4 0 116.3 15.7z" clip-rule="evenodd" class="hidden"></path>
@@ -191,7 +201,7 @@
             <a href="#projects" class="block py-2 font-semibold hover:text-primary flash-transition">Projects</a>
             <a href="#connect" class="block py-2 font-semibold hover:text-primary flash-transition">Connect</a>
             <a href="#stats" class="block py-2 font-semibold hover:text-primary flash-transition">Stats</a>
-            <a href="#connect" class="block py-2 font-semibold hover:text-primary flash-transition">Contact</a>
+            <a href="#contact" class="block py-2 font-semibold hover:text-primary flash-transition">Contact</a>
         </div>
     </nav>
 
@@ -295,19 +305,19 @@
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linkedin/linkedin-original.svg" alt="LinkedIn" class="h-10 social-icon" loading="lazy">
                 </a>
                 <a href="https://twitter.com/manisaiteja">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/twitter/twitter.svg" alt="Twitter" class="h-10 social-icon" loading="lazy">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/twitter/twitter-original.svg" alt="Twitter" class="h-10 social-icon" loading="lazy">
                 </a>
                 <a href="https://leetcode.com/manisaiteja">
-                    <img src="/images/projects/leetcode-icon.png" alt="LeetCode" class="h-10 social-icon" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%220%22 fill=%22var(--icon-bright)%22><path d=%22M%252016%252018%2520v2%2520H%25205v-2%2520h11%2520m5-6.5%2520a1.5%25201.5%25200%25201%25201%25200%25203%2520a1.5%25201.5%25200%25201%25201%25200-3%2520m-2.42-4.96%25201.5%2520a1.5%25200%25201%25201%25202.12%25202.12%2520l-7%25207.07%2520a1.5%25201.5%25200%25201%25200%2520-2.12-2.12%2520l7.07-7.07%2520z%22/></svg>'; this.onerror=null;">
+                    <img src="/images/projects/leetcode-icon.png" alt="LeetCode" class="h-10 social-icon" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22var(--icon-bright)%22><path d=%22M16 18v2H5v-2h11zm5-6.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm-2.42-4.96a1.5 1.5 0 0 1 2.12 2.12l-7.07 7.07a1.5 1.5 0 0 1-2.12-2.12l7.07-7.07z%22/></svg>'; this.onerror=null;">
                 </a>
                 <a href="https://kaggle.com/manisaiteja">
-                    <img src="/images/projects/kaggle-icon.png" alt="Kaggle" class="h-10 social-icon" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%25200%2520%24z%22%2520fill=%22var(--%22)%22><path d=%22M%252019%25203%25200%25205v0%2520h14%2520V3%2520m-2%252016%2520H%2520v7%2520v-2%2520h10%2520v2%2520m0%2520-4%2520H%2520v7%2520v-2%2520h10%2520v2%2520m0%2520-4%2520H%252-7V%25209%2520h10%2520v2%2520z%22/></svg>'; this.onerror=null;">
+                    <img src="/images/projects/kaggle-icon.png" alt="Kaggle" class="h-10 social-icon" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22var(--icon-bright)%22><path d=%22M19 3H5v18h14V3zm-2 16H7v-2h10v2zm0-4H7v-2h10v2zm0-4H7V9h10v2z%22/></svg>'; this.onerror=null;">
                 </a>
                 <a href="https://hackerrank.com/manisaiteja">
-                    <img src="/images/projects/hackerrank-icon.png" alt="HackerRank" class="h-10 social-icon" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%220%2520%24%2520fill=%22%2520var(--icon-bright)%22%2520><path d=%22M%252012%25202%2520L%25202%25207%2520v10%2520l10%25205%2520l10-5%2520V7%2520L%252012%25202%2520z%2520m0%25202.83%2520l7.17%25203.58%2520v7.18%2520L%252012%252019.17%2520l-7.17-3.58%2520V%25208.41%2520L%252012%25204.83%2520z%22/></svg>'; this.onerror=null;">
+                    <img src="/images/projects/hackerrank-icon.png" alt="HackerRank" class="h-10 social-icon" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22var(--icon-bright)%22><path d=%22M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.83l7.17 3.58v7.18L12 19.17l-7.17-3.58V8.41L12 4.83z%22/></svg>'; this.onerror=null;">
                 </a>
                 <a href="https://codeforces.com/profile/maninga">
-                    <img src="/images/projects/codeforces-icon.png" alt="Codeforces" class="h-10 social-icon" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%220%2520%2520%24%2520fill=%22%2520var(--icon-bright)%22%2520><path d=%22M%252012%25202%2520a%252010%252010%25200%25201%25200%25200%252020%2520a%252010%252010%25200%25200%25200%25200-20%2520z%2520m0%252018%2520a%25208%25208%25200%25201%25201%25200-16%2520a%25208%25208%25200%25201%25201%25200%252016%2520z%22/></svg>'; this.onerror=null;">
+                    <img src="/images/projects/codeforces-icon.png" alt="Codeforces" class="h-10 social-icon" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22var(--icon-bright)%22><path d=%22M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z%22/></svg>'; this.onerror=null;">
                 </a>
             </div>
         </div>
