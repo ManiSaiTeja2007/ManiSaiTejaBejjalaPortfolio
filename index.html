@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Portfolio of Mani Sai Teja Bejjala, Frontend Developer and B-Tech ECE Student at IIIT Sri City, showcasing web development, IoT, and Arduino projects."
+    />
+    <meta name="author" content="Mani Sai Teja Bejjala" />
+    <meta property="og:title" content="Mani Sai Teja Bejjala Portfolio" />
+    <meta
+      property="og:description"
+      content="Explore my projects in web development, IoT, and more."
+    />
+    <meta property="og:image" content="/images/og-image.jpg" />
+    <meta
+      property="og:url"
+      content="https://manisaiteja2007.github.io/ManiSaiTejaBejjalaPortfolio/"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mani Sai Teja Bejjala Portfolio" />
+    <meta
+      name="twitter:description"
+      content="Explore my projects in web development, IoT, and more."
+    />
+    <meta
+      name="twitter:image"
+      content="https://manisaiteja2007.github.io/ManiSaiTejaBejjalaPortfolio/images/og-image.jpg"
+    />
+
+    <title>Mani Sai Teja Bejjala</title>
+
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap"
+      as="style"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="particles.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"
+    ></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Mani Sai Teja Bejjala",
+        "url": "https://manisaiteja2007.github.io/ManiSaiTejaBejjalaPortfolio/",
+        "sameAs": [
+          "https://github.com/manisaiteja2007",
+          "https://www.linkedin.com/in/mani-sai-teja-bejjala"
+        ],
+        "jobTitle": "Frontend Developer",
+        "alumniOf": "IIIT Sri City, Chittoor"
+      }
+    </script>
+  </head>
+  <body class="font-inter min-h-screen">
+    <button
+      id="theme-toggle"
+      class="fixed top-20 right-4 z-50 p-3 rounded-full bg-primary-brand text-white shadow-lg hover:shadow-xl btn-primary transition-all duration-300 ease-in-out"
+      aria-label="Toggle dark/light mode"
+    >
+      <svg
+        id="sun-icon"
+        class="w-6 h-6 block"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707-.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+      <svg id="moon-icon" class="w-6 h-6" viewBox="0 0 20 20">
+        <path
+          fill-rule="evenodd"
+          d="M6.3 15.7A6 0 1015.7 6.3 4 4 0 116.3 15.7z"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+    </button>
+
+    <nav class="fixed top-0 w-full bg-card/95 backdrop-blur-md z-40 shadow-sm">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-2">
+          <img
+            src="/images/logo.png"
+            alt="Mani Sai Teja Logo"
+            class="h-10 w-10"
+            onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22%234f46e5%22><rect width=%22100%22 height=%22100%22 fill=%22%23ffffff%22 /><text x=%2250%22 y=%2265%22 font-family=%22Poppins, sans-serif%22 font-size=%2260%22 font-weight=%22bold%22 text-anchor=%22middle%22 fill=%22%234f46e5%22>M</text></svg>'; this.classList.add('skill-icon-placeholder');"
+          />
+          <a
+            href="#hero"
+            class="text-2xl font-poppins font-bold text-primary-brand hidden md:block"
+          >
+            Mani Sai Teja <span class="md:inline lg:block">Bejjala</span>
+          </a>
+        </div>
+
+        <div class="md:hidden flex items-center ml-auto pr-16">
+          <button
+            id="menu-toggle"
+            aria-label="Open main menu"
+            aria-controls="mobile-menu"
+            aria-expanded="false"
+            class="p-2 rounded-md text-default-text focus:outline-none focus:ring-2 focus:ring-primary-brand"
+          >
+            <svg
+              class="w-8 h-8"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2.5"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="hidden md:flex space-x-6 items-center">
+          <a
+            href="#about"
+            class="font-semibold text-default hover:text-primary-brand transition-colors duration-200"
+            >About</a
+          >
+          <a
+            href="#skills"
+            class="font-semibold text-default hover:text-primary-brand transition-colors duration-200"
+            >Skills</a
+          >
+          <a
+            href="#projects"
+            class="font-semibold text-default hover:text-primary-brand transition-colors duration-200"
+            >Projects</a
+          >
+          <a
+            href="#connect"
+            class="font-semibold text-default hover:text-primary-brand transition-colors duration-200"
+            >Connect</a
+          >
+          <a
+            href="#stats"
+            class="font-semibold text-default hover:text-primary-brand transition-colors duration-200"
+            >Stats</a
+          >
+          <a
+            href="#contact"
+            class="font-semibold text-default hover:text-primary-brand transition-colors duration-200"
+            >Contact</a
+          >
+          <a
+            href="#fun-fact"
+            class="font-semibold text-default hover:text-primary-brand transition-colors duration-200"
+            >Fun Fact</a
+          >
+        </div>
+      </div>
+
+      <div
+        id="mobile-menu"
+        class="md:hidden bg-card border-t border-border-color shadow-inner"
+      >
+        <a
+          href="#about"
+          class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200"
+          >About</a
+        >
+        <a
+          href="#skills"
+          class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200"
+          >Skills</a
+        >
+        <a
+          href="#projects"
+          class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200"
+          >Projects</a
+        >
+        <a
+          href="#connect"
+          class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200"
+          >Connect</a
+        >
+        <a
+          href="#stats"
+          class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200"
+          >Stats</a
+        >
+        <a
+          href="#contact"
+          class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200"
+          >Contact</a
+        >
+        <a
+          href="#fun-fact"
+          class="block px-4 py-3 text-default-text hover:bg-section transition-colors duration-200"
+          >Fun Fact</a
+        >
+      </div>
+    </nav>
+
+    <section
+      id="hero"
+      class="bg-hero min-h-screen flex items-center justify-center relative pt-20 md:pt-0"
+    >
+      <div id="particles-js"></div>
+      <div
+        class="text-center max-w-4xl mx-auto px-4 z-10"
+        data-aos="fade-up"
+        data-aos-duration="800"
+      >
+        <h1 class="text-5xl md:text-7xl font-poppins font-bold mb-4 text-white">
+          Hi 👋, I'm Mani Sai Teja Bejjala
+        </h1>
+        <p class="text-xl md:text-3xl text-gray-200">
+          Frontend Developer | B-Tech ECE Student | IIIT Sri City, Chittoor
+        </p>
+      </div>
+    </section>
+
+    <section
+      id="about"
+      class="max-w-6xl mx-auto pt-28 pb-16 px-4 sm:px-6 lg:px-8"
+    >
+      <h2
+        class="text-4xl sm:text-5xl font-poppins font-bold text-center mb-8 text-primary-brand"
+        data-aos="fade-up"
+      >
+        About Me
+      </h2>
+      <p
+        class="text-lg sm:text-xl leading-relaxed text-center text-default-text"
+        data-aos="fade-up"
+        data-aos-delay="100"
+      >
+        I'm a B-Tech Electronics and Communication Engineering student at
+        <strong>IIIT Sri City, Chittoor</strong>, driven by a passion for
+        creating impactful web experiences and exploring innovative technology
+        solutions. My expertise spans crafting responsive and intuitive web
+        interfaces alongside building robust IoT systems. I thrive on combining
+        technical precision with creative design to build seamless, user-centric
+        applications.
+      </p>
+    </section>
+
+    <section id="skills" class="bg-section pt-28 pb-16 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-6xl mx-auto">
+        <h2
+          class="text-4xl sm:text-5xl font-poppins font-bold text-center mb-8 text-primary-brand"
+          data-aos="fade-up"
+        >
+          Languages & Tools
+        </h2>
+        <div
+          class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-6 justify-items-center"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg"
+            alt="HTML5"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg"
+            alt="CSS3"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"
+            alt="JavaScript"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
+            alt="Python"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg"
+            alt="C"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg"
+            alt="C++"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
+            alt="Java"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg"
+            alt="MySQL"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg"
+            alt="Git"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg"
+            alt="VS Code"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
+            alt="AWS"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg"
+            alt="Figma"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg"
+            alt="Bootstrap"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg"
+            alt="Tailwind CSS"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg"
+            alt="React"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angularjs/angularjs-original.svg"
+            alt="Angular"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg"
+            alt="Node.js"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg"
+            alt="MongoDB"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-plain.svg"
+            alt="Firebase"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg"
+            alt="Linux"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg"
+            alt="Bash"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg"
+            alt="Arduino"
+            loading="lazy"
+            class="skill-icon"
+            onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('skill-icon-placeholder');"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="experience"
+      class="py-16 md:py-24 px-4 bg-section border-t border-border-color"
+    >
+      <div class="max-w-7xl mx-auto" data-aos="fade-up">
+        <h2
+          class="text-4xl font-poppins font-bold text-primary-brand text-center mb-12"
+        >
+          Experience
+        </h2>
+        <div class="space-y-12">
+          <div
+            class="bg-card p-8 rounded-lg shadow-md flex flex-col md:flex-row items-start md:items-center"
+          >
+            <div class="md:w-1/4 mb-4 md:mb-0">
+              <h3 class="text-xl font-semibold text-secondary-brand">
+                Web Development Intern
+              </h3>
+              <p class="text-gray-400">Company Name</p>
+              <p class="text-sm text-gray-500">Jan 2024 - Mar 2024</p>
+            </div>
+            <div class="md:w-3/4 md:pl-8">
+              <ul class="list-disc list-inside space-y-2 text-lg">
+                <li>
+                  Developed and maintained responsive web applications using
+                  React.js and Tailwind CSS.
+                </li>
+                <li>
+                  Collaborated with a team to implement new features and improve
+                  user experience.
+                </li>
+                <li>
+                  Optimized website performance and ensured cross-browser
+                  compatibility.
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div
+            class="bg-card p-8 rounded-lg shadow-md flex flex-col md:flex-row items-start md:items-center"
+          >
+            <div class="md:w-1/4 mb-4 md:mb-0">
+              <h3 class="text-xl font-semibold text-secondary-brand">
+                IoT Project Lead
+              </h3>
+              <p class="text-gray-400">University Project</p>
+              <p class="text-sm text-gray-500">Sep 2023 - Dec 2023</p>
+            </div>
+            <div class="md:w-3/4 md:pl-8">
+              <ul class="list-disc list-inside space-y-2 text-lg">
+                <li>
+                  Led a team in developing a smart home automation system using
+                  Arduino and ESP32.
+                </li>
+                <li>
+                  Designed and implemented sensor integration for temperature,
+                  humidity, and motion detection.
+                </li>
+                <li>
+                  Created a mobile application interface for remote control and
+                  monitoring.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="projects"
+      class="pt-28 pb-16 px-4 bg-card border-t border-border-color"
+    >
+      <div class="max-w-7xl mx-auto" data-aos="fade-up">
+        <h2
+          class="text-4xl font-poppins font-bold text-primary-brand text-center mb-12"
+        >
+          My Projects
+        </h2>
+        <div class="flex justify-center">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center"
+          >
+            <a
+              href="projects/angular/angular-task-management/angular-task-management.html"
+              class="project-item bg-card rounded-lg shadow-md overflow-hidden hover-lift block"
+              data-aos="fade-up"
+              data-aos-duration="600"
+            >
+              <img
+                src="projects/angular/angular-task-management/project-angular-task-management.jpg"
+                alt="Task Management App (Angular)"
+                class="w-full h-48 object-cover"
+                onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('project-image-placeholder');"
+              />
+              <div class="p-8">
+                <h3 class="text-2xl font-semibold mb-2 text-default-text">
+                  Task Management App (Angular)
+                </h3>
+                <p class="text-gray-400 mb-4 text-default-text">
+                  A web app for managing tasks with real-time updates and a
+                  clean UI.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span
+                    class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag"
+                    >Angular</span
+                  >
+                  <span
+                    class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag"
+                    >Firebase</span
+                  >
+                </div>
+              </div>
+            </a>
+            <a
+              href="projects/arduino/arduino-smart-home/arduino-smart-home.html"
+              class="project-item bg-card rounded-lg shadow-md overflow-hidden hover-lift block"
+              data-aos="fade-up"
+              data-aos-delay="100"
+              data-aos-duration="600"
+            >
+              <img
+                src="projects/arduino/arduino-smart-home/project-arduino-smart-home.jpg"
+                alt="Smart Home IoT (Arduino)"
+                class="w-full h-48 object-cover"
+                onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('project-image-placeholder');"
+              />
+              <div class="p-8">
+                <h3 class="text-2xl font-semibold mb-2 text-default-text">
+                  Smart Home IoT (Arduino)
+                </h3>
+                <p class="text-gray-400 mb-4 text-default-text">
+                  An Internet of Things system to control home appliances
+                  remotely.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span
+                    class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag"
+                    >Arduino</span
+                  >
+                  <span
+                    class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag"
+                    >C</span
+                  >
+                  <span
+                    class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag"
+                    >Bluetooth</span
+                  >
+                </div>
+              </div>
+            </a>
+            <a
+              href="projects/aws/aws-serverless-api/aws-serverless-api.html"
+              class="project-item project-hidden bg-card rounded-lg shadow-md overflow-hidden hover-lift block"
+              data-aos="fade-up"
+              data-aos-delay="200"
+              data-aos-duration="600"
+            >
+              <img
+                src="projects/aws/aws-serverless-api/project-aws-serverless-api.jpg"
+                alt="Serverless API (AWS)"
+                class="w-full h-48 object-cover"
+                onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('project-image-placeholder');"
+              />
+              <div class="p-8">
+                <h3 class="text-2xl font-semibold mb-2 text-default-text">
+                  Serverless API (AWS)
+                </h3>
+                <p class="text-gray-400 mb-4 text-default-text">
+                  A scalable serverless REST API built on AWS for a todo
+                  application.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span
+                    class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag"
+                    >AWS Lambda</span
+                  >
+                  <span
+                    class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag"
+                    >Node.js</span
+                  >
+                </div>
+              </div>
+            </a>
+            <a
+              href="projects/bash/bash-automation/bash-automation.html"
+              class="project-item project-hidden bg-card rounded-lg shadow-md overflow-hidden hover-lift block"
+              data-aos="fade-up"
+              data-aos-delay="300"
+              data-aos-duration="600"
+            >
+              <img
+                src="projects/bash/bash-automation/project-bash-automation.jpg"
+                alt="Automation Script (Bash)"
+                class="w-full h-48 object-cover"
+                onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('project-image-placeholder');"
+              />
+              <div class="p-8">
+                <h3 class="text-2xl font-semibold mb-2 text-default-text">
+                  Automation Script (Bash)
+                </h3>
+                <p class="text-gray-400 mb-4 text-default-text">
+                  A powerful Bash script to automate server setup and deployment
+                  processes.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span
+                    class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag"
+                    >Bash</span
+                  >
+                  <span
+                    class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag"
+                    >Linux</span
+                  >
+                </div>
+              </div>
+            </a>
+            <a
+              href="projects/c/c-embedded-monitor/c-embedded-monitor.html"
+              class="project-item project-hidden bg-card rounded-lg shadow-md overflow-hidden hover-lift block"
+              data-aos="fade-up"
+              data-aos-delay="400"
+              data-aos-duration="600"
+            >
+              <img
+                src="projects/c/c-embedded-monitor/project-c-embedded-monitor.jpg"
+                alt="Embedded System Monitor (C)"
+                class="w-full h-48 object-cover"
+                onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('project-image-placeholder');"
+              />
+              <div class="p-8">
+                <h3 class="text-2xl font-semibold mb-2 text-default-text">
+                  Embedded System Monitor (C)
+                </h3>
+                <p class="text-gray-400 mb-4 text-default-text">
+                  A real-time monitoring system developed for embedded
+                  environments.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span
+                    class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag"
+                    >C</span
+                  >
+                  <span
+                    class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag"
+                    >Arduino</span
+                  >
+                </div>
+              </div>
+            </a>
+            <a
+              href="projects/cpp/cpp-pathfinding/cpp-pathfinding.html"
+              class="project-item project-hidden bg-card rounded-lg shadow-md overflow-hidden hover-lift block"
+              data-aos="fade-up"
+              data-aos-delay="500"
+              data-aos-duration="600"
+            >
+              <img
+                src="projects/cpp/cpp-pathfinding/project-cpp-pathfinding.jpg"
+                alt="Pathfinding Visualizer (C++)"
+                class="w-full h-48 object-cover"
+                onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('project-image-placeholder');"
+              />
+              <div class="p-8">
+                <h3 class="text-2xl font-semibold mb-2 text-default-text">
+                  Pathfinding Visualizer (C++)
+                </h3>
+                <p class="text-gray-400 mb-4 text-default-text">
+                  A desktop application that visualizes various pathfinding
+                  algorithms.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span
+                    class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag"
+                    >C++</span
+                  >
+                  <span
+                    class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm project-tag"
+                    >SFML</span
+                  >
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div
+          class="flex justify-center mt-12 space-x-4"
+          data-aos="fade-up"
+          data-aos-delay="600"
+        >
+          <button
+            id="show-more-initial-projects"
+            class="bg-primary-brand text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 ease-in-out hover:shadow-xl hover:translate-y-[-2px]"
+          >
+            More
+          </button>
+          <a
+            href="all-projects.html"
+            id="explore-all-projects-button"
+            class="bg-section p-6 rounded-xl hover-lift shadow-lg text-center max-w-sm w-full flex flex-col justify-between btn-primary"
+          >
+            <h3
+              class="text-xl font-poppins font-semibold mb-4 text-default-text"
+            >
+              Explore More
+            </h3>
+            <p class="text-default-text mb-4 flex-grow">
+              Discover all 25+ projects I've worked on.
+            </p>
+            <span class="self-center">View All Projects (25+)</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="connect" class="bg-section pt-28 pb-16 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-6xl mx-auto">
+        <h2
+          class="text-4xl sm:text-5xl font-poppins font-bold text-center mb-8 text-primary-brand"
+          data-aos="fade-up"
+        >
+          Connect with Me
+        </h2>
+        <div
+          class="flex flex-wrap justify-center gap-6"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <a
+            href="https://github.com/manisaiteja2007"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="GitHub"
+            class="icon"
+          >
+            <img
+              src="https://www.vectorlogo.zone/logos/github/github-icon.svg"
+              alt="GitHub"
+              class="w-10 h-10 social-icon"
+              onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('social-icon-placeholder');"
+            />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/mani-sai-teja-bejjala"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="LinkedIn"
+            class="icon"
+          >
+            <img
+              src="https://www.vectorlogo.zone/logos/linkedin/linkedin-icon.svg"
+              alt="LinkedIn"
+              class="w-10 h-10 social-icon"
+              onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('social-icon-placeholder');"
+            />
+          </a>
+          <a
+            href="https://www.kaggle.com/bejjalamanisaiteja"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Kaggle"
+            class="icon"
+          >
+            <img
+              src="https://www.vectorlogo.zone/logos/kaggle/kaggle-icon.svg"
+              alt="Kaggle"
+              class="w-10 h-10 social-icon"
+              onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('social-icon-placeholder');"
+            />
+          </a>
+          <a
+            href="https://manisaitejabejjala.hashnode.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Hashnode"
+            class="icon"
+          >
+            <img
+              src="https://www.vectorlogo.zone/logos/hashnode/hashnode-icon.svg"
+              alt="Hashnode"
+              class="w-10 h-10 social-icon"
+              onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('social-icon-placeholder');"
+            />
+          </a>
+          <a
+            href="https://discord.com/users/manisaiteja7509"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Discord"
+            class="icon"
+          >
+            <img
+              src="https://www.vectorlogo.zone/logos/discord/discord-icon.svg"
+              alt="Discord"
+              class="w-10 h-10 social-icon"
+              onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('social-icon-placeholder');"
+            />
+          </a>
+          <a
+            href="https://codepen.io/bejjala-mani-sai-teja"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="CodePen"
+            class="icon"
+          >
+            <img
+              src="https://www.vectorlogo.zone/logos/codepen/codepen-icon.svg"
+              alt="CodePen"
+              class="w-10 h-10 social-icon"
+              onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('social-icon-placeholder');"
+            />
+          </a>
+          <a
+            href="https://dev.to/manisaiteja2007"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Dev.to"
+            class="icon"
+          >
+            <img
+              src="https://www.vectorlogo.zone/logos/devto/devto-icon.svg"
+              alt="Dev.to"
+              class="w-10 h-10 social-icon"
+              onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('social-icon-placeholder');"
+            />
+          </a>
+          <a
+            href="https://twitter.com/manisaiteja_b"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Twitter"
+            class="icon"
+          >
+            <img
+              src="https://www.vectorlogo.zone/logos/twitter/twitter-icon.svg"
+              alt="Twitter"
+              class="w-10 h-10 social-icon"
+              onerror="this.onerror=null; this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; this.classList.add('social-icon-placeholder');"
+            />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="stats"
+      class="pt-28 pb-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
+    >
+      <h2
+        class="text-4xl sm:text-5xl font-poppins font-bold text-center mb-8 text-primary-brand"
+        data-aos="fade-up"
+      >
+        My GitHub Stats
+      </h2>
+      <p
+        class="text-lg leading-relaxed text-center mb-8 text-default-text"
+        data-aos="fade-up"
+        data-aos-delay="100"
+      >
+        These dynamic GitHub stats automatically switch themes to match your
+        chosen light or dark mode, ensuring an optimal viewing experience.
+      </p>
+      <div
+        class="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center"
+        data-aos="fade-up"
+        data-aos-delay="200"
+      >
+        <div class="w-full max-w-md bg-card rounded-xl p-4 hover-lift">
+          <img
+            id="github-stats-img"
+            src="https://github-readme-stats.vercel.app/api?username=manisaiteja2007&show_icons=true&theme=default&hide_border=true&bg_color=ffffff&text_color=1e293b&title_color=4f46e5"
+            alt="GitHub Stats"
+            class="w-full rounded-lg"
+          />
+        </div>
+
+        <div class="w-full max-w-md bg-card rounded-xl p-4 hover-lift">
+          <img
+            id="top-langs-img"
+            src="https://github-readme-stats.vercel.app/api/top-langs/?username=manisaiteja2007&layout=compact&theme=default&hide_border=true&bg_color=ffffff&text_color=1e293b&title_color=4f46e5"
+            alt="Top Languages"
+            class="w-full rounded-lg"
+          />
+        </div>
+
+        <div class="w-full max-w-md bg-card rounded-xl p-4 hover-lift">
+          <img
+            id="streak-stats-img"
+            src="https://github-readme-streak-stats.herokuapp.com/?user=manisaiteja2007&theme=default&hide_border=true&background=ffffff&stroke=4f46e5&ring=4f46e5&currStreakLabel=4f46e5&sideLabels=1e293b"
+            alt="GitHub Streak"
+            class="w-full rounded-lg"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="bg-section pt-28 pb-16 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-6xl mx-auto">
+        <h2
+          class="text-4xl sm:text-5xl font-poppins font-bold text-center mb-8 text-primary-brand"
+          data-aos="fade-up"
+        >
+          Contact Me
+        </h2>
+        <p
+          class="text-lg sm:text-xl leading-relaxed text-center mb-8 text-default-text"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          For inquiries, project discussions, or networking, please feel free to
+          contact me. You can reach me directly via email or connect through my
+          social media profiles listed above.
+        </p>
+        <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+          <a
+            href="mailto:manisaiteja2007@gmail.com"
+            class="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 font-medium text-lg dark:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-300 ease-in-out email-button-glow"
+          >
+            Send an Email
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="fun-fact"
+      class="max-w-6xl mx-auto pt-28 pb-16 px-4 sm:px-6 lg:px-8"
+    >
+      <h2
+        class="text-4xl sm:text-5xl font-poppins font-bold text-center mb-8 text-primary-brand"
+        data-aos="fade-up"
+      >
+        Fun Fact
+      </h2>
+      <p
+        class="text-lg sm:text-xl italic text-center leading-relaxed text-default-text"
+        data-aos="fade-up"
+        data-aos-delay="100"
+      >
+        🌟 I love blending my ECE background with frontend development,
+        constantly experimenting with new tech stacks to create innovative
+        projects that seamlessly bridge hardware and software!
+      </p>
+    </section>
+
+    <footer class="bg-card text-center py-8 border-t border-border-color">
+      <p class="text-default-text text-sm mb-2">
+        &copy; <span id="current-year"></span> Mani Sai Teja Bejjala. All rights
+        reserved.
+      </p>
+      <a
+        href="#"
+        id="back-to-top"
+        class="text-primary-brand hover:underline text-base font-medium"
+        >Back to Top</a
+      >
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="assets/js/script.js"></script>
+    <noscript>
+      <div class="bg-red-500 text-white text-center p-4">
+        JavaScript is disabled in your browser. Some features may not work
+        correctly.
+      </div>
+    </noscript>
+  </body>
+</html>
+
+<!-- 
+Mani Sai Teja Bejjala - Portfolio Homepage
+├── Header
+│   ├── Theme Toggle Button
+│   ├── Navigation Bar
+│   │   ├── Logo (Mani Sai Teja Bejjala)
+│   │   ├── Mobile Menu Toggle
+│   │   ├── Desktop Navigation Links
+│   │   │   ├── About
+│   │   │   ├── Skills
+│   │   │   ├── Projects
+│   │   │   ├── Connect
+│   │   │   ├── Stats
+│   │   │   ├── Contact
+│   │   │   └── Fun Fact
+│   │   └── Mobile Menu (hidden by default)
+├── Hero Section
+│   ├── Particles.js Background
+│   ├── Title: "Hi 👋, I'm Mani Sai Teja Bejjala"
+│   └── Subtitle: "Frontend Developer | B-Tech ECE Student | IIIT Sri City, Chittoor"
+├── About Me Section
+│   ├── Section Title: "About Me"
+│   └── Description Paragraph
+├── Skills Section
+│   ├── Section Title: "Languages & Tools"
+│   └── Grid of Skill Icons (e.g., HTML5, CSS3, JavaScript, Python, C, C++, Java, MySQL, Git, VS Code, AWS, Figma, Bootstrap, Tailwind CSS, React, Angular, Node.js, MongoDB, Firebase, Linux, Bash, Arduino)
+├── Experience Section
+│   ├── Section Title: "Experience"
+│   ├── Web Development Intern
+│   │   ├── Role: Web Development Intern
+│   │   ├── Company: Company Name
+│   │   ├── Duration: Jan 2024 - Mar 2024
+│   │   └── Responsibilities:
+│   │       ├── Developed and maintained responsive web applications
+│   │       ├── Collaborated on new features and UX
+│   │       └── Optimized website performance
+│   └── IoT Project Lead
+│       ├── Role: IoT Project Lead
+│       ├── Organization: University Project
+│       ├── Duration: Sep 2023 - Dec 2023
+│       └── Responsibilities:
+│           ├── Led smart home automation system development
+│           ├── Designed sensor integration
+│           └── Created mobile application interface
+├── Featured Projects Section
+│   ├── Section Title: "My Projects"
+│   ├── Project Card: "Task Management App (Angular)"
+│   │   ├── Image: projects/angular/angular-task-management/project-angular-task-management.jpg
+│   │   ├── Description: "A web app for managing tasks with real-time updates and a clean UI."
+│   │   └── Tags: Angular, Firebase
+│   ├── Project Card: "Smart Home IoT (Arduino)"
+│   │   ├── Image: projects/arduino/arduino-smart-home/project-arduino-smart-home.jpg
+│   │   ├── Description: "An Internet of Things system to control home appliances remotely."
+│   │   └── Tags: Arduino, C, Bluetooth
+│   ├── Project Card: "Serverless API (AWS)"
+│   │   ├── Image: projects/aws/aws-serverless-api/project-aws-serverless-api.jpg
+│   │   ├── Description: "A scalable serverless REST API built on AWS for a todo application."
+│   │   └── Tags: AWS Lambda, Node.js
+│   ├── Project Card: "Automation Script (Bash)"
+│   │   ├── Image: projects/bash/bash-automation/project-bash-automation.jpg
+│   │   ├── Description: "A powerful Bash script to automate server setup and deployment processes."
+│   │   └── Tags: Bash, Linux
+│   ├── Project Card: "Embedded System Monitor (C)"
+│   │   ├── Image: projects/c/c-embedded-monitor/project-c-embedded-monitor.jpg
+│   │   ├── Description: "A real-time monitoring system developed for embedded environments."
+│   │   └── Tags: C, Arduino
+│   ├── Project Card: "Pathfinding Visualizer (C++)"
+│   │   ├── Image: projects/cpp/cpp-pathfinding/project-cpp-pathfinding.jpg
+│   │   ├── Description: "A desktop application that visualizes various pathfinding algorithms."
+│   │   └── Tags: C++, SFML
+│   ├── "More" Button (to show more featured projects)
+│   └── "Explore More" Button (link to all-projects.html)
+├── Connect Section
+│   ├── Section Title: "Connect with Me"
+│   └── Social Media Icons (e.g., GitHub, LinkedIn, Kaggle, Hashnode, Discord, CodePen, Dev.to, Twitter)
+├── GitHub Stats Section
+│   ├── Section Title: "My GitHub Stats"
+│   ├── Description: "Dynamic GitHub stats that match theme."
+│   ├── GitHub Stats Image
+│   ├── Top Languages Image
+│   └── GitHub Streak Image
+├── Contact Me Section
+│   ├── Section Title: "Contact Me"
+│   ├── Description Paragraph
+│   └── "Send an Email" Button
+├── Fun Fact Section
+│   ├── Section Title: "Fun Fact"
+│   └── Fun Fact Paragraph
+└── Footer
+    ├── Copyright
+    └── Back to Top link
+-->
