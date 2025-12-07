@@ -1,0 +1,108 @@
+import { motion } from 'framer-motion';
+import { getSkillsByCategory } from '@/utils/skillsData';
+
+export const Skills = () => {
+  const skillsByCategory = getSkillsByCategory();
+
+  return (
+    <section id="skills" className="py-20 bg-slate-50 dark:bg-slate-900/50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <span className="inline-block px-4 py-2 bg-primary-brand/10 text-primary-brand rounded-full text-sm font-medium mb-4">
+            Technical Toolkit
+          </span>
+          <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-6">
+            Technologies I Work With
+          </h2>
+          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+            Combining hardware knowledge with modern software development tools
+          </p>
+        </motion.div>
+
+        <div className="space-y-16">
+          {Object.entries(skillsByCategory).map(([category, skills], categoryIndex) => (
+            <motion.div
+              key={category}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: categoryIndex * 0.1 }}
+              className="space-y-6"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-8 bg-gradient-to-b from-primary-brand to-secondary-brand rounded-full" />
+                <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 capitalize">
+                  {category.replace('_', '/')}
+                </h3>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                {skills.map((skill, index) => (
+                  <motion.div
+                    key={skill.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05 }}
+                    whileHover={{ y: -5 }}
+                    className="group"
+                  >
+                    <div className="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-200 dark:border-slate-700 h-full flex flex-col items-center justify-center gap-3">
+                      <div className="w-12 h-12 flex items-center justify-center bg-slate-100 dark:bg-slate-700 rounded-lg group-hover:scale-110 transition-transform duration-300">
+                        <img 
+                          src={skill.iconUrl} 
+                          alt={skill.name}
+                          className="w-8 h-8 object-contain"
+                          loading="lazy"
+                        />
+                      </div>
+                      <span className="text-sm font-medium text-center text-slate-700 dark:text-slate-300 group-hover:text-primary-brand transition-colors">
+                        {skill.name}
+                      </span>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Learning Path */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-20 pt-12 border-t border-slate-200 dark:border-slate-800"
+        >
+          <div className="text-center">
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
+              Currently Exploring
+            </h3>
+            <div className="flex flex-wrap justify-center gap-3">
+              {[
+                'Next.js 14',
+                'Three.js & WebGL',
+                'Rust',
+                'Edge Computing',
+                'Machine Learning Ops',
+                'Cloud Native Development',
+              ].map((tech, index) => (
+                <span
+                  key={index}
+                  className="px-4 py-2 bg-gradient-to-r from-primary-brand/10 to-secondary-brand/10 text-primary-brand rounded-full text-sm font-medium border border-primary-brand/20"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
