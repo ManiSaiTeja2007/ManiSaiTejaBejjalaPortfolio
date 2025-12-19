@@ -1,8 +1,9 @@
-// src/components/common/Icon/Icon.tsx
+// FIXED: src/components/common/Icon/Icon.tsx
 import { Icon as IconifyIcon } from '@iconify/react';
 import { memo, useMemo } from 'react';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
+import { getCachedIcon } from './IconUtils';
 
 const iconVariants = cva(
   'inline-flex items-center justify-center',
@@ -37,42 +38,13 @@ const iconVariants = cva(
   }
 );
 
-// Pre-computed icon mapping
-const ICON_MAP = new Map([
-  ['react', 'simple-icons:react'],
-  ['typescript', 'simple-icons:typescript'],
-  ['javascript', 'simple-icons:javascript'],
-  ['html5', 'simple-icons:html5'],
-  ['css3', 'simple-icons:css3'],
-  ['tailwindcss', 'simple-icons:tailwindcss'],
-  ['nextjs', 'simple-icons:nextdotjs'],
-  ['nodejs', 'simple-icons:nodedotjs'],
-  ['express', 'simple-icons:express'],
-  ['python', 'simple-icons:python'],
-  ['mongodb', 'simple-icons:mongodb'],
-  ['firebase', 'simple-icons:firebase'],
-  ['git', 'simple-icons:git'],
-  ['github', 'simple-icons:github'],
-  ['docker', 'simple-icons:docker'],
-  ['aws', 'simple-icons:amazonaws'],
-  ['arduino', 'simple-icons:arduino'],
-  ['c', 'simple-icons:c'],
-  ['cpp', 'simple-icons:cplusplus'],
-  ['java', 'simple-icons:java'],
-]);
-
-const iconCache = new Map<string, string>();
-
-const normalizeTechName = (techName: string): string => {
-  return techName.toLowerCase().replace(/[^a-z0-9]/g, '');
-};
-
 interface IconProps {
   name: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | number;
   className?: string;
   color?: 'default' | 'primary' | 'secondary' | 'current' | 'white';
   variant?: 'default' | 'rounded' | 'square' | 'circle';
+  fallbackIcon?: string;
 }
 
 export const TechIcon = memo(({ 
@@ -80,19 +52,11 @@ export const TechIcon = memo(({
   size = 'md', 
   className = '', 
   color = 'default',
-  variant = 'default'
+  variant = 'default',
+  fallbackIcon = 'simple-icons:code'
 }: IconProps) => {
   const iconName = useMemo(() => {
-    const normalized = normalizeTechName(name);
-    
-    if (iconCache.has(normalized)) {
-      return iconCache.get(normalized)!;
-    }
-    
-    const foundIcon = ICON_MAP.get(normalized) || 'simple-icons:code';
-    iconCache.set(normalized, foundIcon);
-    
-    return foundIcon;
+    return getCachedIcon(name);
   }, [name]);
   
   const iconSize = typeof size === 'number' ? size : 
@@ -104,12 +68,19 @@ export const TechIcon = memo(({
   const sizeClass = typeof size === 'string' ? size : undefined;
 
   return (
-    <div className={cn(iconVariants({ variant, size: sizeClass, color, className }))}>
+    <div 
+      className={cn(iconVariants({ variant, size: sizeClass, color, className }))}
+      title={name}
+    >
       <IconifyIcon 
         icon={iconName} 
         width={iconSize}
         height={iconSize}
         className="current-color"
+        onError={(e) => {
+          // Fallback to a different icon on error
+          e.currentTarget.setAttribute('icon', fallbackIcon);
+        }}
       />
     </div>
   );

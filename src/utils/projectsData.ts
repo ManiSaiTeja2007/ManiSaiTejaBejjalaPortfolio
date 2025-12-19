@@ -527,6 +527,37 @@ export const projectCategories: ProjectCategory[] = [
 ];
 
 // Helper functions
+// Update in src/utils/projectsData.ts - Fix the getProjectById function
+export const getProjectById = (id: string): Project | undefined => {
+  // First try to find in all projects
+  for (const category of projectCategories) {
+    const project = category.projects.find(p => p.id === id);
+    if (project) return project;
+  }
+  
+  // If not found, try case-insensitive search
+  for (const category of projectCategories) {
+    const project = category.projects.find(p => 
+      p.id.toLowerCase() === id.toLowerCase()
+    );
+    if (project) return project;
+  }
+  
+  return undefined;
+};
+
+// Add this function to get projects by partial match
+export const findProjectByPartialId = (partialId: string): Project | undefined => {
+  for (const category of projectCategories) {
+    const project = category.projects.find(p => 
+      p.id.includes(partialId) || partialId.includes(p.id)
+    );
+    if (project) return project;
+  }
+  
+  return undefined;
+};
+
 export const getAllProjects = (): Project[] => {
   return projectCategories.flatMap(category => category.projects);
 };
@@ -535,10 +566,6 @@ export const getFeaturedProjects = (): Project[] => {
   return getAllProjects()
     .filter(project => project.featured)
     .sort((a, b) => (a.featuredOrder || 99) - (b.featuredOrder || 99));
-};
-
-export const getProjectById = (id: string): Project | undefined => {
-  return getAllProjects().find(project => project.id === id);
 };
 
 export const getProjectsByCategory = (categoryId: string): Project[] => {

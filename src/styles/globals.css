@@ -227,4 +227,64 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
   }
+}/* Add these styles to your existing globals.css */
+
+/* GitHub stats image optimizations */
+.github-stats-image {
+  width: 100%;
+  height: auto;
+  min-height: 200px;
+  object-fit: contain;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 0.75rem;
+}
+
+.dark .github-stats-image {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+
+/* Icon fallback styling */
+.icon-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: #e2e8f0;
+  border-radius: 0.375rem;
+  color: #64748b;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+
+.dark .icon-fallback {
+  background: #475569;
+  color: #cbd5e1;
+}
+
+/* Smooth image loading */
+.image-loading {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Performance optimizations */
+img {
+  content-visibility: auto;
+}
+
+/* Lazy loading for stats images */
+.lazy-image {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.lazy-image.loaded {
+  opacity: 1;
 }

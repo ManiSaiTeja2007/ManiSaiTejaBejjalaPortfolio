@@ -1,9 +1,43 @@
+// UPDATED: src/components/sections/Skills/Skills.tsx
 import { motion } from 'framer-motion';
 import { TechIcon } from '@/components/common/Icon/Icon';
 import { getSkillsByCategory } from '@/utils/skillsData';
 
 export const Skills = () => {
   const skillsByCategory = getSkillsByCategory();
+
+  // Category display order
+  const categoryOrder = [
+    'frontend',
+    'backend',
+    'languages',
+    'ai_ml',
+    'database',
+    'cloud_devops',
+    'hardware_iot',
+    'tools',
+    'testing',
+    'mobile'
+  ];
+
+  // Filter and sort categories
+  const sortedCategories = Object.entries(skillsByCategory)
+    .filter(([category]) => categoryOrder.includes(category))
+    .sort(([a], [b]) => categoryOrder.indexOf(a) - categoryOrder.indexOf(b));
+
+  // Category titles mapping
+  const categoryTitles: Record<string, string> = {
+    frontend: 'Frontend Development',
+    backend: 'Backend Development',
+    languages: 'Programming Languages',
+    ai_ml: 'AI/ML & Data Science',
+    database: 'Databases',
+    cloud_devops: 'Cloud & DevOps',
+    hardware_iot: 'Hardware & IoT',
+    tools: 'Tools & Platforms',
+    testing: 'Testing',
+    mobile: 'Mobile Development'
+  };
 
   return (
     <section id="skills" className="py-20 bg-slate-50 dark:bg-slate-900/50">
@@ -26,7 +60,7 @@ export const Skills = () => {
         </motion.div>
 
         <div className="space-y-16">
-          {Object.entries(skillsByCategory).map(([category, skills], categoryIndex) => (
+          {sortedCategories.map(([category, skills], categoryIndex) => (
             <motion.div
               key={category}
               initial={{ opacity: 0, y: 20 }}
@@ -37,9 +71,12 @@ export const Skills = () => {
             >
               <div className="flex items-center gap-3">
                 <div className="w-3 h-8 bg-gradient-to-b from-primary-500 to-secondary-500 rounded-full" />
-                <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 capitalize">
-                  {category.replace('_', '/')}
+                <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+                  {categoryTitles[category] || category.replace('_', '/')}
                 </h3>
+                <span className="text-sm text-slate-500 dark:text-slate-400 ml-2">
+                  ({skills.length})
+                </span>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -60,6 +97,7 @@ export const Skills = () => {
                           size={32}
                           color="primary"
                           variant="rounded"
+                          fallbackIcon={skill.iconUrl}
                         />
                       </div>
                       <span className="text-sm font-medium text-center text-slate-700 dark:text-slate-300 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
@@ -87,7 +125,7 @@ export const Skills = () => {
             <div className="flex flex-wrap justify-center gap-3">
               {[
                 { name: 'Next.js 14', icon: 'nextjs' },
-                { name: 'Three.js', icon: 'three.js' },
+                { name: 'Three.js', icon: 'threejs' },
                 { name: 'Rust', icon: 'rust' },
                 { name: 'Edge Computing', icon: 'aws' },
                 { name: 'MLOps', icon: 'kubernetes' },
@@ -101,6 +139,7 @@ export const Skills = () => {
                     name={tech.icon}
                     size={16}
                     color="primary"
+                    fallbackIcon="simple-icons:code"
                   />
                   <span>{tech.name}</span>
                 </div>

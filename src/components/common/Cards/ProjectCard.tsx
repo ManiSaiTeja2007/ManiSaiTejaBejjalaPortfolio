@@ -1,9 +1,10 @@
-// src/components/common/Cards/ProjectCard.tsx
+// Update src/components/common/Cards/ProjectCard.tsx
 import { BaseCard } from './BaseCard';
 import { ProjectHeader } from './ProjectHeader';
 import { TechStackDisplay } from './TechStackDisplay';
 import { ProjectFooter } from './ProjectFooter';
 import type { Project } from '@/types/project';
+import { useNavigate } from 'react-router-dom';
 
 interface ProjectCardProps {
   project: Project;
@@ -18,8 +19,21 @@ export const ProjectCard = ({
   showDescription = true,
   variant = 'detailed'
 }: ProjectCardProps) => {
+  const navigate = useNavigate();
   const isCompact = variant === 'compact';
   const isFeatured = variant === 'featured';
+  
+  const handleClick = () => {
+    // Navigate to project detail page
+    navigate(`/projects/${project.category}/${project.id}`);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleClick();
+    }
+  };
   
   return (
     <BaseCard
@@ -30,6 +44,8 @@ export const ProjectCard = ({
       className={`cursor-pointer ${className}`}
       role="button"
       tabIndex={0}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
     >
       <ProjectHeader
         title={project.title}

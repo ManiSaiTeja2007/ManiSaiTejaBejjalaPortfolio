@@ -1,7 +1,9 @@
+// FIXED: src/components/sections/Stats/Stats.tsx
 import { motion } from 'framer-motion';
-import { Github, Star, Code, Clock, Users, TrendingUp } from 'lucide-react';
+import { Github, Star, Code, Clock, Users, TrendingUp, Zap } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
 import { GITHUB_CONFIG } from '@/utils/constants';
+import { useMemo } from 'react';
 
 export const Stats = () => {
   const { theme } = useTheme();
@@ -9,12 +11,21 @@ export const Stats = () => {
   // Use the actual GitHub username from constants
   const githubUsername = GITHUB_CONFIG.username;
   
-  // Proper GitHub Stats URLs
-  const githubStatsUrl = `https://github-readme-stats.vercel.app/api?username=${githubUsername}&show_icons=true&count_private=true&hide_border=true&bg_color=00000000&title_color=${theme === 'dark' ? 'ffffff' : '000000'}&text_color=${theme === 'dark' ? 'ffffff' : '000000'}&icon_color=${theme === 'dark' ? '58a6ff' : '0366d6'}`;
-  
-  const topLangsUrl = `https://github-readme-stats.vercel.app/api/top-langs/?username=${githubUsername}&layout=compact&hide_border=true&bg_color=00000000&title_color=${theme === 'dark' ? 'ffffff' : '000000'}&text_color=${theme === 'dark' ? 'ffffff' : '000000'}`;
-  
-  const streakUrl = `https://streak-stats.demolab.com/?user=${githubUsername}&theme=${theme === 'dark' ? 'dark' : 'light'}&hide_border=true&background=00000000&fire=${theme === 'dark' ? 'DD2727' : 'DD2727'}&currStreakLabel=${theme === 'dark' ? 'FFFFFF' : '000000'}`;
+  // Use useMemo to compute URLs without useEffect - FIXED: Removed useState/useEffect
+  const { githubStatsUrl, topLangsUrl, streakUrl } = useMemo(() => {
+    const isDark = theme === 'dark';
+    
+    // GitHub Stats URL
+    const statsUrl = `https://github-readme-stats.vercel.app/api?username=${githubUsername}&show_icons=true&count_private=true&hide_border=true&bg_color=00000000&title_color=${isDark ? 'ffffff' : '000000'}&text_color=${isDark ? 'ffffff' : '000000'}&icon_color=${isDark ? '58a6ff' : '0366d6'}&ring_color=${isDark ? '58a6ff' : '0366d6'}`;
+    
+    // Top Languages URL
+    const langsUrl = `https://github-readme-stats.vercel.app/api/top-langs/?username=${githubUsername}&layout=compact&hide_border=true&bg_color=00000000&title_color=${isDark ? 'ffffff' : '000000'}&text_color=${isDark ? 'ffffff' : '000000'}&langs_count=8`;
+    
+    // Streak Stats URL - UPDATED: Fixed URL format
+    const streakUrl = `https://streak-stats.demolab.com?user=${githubUsername}&theme=${isDark ? 'dark' : 'light'}&hide_border=true&background=0D1117&fire=${isDark ? 'FF6B6B' : 'FF6B6B'}&ring=${isDark ? '58A6FF' : '0366D6'}&currStreakNum=${isDark ? 'FFFFFF' : '000000'}&sideNums=${isDark ? 'FFFFFF' : '000000'}&currStreakLabel=${isDark ? 'FFFFFF' : '000000'}&sideLabels=${isDark ? 'FFFFFF' : '000000'}`;
+    
+    return { githubStatsUrl: statsUrl, topLangsUrl: langsUrl, streakUrl };
+  }, [theme, githubUsername]);
 
   const stats = [
     {
@@ -142,8 +153,6 @@ export const Stats = () => {
                   className="w-full h-auto rounded-lg"
                   loading="lazy"
                   onError={(e) => {
-                    // Fallback if image fails to load
-                    console.log('GitHub stats image failed to load');
                     e.currentTarget.style.display = 'none';
                     e.currentTarget.parentElement!.innerHTML = `
                       <div class="text-center">
@@ -183,7 +192,6 @@ export const Stats = () => {
                   className="w-full h-auto rounded-lg"
                   loading="lazy"
                   onError={(e) => {
-                    console.log('Top languages image failed to load');
                     e.currentTarget.style.display = 'none';
                     e.currentTarget.parentElement!.innerHTML = `
                       <div class="text-center">
@@ -202,7 +210,7 @@ export const Stats = () => {
               </p>
             </motion.div>
             
-            {/* GitHub Streak Card */}
+            {/* GitHub Streak Card - UPDATED */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -211,7 +219,7 @@ export const Stats = () => {
               className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300 border border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center min-h-[200px]"
             >
               <div className="mb-4">
-                <TrendingUp className="text-slate-700 dark:text-slate-300" size={32} />
+                <Zap className="text-slate-700 dark:text-slate-300" size={32} />
               </div>
               <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
                 Contribution Streak
@@ -223,7 +231,6 @@ export const Stats = () => {
                   className="w-full h-auto rounded-lg"
                   loading="lazy"
                   onError={(e) => {
-                    console.log('Streak stats image failed to load');
                     e.currentTarget.style.display = 'none';
                     e.currentTarget.parentElement!.innerHTML = `
                       <div class="text-center">

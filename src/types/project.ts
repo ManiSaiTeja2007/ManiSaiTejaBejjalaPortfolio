@@ -1,9 +1,4 @@
-export interface ProjectTag {
-  id: string;
-  name: string;
-  color?: string;
-}
-
+// Update src/types/project.ts - Add these properties
 export interface Project {
   id: string;
   title: string;
@@ -24,7 +19,7 @@ export interface Project {
   // Links
   liveUrl?: string;
   githubUrl?: string;
-  projectUrl: string;
+  projectUrl: string; // This should match the route path
   
   // Technical details
   technologies: string[];
@@ -41,21 +36,12 @@ export interface Project {
     value: string;
     improvement?: string;
   }[];
-}
-
-export interface ProjectCategory {
-  id: string;
-  name: string;
-  description?: string;
-  color: string;
-  projects: Project[];
-}
-
-// For tiered display
-export interface ProjectTier {
-  id: 'complex' | 'ui' | 'hardware' | 'algorithms';
-  name: string;
-  description: string;
-  icon: string;
-  projects: Project[];
+  
+  // NEW: Add these fields for project detail page
+  longDescription?: string;
+  features?: string[];
+  screenshots?: string[];
+  demoVideo?: string;
+  documentation?: string;
+  complexity?: 'beginner' | 'intermediate' | 'advanced';
 }
