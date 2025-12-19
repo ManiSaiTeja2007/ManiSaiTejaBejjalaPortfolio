@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Search, Filter } from 'lucide-react';
-import { ProjectCard } from '../common/Card/ProjectCard';
+import { ProjectCard } from '../common/Cards/ProjectCard';
 import { projectCategories, getAllProjects } from '@/utils/projectsData';
 import { useProjectFilter } from '@/hooks/useProjectFilter';
 import { Link } from 'react-router-dom';

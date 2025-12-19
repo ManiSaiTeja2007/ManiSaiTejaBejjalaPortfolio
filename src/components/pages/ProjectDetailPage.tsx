@@ -2,7 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ExternalLink, Github, Calendar, Code } from 'lucide-react';
 import { getProjectById, getCategoryById } from '@/utils/projectsData';
-import { ProjectCard } from '../common/Card/ProjectCard';
+import { ProjectCard } from '../common/Cards/ProjectCard';
 
 export const ProjectDetailPage = () => {
   const { id } = useParams<{ id: string }>();

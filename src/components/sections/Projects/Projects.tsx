@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ProjectCard } from '../../common/Card/ProjectCard';
+import { ProjectCard } from '../../common/Cards/ProjectCard';
 import { featuredProjects, getAllProjects } from '@/utils/projectsData';
 import { Link } from 'react-router-dom';
 import { Filter, ChevronDown, Sparkles } from 'lucide-react';

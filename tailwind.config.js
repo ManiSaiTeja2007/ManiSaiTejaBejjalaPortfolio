@@ -8,26 +8,28 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['Inter', 'system-ui', 'sans-serif'],
-        'mono': ['Fira Code', 'monospace'],
-        'display': ['Poppins', 'sans-serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['Fira Code', 'monospace'],
+        poppins: ['Poppins', 'sans-serif'],
       },
       colors: {
-        'primary-brand': {
+        // Primary brand colors
+        primary: {
+          50: '#eef2ff',
+          100: '#e0e7ff',
+          200: '#c7d2fe',
+          300: '#a5b4fc',
+          400: '#818cf8',
+          500: '#6366f1',
+          600: '#4f46e5',
+          700: '#4338ca',
+          800: '#3730a3',
+          900: '#312e81',
           DEFAULT: '#4f46e5',
-          50: '#f0f0ff',
-          100: '#e4e4ff',
-          200: '#c7c7ff',
-          300: '#a5a5ff',
-          400: '#8181ff',
-          500: '#4f46e5',
-          600: '#4338ca',
-          700: '#3730a3',
-          800: '#312e81',
-          900: '#1e1b4b',
+          brand: '#4f46e5',
         },
-        'secondary-brand': {
-          DEFAULT: '#14b8a6',
+        // Secondary brand colors
+        secondary: {
           50: '#f0fdfa',
           100: '#ccfbf1',
           200: '#99f6e4',
@@ -38,7 +40,45 @@ export default {
           700: '#0f766e',
           800: '#115e59',
           900: '#134e4a',
+          DEFAULT: '#14b8a6',
+          brand: '#14b8a6',
         },
+        // Slate colors (ensure they exist)
+        slate: {
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569',
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
+          950: '#020617',
+        },
+        // Text colors for theme
+        default: {
+          light: '#0f172a', // slate-900
+          dark: '#f1f5f9', // slate-100
+        },
+        // Card background colors
+        card: {
+          light: '#ffffff',
+          dark: '#1e293b', // slate-800
+        },
+        // Section background colors
+        section: {
+          light: '#f8fafc', // slate-50
+          dark: '#0f172a', // slate-900
+        }
+      },
+      backgroundColor: {
+        'card': 'var(--card-bg)',
+        'section': 'var(--section-bg)',
+      },
+      textColor: {
+        'default': 'var(--text-default)',
       },
       animation: {
         'fade-in': 'fade-in 0.5s ease-out',
@@ -47,7 +87,6 @@ export default {
         'float': 'float 3s ease-in-out infinite',
         'shimmer': 'shimmer 2s linear infinite',
         'pulse-subtle': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'bounce-subtle': 'bounce 1s infinite',
         'spin-slow': 'spin 3s linear infinite',
         'slide-in-right': 'slide-in-right 0.3s ease-out',
         'slide-in-left': 'slide-in-left 0.3s ease-out',
@@ -83,7 +122,8 @@ export default {
         },
       },
       backgroundImage: {
-        'grid-pattern': "linear-gradient(to right, #e5e7eb 1px, transparent 1px), linear-gradient(to bottom, #e5e7eb 1px, transparent 1px)",
+        'grid-pattern': "linear-gradient(to right, #e2e8f0 1px, transparent 1px), linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)",
+        'grid-pattern-dark': "linear-gradient(to right, #1e293b 1px, transparent 1px), linear-gradient(to bottom, #1e293b 1px, transparent 1px)",
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'gradient-primary': 'linear-gradient(135deg, #4f46e5 0%, #14b8a6 100%)',

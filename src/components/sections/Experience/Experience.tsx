@@ -17,19 +17,6 @@ export const Experience = () => {
       type: 'learning',
     },
     {
-      title: 'College Projects & Activities',
-      organization: 'IIIT Sri City',
-      period: '2023 - Present',
-      description: [
-        'Working on academic projects in Electronics and Computer Science',
-        'Participating in college technical clubs and events',
-        'Collaborating with peers on coding projects',
-        'Attending workshops and tech seminars',
-      ],
-      icon: <Users className="text-green-600 dark:text-green-400" size={24} />,
-      type: 'academic',
-    },
-    {
       title: 'Competitive Programming',
       organization: 'LeetCode, CodeChef',
       period: '2023 - Present',
@@ -55,6 +42,19 @@ export const Experience = () => {
       icon: <Briefcase className="text-purple-600 dark:text-purple-400" size={24} />,
       type: 'opensource',
     },
+    {
+      title: 'College Projects & Activities',
+      organization: 'IIIT Sri City',
+      period: '2026 - Present',
+      description: [
+        'Working on academic projects in Electronics and Computer Science',
+        'Participating in college technical clubs and events',
+        'Collaborating with peers on coding projects',
+        'Attending workshops and tech seminars',
+      ],
+      icon: <Users className="text-green-600 dark:text-green-400" size={24} />,
+      type: 'academic',
+    }
   ];
 
   return (

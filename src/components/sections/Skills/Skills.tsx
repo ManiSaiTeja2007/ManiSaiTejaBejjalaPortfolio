@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { TechIcon } from '@/components/common/Icon/Icon';
 import { getSkillsByCategory } from '@/utils/skillsData';
 
 export const Skills = () => {
@@ -13,7 +14,7 @@ export const Skills = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-2 bg-primary-brand/10 text-primary-brand rounded-full text-sm font-medium mb-4">
+          <span className="inline-block px-4 py-2 bg-primary-500/10 text-primary-600 dark:text-primary-400 rounded-full text-sm font-medium mb-4">
             Technical Toolkit
           </span>
           <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-6">
@@ -35,7 +36,7 @@ export const Skills = () => {
               className="space-y-6"
             >
               <div className="flex items-center gap-3">
-                <div className="w-3 h-8 bg-gradient-to-b from-primary-brand to-secondary-brand rounded-full" />
+                <div className="w-3 h-8 bg-gradient-to-b from-primary-500 to-secondary-500 rounded-full" />
                 <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 capitalize">
                   {category.replace('_', '/')}
                 </h3>
@@ -52,16 +53,16 @@ export const Skills = () => {
                     whileHover={{ y: -5 }}
                     className="group"
                   >
-                    <div className="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-200 dark:border-slate-700 h-full flex flex-col items-center justify-center gap-3">
-                      <div className="w-12 h-12 flex items-center justify-center bg-slate-100 dark:bg-slate-700 rounded-lg group-hover:scale-110 transition-transform duration-300">
-                        <img 
-                          src={skill.iconUrl} 
-                          alt={skill.name}
-                          className="w-8 h-8 object-contain"
-                          loading="lazy"
+                    <div className="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-200 dark:border-slate-700 h-full flex flex-col items-center justify-center gap-3 hover:bg-white/50 dark:hover:bg-slate-800/50">
+                      <div className="w-16 h-16 flex items-center justify-center bg-slate-100 dark:bg-slate-700 rounded-xl group-hover:scale-110 transition-transform duration-300 group-hover:shadow-md">
+                        <TechIcon 
+                          name={skill.name}
+                          size={32}
+                          color="primary"
+                          variant="rounded"
                         />
                       </div>
-                      <span className="text-sm font-medium text-center text-slate-700 dark:text-slate-300 group-hover:text-primary-brand transition-colors">
+                      <span className="text-sm font-medium text-center text-slate-700 dark:text-slate-300 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                         {skill.name}
                       </span>
                     </div>
@@ -85,19 +86,24 @@ export const Skills = () => {
             </h3>
             <div className="flex flex-wrap justify-center gap-3">
               {[
-                'Next.js 14',
-                'Three.js & WebGL',
-                'Rust',
-                'Edge Computing',
-                'Machine Learning Ops',
-                'Cloud Native Development',
+                { name: 'Next.js 14', icon: 'nextjs' },
+                { name: 'Three.js', icon: 'three.js' },
+                { name: 'Rust', icon: 'rust' },
+                { name: 'Edge Computing', icon: 'aws' },
+                { name: 'MLOps', icon: 'kubernetes' },
+                { name: 'Cloud Native', icon: 'docker' },
               ].map((tech, index) => (
-                <span
+                <div
                   key={index}
-                  className="px-4 py-2 bg-gradient-to-r from-primary-brand/10 to-secondary-brand/10 text-primary-brand rounded-full text-sm font-medium border border-primary-brand/20"
+                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary-500/10 to-secondary-500/10 text-primary-600 dark:text-primary-400 rounded-full text-sm font-medium border border-primary-500/20"
                 >
-                  {tech}
-                </span>
+                  <TechIcon 
+                    name={tech.icon}
+                    size={16}
+                    color="primary"
+                  />
+                  <span>{tech.name}</span>
+                </div>
               ))}
             </div>
           </div>

@@ -5,6 +5,18 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --text-default: theme('colors.slate.900');
+    --card-bg: theme('colors.white');
+    --section-bg: theme('colors.slate.50');
+  }
+
+  .dark {
+    --text-default: theme('colors.slate.100');
+    --card-bg: theme('colors.slate.800');
+    --section-bg: theme('colors.slate.900');
+  }
+
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
@@ -17,17 +29,13 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
-    background-color: theme('colors.white');
-    color: theme('colors.slate.900');
-  }
-  
-  .dark body {
-    background-color: theme('colors.slate.900');
-    color: theme('colors.slate.100');
+    background-color: var(--section-bg);
+    color: var(--text-default);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   
   ::selection {
-    background-color: theme('colors.primary.brand');
+    background-color: theme('colors.primary.500');
     color: white;
   }
   
@@ -67,8 +75,16 @@
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20;
   }
   
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-center mb-6 text-slate-900 dark:text-white;
+  }
+  
+  .section-description {
+    @apply text-lg text-slate-600 dark:text-slate-400 text-center mb-12 max-w-3xl mx-auto;
+  }
+  
   .gradient-text {
-    @apply bg-gradient-to-r from-primary-brand to-secondary-brand bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent;
   }
   
   .glass-effect {
@@ -80,17 +96,51 @@
   }
   
   .hover-glow {
-    @apply transition-shadow duration-300 hover:shadow-lg hover:shadow-primary-brand/10;
+    @apply transition-shadow duration-300 hover:shadow-lg hover:shadow-primary-500/10;
   }
   
   .gradient-border {
-    @apply relative;
+    @apply relative border-2 border-transparent bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-padding;
   }
   
-  .gradient-border::before {
-    content: '';
-    @apply absolute inset-0 bg-gradient-to-r from-primary-brand to-secondary-brand rounded-lg -z-10;
-    padding: 2px;
+  .bg-card {
+    @apply bg-white dark:bg-slate-800;
+  }
+  
+  .bg-section {
+    @apply bg-slate-50 dark:bg-slate-900;
+  }
+  
+  .text-default {
+    @apply text-slate-900 dark:text-slate-100;
+  }
+  
+  .btn-primary {
+    @apply px-6 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800;
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-3 border-2 border-primary-600 text-primary-600 dark:text-primary-400 rounded-lg font-semibold hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800;
+  }
+  
+  .project-tag {
+    @apply px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-xs font-medium;
+  }
+  
+  .project-image-placeholder {
+    @apply bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800;
+  }
+  
+  .code-snippet-container {
+    @apply bg-slate-900 rounded-lg p-4 overflow-x-auto;
+  }
+  
+  .code-snippet-container pre {
+    @apply text-slate-100 font-mono text-sm;
+  }
+  
+  .code-snippet-container code {
+    @apply text-slate-100;
   }
   
   .prose-custom {
@@ -143,16 +193,38 @@
     text-wrap: pretty;
   }
   
-  .bg-grid-pattern {
+  .bg-grid-pattern-light {
     background-size: 40px 40px;
     background-image: 
-      linear-gradient(to right, theme('colors.slate.200') 1px, transparent 1px),
-      linear-gradient(to bottom, theme('colors.slate.200') 1px, transparent 1px);
+      linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+      linear-gradient(to bottom, #e2e8f0 1px, transparent 1px);
   }
   
-  .dark .bg-grid-pattern {
+  .bg-grid-pattern-dark {
+    background-size: 40px 40px;
     background-image: 
-      linear-gradient(to right, theme('colors.slate.800') 1px, transparent 1px),
-      linear-gradient(to bottom, theme('colors.slate.800') 1px, transparent 1px);
+      linear-gradient(to right, #1e293b 1px, transparent 1px),
+      linear-gradient(to bottom, #1e293b 1px, transparent 1px);
+  }
+  
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
   }
 }
