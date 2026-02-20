@@ -2,13 +2,13 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Code2, Cpu, Zap, GraduationCap, MapPin } from 'lucide-react';
 import { PERSONAL_INFO, ACADEMIC_INFO } from '@/utils/constants';
 
-export const Hero = () => {
-  // Generate deterministic positions based on index
-  const dotPositions = Array.from({ length: 15 }, (_, i) => ({
-    x: (i * 7) % 100, // Deterministic based on index
-    y: (i * 11) % 100, // Deterministic based on index
-  }));
+// Generate deterministic positions based on index (moved outside component for optimization)
+const dotPositions = Array.from({ length: 15 }, (_, i) => ({
+  x: (i * 7) % 100,
+  y: (i * 11) % 100,
+}));
 
+export const Hero = () => {
   return (
     <section 
       id="hero" 
@@ -31,10 +31,12 @@ export const Hero = () => {
               duration: 3 + (i % 3), // Deterministic duration based on index
               repeat: Infinity,
               delay: i * 0.2,
+              ease: "easeInOut"
             }}
             style={{
               left: `${position.x}%`,
               top: `${position.y}%`,
+              willChange: 'transform, opacity'
             }}
           />
         ))}
@@ -45,7 +47,7 @@ export const Hero = () => {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-center"
           >
             {/* Badge */}
@@ -142,32 +144,6 @@ export const Hero = () => {
               >
                 <span>Get In Touch</span>
               </a>
-            </motion.div>
-
-            {/* Stats Preview */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.9 }}
-              className="mt-20 pt-12 border-t border-slate-200 dark:border-slate-800"
-            >
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
-                {[
-                  { value: '20+', label: 'Projects Built' },
-                  { value: '15+', label: 'Technologies' },
-                  { value: '2', label: 'Years Coding' },
-                  { value: '100%', label: 'Passionate' },
-                ].map((stat, index) => (
-                  <div key={index} className="text-center">
-                    <div className="text-2xl md:text-3xl font-bold text-primary-brand mb-2">
-                      {stat.value}
-                    </div>
-                    <div className="text-sm text-slate-600 dark:text-slate-400">
-                      {stat.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
             </motion.div>
           </motion.div>
         </div>

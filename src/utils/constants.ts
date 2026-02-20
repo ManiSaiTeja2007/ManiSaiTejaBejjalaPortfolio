@@ -69,6 +69,18 @@ export const SECTION_IDS = [
   'fun-fact',
 ];
 
+// Navigation Links
+export const NAV_LINKS = [
+  { href: '#about', label: 'About' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#connect', label: 'Connect' },
+  { href: '#stats', label: 'Stats' },
+  { href: '#contact', label: 'Contact' },
+  { href: '#fun-fact', label: 'Fun Fact' },
+];
+
 // Colors
 export const COLORS = {
   primary: '#4f46e5',

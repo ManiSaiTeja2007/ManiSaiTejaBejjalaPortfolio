@@ -18,10 +18,10 @@ const ProjectDetailPage = lazy(() => import('@/components/pages/ProjectDetailPag
 
 // Loading fallback component
 const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center">
+  <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
     <div className="text-center">
       <div className="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-      <p className="text-slate-600 dark:text-slate-400">Loading portfolio...</p>
+      <p className="text-slate-600 dark:text-slate-400 font-medium">Loading portfolio...</p>
     </div>
   </div>
 );
@@ -39,9 +39,9 @@ function AppContent() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300 flex flex-col">
         <Header />
-        <main className="pt-16">
+        <main className="flex-grow pt-16">
           <ErrorBoundary>
             <Suspense fallback={<PageLoader />}>
               <Routes>

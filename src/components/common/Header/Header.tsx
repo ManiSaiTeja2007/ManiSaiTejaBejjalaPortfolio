@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Menu, X } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { Navigation } from './Navigation';
 import { MobileMenu } from './MobileMenu';
 import { useScrollSpy } from '@/hooks/useScrollSpy';
-import { SECTION_IDS } from '@/utils/constants';
+import { SECTION_IDS, NAV_LINKS, PERSONAL_INFO } from '@/utils/constants';
 
 export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -22,36 +22,40 @@ export const Header = () => {
     };
   }, [isMobileMenuOpen]);
 
-  const navLinks = [
-    { href: '#about', label: 'About' },
-    { href: '#skills', label: 'Skills' },
-    { href: '#experience', label: 'Experience' },
-    { href: '#projects', label: 'Projects' },
-    { href: '#connect', label: 'Connect' },
-    { href: '#stats', label: 'Stats' },
-    { href: '#contact', label: 'Contact' },
-    { href: '#fun-fact', label: 'Fun Fact' },
-  ];
+  const toggleMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen((prev) => !prev);
+  }, []);
+
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+  }, []);
+
+  // Split name for responsive layout logic
+  const nameParts = PERSONAL_INFO.name.split(' ');
+  const firstName = nameParts.slice(0, -1).join(' ');
+  const lastName = nameParts[nameParts.length - 1];
 
   return (
-    <header className="fixed top-0 w-full bg-white/95 dark:bg-slate-800/95 backdrop-blur-md z-50 shadow-sm">
+    <header className="fixed top-0 w-full bg-white/95 dark:bg-slate-800/95 backdrop-blur-md z-50 shadow-sm transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center space-x-2">
-          <div className="h-10 w-10 bg-primary-brand rounded-lg flex items-center justify-center">
-            <span className="text-white font-poppins font-bold text-2xl">M</span>
+          <div className="h-10 w-10 bg-primary-brand rounded-lg flex items-center justify-center shrink-0 shadow-sm">
+            <span className="text-white font-poppins font-bold text-2xl">
+              {firstName.charAt(0)}
+            </span>
           </div>
           <a
             href="#hero"
-            className="text-2xl font-poppins font-bold text-primary-brand hidden md:block"
+            className="text-xl md:text-2xl font-poppins font-bold text-primary-brand hidden md:block hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
           >
-            Mani Sai Teja <span className="md:inline lg:block">Bejjala</span>
+            {firstName} <span className="md:inline lg:block">{lastName}</span>
           </a>
         </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
-          <Navigation links={navLinks} activeSection={activeSection} />
+          <Navigation links={NAV_LINKS} activeSection={activeSection} />
           <ThemeToggle />
         </div>
 
@@ -59,8 +63,8 @@ export const Header = () => {
         <div className="md:hidden flex items-center space-x-4">
           <ThemeToggle />
           <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 rounded-md text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+            onClick={toggleMobileMenu}
+            className="p-2 rounded-md text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors"
             aria-label="Toggle mobile menu"
             aria-expanded={isMobileMenuOpen}
           >
@@ -72,9 +76,9 @@ export const Header = () => {
       {/* Mobile Menu */}
       <MobileMenu 
         isOpen={isMobileMenuOpen} 
-        links={navLinks}
+        links={NAV_LINKS}
         activeSection={activeSection}
-        onClose={() => setIsMobileMenuOpen(false)}
+        onClose={closeMobileMenu}
       />
     </header>
   );
