@@ -1,3 +1,4 @@
+// src/components/sections/ValuePropositions/ValuePropositions.tsx
 import { motion } from 'framer-motion';
 import { Cpu, Layers, TrendingUp, ArrowRight } from 'lucide-react';
 
@@ -62,15 +63,15 @@ export const ValuePropositions = () => {
                 <div className={`w-14 h-14 rounded-xl bg-gradient-to-r ${card.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
                   {card.icon}
                 </div>
-                
+
                 <h3 className="text-2xl font-bold text-default mb-4 group-hover:text-primary-brand transition-colors">
                   {card.title}
                 </h3>
-                
+
                 <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
                   {card.description}
                 </p>
-                
+
                 <div className="flex items-center text-primary-brand font-medium">
                   <span className="mr-2">See it in action</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />

@@ -1,3 +1,4 @@
+// src/hooks/useScrollSpy.ts
 import { useState, useEffect } from 'react';
 
 export const useScrollSpy = (sectionIds: string[]) => {

@@ -26,7 +26,7 @@ export const ProjectHeader = memo(({
           {category.toUpperCase()}
         </span>
       </div>
-      
+
       <div className="flex space-x-2">
         {githubUrl && (
           <PrimaryButton

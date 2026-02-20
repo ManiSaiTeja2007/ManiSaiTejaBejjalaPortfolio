@@ -1,5 +1,5 @@
-// src/components/providers/PerformanceProvider.tsx (UPDATED)
-  import { createContext, useEffect } from 'react';
+// src/components/providers/PerformanceProvider.tsx
+import { createContext, useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 
@@ -48,16 +48,18 @@ function PerformanceProvider({ children }: { children: ReactNode }) {
     observer.observe({ entryTypes: ['paint', 'largest-contentful-paint'] });
 
     return () => observer.disconnect();
-  }, [isPerfMode, setMetrics]);
+  }, [isPerfMode]); // Remove setMetrics from dependencies
 
-  const logMetric = (name: string, value: number) => {
+  const logMetric = useCallback((name: string, value: number) => {
     setMetrics((prev: PerformanceMetrics) => ({
       ...prev,
       [name]: value,
     }));
-  };
+  }, [setMetrics]); // Add setMetrics as dependency
 
-  const togglePerfMode = () => setIsPerfMode((prev: boolean) => !prev);
+  const togglePerfMode = useCallback(() => {
+    setIsPerfMode((prev: boolean) => !prev);
+  }, [setIsPerfMode]);
 
   return (
     <PerformanceContext.Provider

@@ -1,3 +1,4 @@
+/* src/styles/animations.css */
 /* Strategic Animation Classes */
 
 /* Hero Section Animations */
@@ -129,7 +130,7 @@
   html {
     scroll-behavior: smooth;
   }
-  
+
   .scroll-snap-section {
     scroll-snap-align: start;
     scroll-snap-stop: always;

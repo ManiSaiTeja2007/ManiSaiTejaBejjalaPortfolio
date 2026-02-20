@@ -1,9 +1,11 @@
+// src/components/pages/AllProjectsPage.tsx
 import { motion } from 'framer-motion';
 import { Search, Filter } from 'lucide-react';
 import { ProjectCard } from '../common/Cards/ProjectCard';
 import { projectCategories, getAllProjects } from '@/utils/projectsData';
 import { useProjectFilter } from '@/hooks/useProjectFilter';
 import { Link } from 'react-router-dom';
+import type { Project } from '@/types/project'; // Add this import
 
 export const AllProjectsPage = () => {
   const allProjects = getAllProjects();
@@ -47,7 +49,7 @@ export const AllProjectsPage = () => {
                 Filter by Technology
               </h2>
             </div>
-            
+
             <div className="relative w-full md:w-64">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
               <input
@@ -65,7 +67,7 @@ export const AllProjectsPage = () => {
             {categories.map((category) => {
               const categoryData = projectCategories.find(cat => cat.id === category);
               const isActive = selectedCategory === category;
-              
+
               return (
                 <button
                   key={category}
@@ -103,14 +105,14 @@ export const AllProjectsPage = () => {
             {/* Group by category if showing all */}
             {selectedCategory === 'all' ? (
               projectCategories
-                .filter(category => 
-                  category.projects.some(project => 
-                    filteredProjects.some(p => p.id === project.id)
+                .filter((category: { projects: Project[] }) => 
+                  category.projects.some((project: Project) => 
+                    filteredProjects.some((p: Project) => p.id === project.id)
                   )
                 )
                 .map((category) => {
                   const categoryProjects = filteredProjects.filter(
-                    project => project.category === category.id
+                    (project: Project) => project.category === category.id
                   );
 
                   if (categoryProjects.length === 0) return null;
@@ -126,7 +128,7 @@ export const AllProjectsPage = () => {
                         {category.name}
                       </h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {categoryProjects.map((project, index) => (
+                        {categoryProjects.map((project: Project, index: number) => (
                           <motion.div
                             key={project.id}
                             initial={{ opacity: 0, y: 20 }}
@@ -142,7 +144,7 @@ export const AllProjectsPage = () => {
                 })
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredProjects.map((project, index) => (
+                {filteredProjects.map((project: Project, index: number) => (
                   <motion.div
                     key={project.id}
                     initial={{ opacity: 0, y: 20 }}

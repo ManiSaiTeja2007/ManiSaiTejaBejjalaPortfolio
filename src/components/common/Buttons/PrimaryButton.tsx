@@ -1,4 +1,4 @@
-// src/components/common/Buttons/PrimaryButton.tsx (UPDATED)
+// src/components/common/Buttons/PrimaryButton.tsx
 import { forwardRef } from 'react';
 import type { ButtonHTMLAttributes } from 'react';
 import type { LucideIcon } from 'lucide-react';

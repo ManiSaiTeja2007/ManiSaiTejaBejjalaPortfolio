@@ -1,3 +1,4 @@
+// src/components/common/ScrollToTop.tsx
 import { ArrowUp } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';

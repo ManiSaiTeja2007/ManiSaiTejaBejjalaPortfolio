@@ -1,3 +1,4 @@
+// src/utils/principlesData.ts
 import type { ProfessionalPrinciple } from '@/types/portfolio';
 
 export const principlesData: ProfessionalPrinciple[] = [

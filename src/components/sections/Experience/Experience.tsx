@@ -1,3 +1,4 @@
+// src/components/sections/Experience/Experience.tsx
 import { motion } from 'framer-motion';
 import { Briefcase, GraduationCap, Users, Trophy } from 'lucide-react';
 
@@ -81,7 +82,7 @@ export const Experience = () => {
         <div className="relative">
           {/* Timeline line */}
           <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-primary-brand via-secondary-brand to-transparent" />
-          
+
           <div className="space-y-12">
             {experiences.map((exp, index) => (
               <motion.div
@@ -94,7 +95,7 @@ export const Experience = () => {
               >
                 {/* Timeline dot */}
                 <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary-brand rounded-full border-4 border-white dark:border-slate-900 z-10" />
-                
+
                 <div className={`w-5/12 ${index % 2 === 0 ? 'pr-12 text-right' : 'pl-12'}`}>
                   <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow duration-300">
                     <div className="flex items-center gap-4 mb-4">
@@ -110,11 +111,11 @@ export const Experience = () => {
                         </p>
                       </div>
                     </div>
-                    
+
                     <span className="inline-block px-3 py-1 bg-primary-brand/10 text-primary-brand rounded-full text-sm font-medium mb-4">
                       {exp.period}
                     </span>
-                    
+
                     <ul className="space-y-2">
                       {exp.description.map((item, idx) => (
                         <li
@@ -126,7 +127,7 @@ export const Experience = () => {
                         </li>
                       ))}
                     </ul>
-                    
+
                     {/* Badge based on type */}
                     <div className="mt-4">
                       <span className={`px-3 py-1 rounded-full text-xs font-medium ${

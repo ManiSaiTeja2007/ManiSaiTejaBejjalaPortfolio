@@ -17,33 +17,33 @@ export function useIntersectionObserver<T extends HTMLElement = HTMLElement>(
     rootMargin = '0px',
     freezeOnceVisible = false,
   } = options;
-  
+
   const ref = useRef<T | null>(null);
   const [isIntersecting, setIsIntersecting] = useState(false);
-  
+
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
-    
+
     if (freezeOnceVisible && isIntersecting) return;
-    
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsIntersecting(entry.isIntersecting);
-        
+
         if (freezeOnceVisible && entry.isIntersecting) {
           observer.unobserve(element);
         }
       },
       { threshold, root, rootMargin }
     );
-    
+
     observer.observe(element);
-    
+
     return () => {
       observer.disconnect();
     };
   }, [threshold, root, rootMargin, freezeOnceVisible, isIntersecting]);
-  
+
   return [ref, isIntersecting];
 }

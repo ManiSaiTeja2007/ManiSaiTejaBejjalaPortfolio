@@ -1,3 +1,4 @@
+// src/utils/projectsData.ts
 import type { Project, ProjectCategory } from '@/types/project';
 
 export const projectCategories: ProjectCategory[] = [
@@ -110,9 +111,9 @@ export const projectCategories: ProjectCategory[] = [
         projectUrl: '/projects/arduino/weather-station',
         technologies: ['Arduino', 'Python', 'TensorFlow Lite', 'LoRa', 'Solar Panels'],
         tags: [
-          { id: 'ml', name: 'Machine Learning' },
-          { id: 'solar', name: 'Solar Powered' },
-          { id: 'environment', name: 'Environment' },
+          { id: 'ml', name: 'Machine Learning', color: '#f37626' },
+          { id: 'solar', name: 'Solar Powered', color: '#ffeb3b' },
+          { id: 'environment', name: 'Environment', color: '#4caf50' },
         ],
         category: 'arduino',
         featured: false,
@@ -178,9 +179,9 @@ export const projectCategories: ProjectCategory[] = [
         projectUrl: '/projects/aws/aws-sagemaker-ml',
         technologies: ['AWS SageMaker', 'Docker', 'Python', 'AWS S3', 'MLflow', 'FastAPI'],
         tags: [
-          { id: 'machine-learning', name: 'Machine Learning' },
-          { id: 'aws-sagemaker', name: 'SageMaker' },
-          { id: 'mlops', name: 'MLOps' },
+          { id: 'machine-learning', name: 'Machine Learning', color: '#f37626' },
+          { id: 'aws-sagemaker', name: 'SageMaker', color: '#ff9900' },
+          { id: 'mlops', name: 'MLOps', color: '#4ecdc4' },
         ],
         category: 'aws',
         featured: false,
@@ -248,9 +249,9 @@ export const projectCategories: ProjectCategory[] = [
         projectUrl: '/projects/react/react-ecommerce',
         technologies: ['Next.js', 'Stripe', 'Redux Toolkit', 'Tailwind CSS', 'MongoDB'],
         tags: [
-          { id: 'nextjs', name: 'Next.js' },
-          { id: 'ecommerce', name: 'E-commerce' },
-          { id: 'payments', name: 'Payments' },
+          { id: 'nextjs', name: 'Next.js', color: '#000000' },
+          { id: 'ecommerce', name: 'E-commerce', color: '#4caf50' },
+          { id: 'payments', name: 'Payments', color: '#ff9800' },
         ],
         category: 'react',
         featured: false,
@@ -316,9 +317,9 @@ export const projectCategories: ProjectCategory[] = [
         projectUrl: '/projects/nodejs/nodejs-auth',
         technologies: ['Node.js', 'JWT', 'Redis', 'PostgreSQL', 'Docker', 'OAuth 2.0'],
         tags: [
-          { id: 'security', name: 'Security' },
-          { id: 'authentication', name: 'Authentication' },
-          { id: 'rbac', name: 'RBAC' },
+          { id: 'security', name: 'Security', color: '#ff4444' },
+          { id: 'authentication', name: 'Authentication', color: '#00a1f1' },
+          { id: 'rbac', name: 'RBAC', color: '#7cbb00' },
         ],
         category: 'nodejs',
         featured: false,
@@ -384,9 +385,9 @@ export const projectCategories: ProjectCategory[] = [
         projectUrl: '/projects/python/python-inventory',
         technologies: ['Python', 'Flask', 'SQLite', 'TensorFlow', 'React', 'Docker'],
         tags: [
-          { id: 'inventory', name: 'Inventory' },
-          { id: 'ai', name: 'AI' },
-          { id: 'prediction', name: 'Prediction' },
+          { id: 'inventory', name: 'Inventory', color: '#4caf50' },
+          { id: 'ai', name: 'AI', color: '#ff6b6b' },
+          { id: 'prediction', name: 'Prediction', color: '#4ecdc4' },
         ],
         category: 'python',
         featured: false,
@@ -513,10 +514,10 @@ export const projectCategories: ProjectCategory[] = [
         projectUrl: '/projects/fullstack/health-tracker',
         technologies: ['React', 'Node.js', 'PostgreSQL', 'Docker', 'TensorFlow.js', 'WebSocket', 'OAuth 2.0'],
         tags: [
-          { id: 'fullstack', name: 'Full Stack' },
-          { id: 'healthcare', name: 'Healthcare' },
-          { id: 'iot', name: 'IoT' },
-          { id: 'predictive-analytics', name: 'Predictive Analytics' },
+          { id: 'fullstack', name: 'Full Stack', color: '#6f42c1' },
+          { id: 'healthcare', name: 'Healthcare', color: '#e83e8c' },
+          { id: 'iot', name: 'IoT', color: '#20c997' },
+          { id: 'predictive-analytics', name: 'Predictive Analytics', color: '#fd7e14' },
         ],
         category: 'fullstack',
         featured: false,
@@ -527,18 +528,43 @@ export const projectCategories: ProjectCategory[] = [
 ];
 
 // Helper functions
+export const getProjectById = (id: string): Project | undefined => {
+  // First try to find in all projects
+  for (const category of projectCategories) {
+    const project = category.projects.find((p: Project) => p.id === id);
+    if (project) return project;
+  }
+
+  // If not found, try case-insensitive search
+  for (const category of projectCategories) {
+    const project = category.projects.find((p: Project) =>
+      p.id.toLowerCase() === id.toLowerCase()
+    );
+    if (project) return project;
+  }
+
+  return undefined;
+};
+
+export const findProjectByPartialId = (partialId: string): Project | undefined => {
+  for (const category of projectCategories) {
+    const project = category.projects.find((p: Project) =>
+      p.id.includes(partialId) || partialId.includes(p.id)
+    );
+    if (project) return project;
+  }
+
+  return undefined;
+};
+
 export const getAllProjects = (): Project[] => {
   return projectCategories.flatMap(category => category.projects);
 };
 
 export const getFeaturedProjects = (): Project[] => {
   return getAllProjects()
-    .filter(project => project.featured)
-    .sort((a, b) => (a.featuredOrder || 99) - (b.featuredOrder || 99));
-};
-
-export const getProjectById = (id: string): Project | undefined => {
-  return getAllProjects().find(project => project.id === id);
+    .filter((project: Project) => project.featured)
+    .sort((a: Project, b: Project) => (a.featuredOrder || 99) - (b.featuredOrder || 99));
 };
 
 export const getProjectsByCategory = (categoryId: string): Project[] => {
@@ -557,25 +583,25 @@ export const getCategories = (): ProjectCategory[] => {
 // Get projects by tier (for strategic display)
 export const getTieredProjects = () => {
   const allProjects = getAllProjects();
-  
+
   return {
     // Tier 1: Complex Systems (show architecture thinking)
-    complex: allProjects.filter(p => 
+    complex: allProjects.filter((p: Project) =>
       ['aws-serverless-api', 'nodejs-events-api', 'arduino-smart-home'].includes(p.id)
     ),
-    
+
     // Tier 2: UI/UX Focus (show design sensibility)
-    ui: allProjects.filter(p => 
+    ui: allProjects.filter((p: Project) =>
       ['react-social-dashboard', 'angular-task-management', 'javascript-weather-app'].includes(p.id)
     ),
-    
+
     // Tier 3: Hardware/IoT (show unique blend)
-    hardware: allProjects.filter(p => 
+    hardware: allProjects.filter((p: Project) =>
       ['arduino-smart-home', 'arduino-weather-station'].includes(p.id)
     ),
-    
+
     // Tier 4: Algorithms & Performance (show optimization)
-    algorithms: allProjects.filter(p => 
+    algorithms: allProjects.filter((p: Project) =>
       ['cpp-pathfinding', 'python-data-analytics'].includes(p.id)
     ),
   };
@@ -584,13 +610,13 @@ export const getTieredProjects = () => {
 // Get project metrics summary for quick stats
 export const getPortfolioMetrics = () => {
   const projects = getAllProjects();
-  
+
   return {
     totalProjects: projects.length,
-    featuredProjects: projects.filter(p => p.featured).length,
+    featuredProjects: projects.filter((p: Project) => p.featured).length,
     totalTechnologies: new Set(projects.flatMap(p => p.technologies)).size,
     categories: projectCategories.length,
-    estimatedImpact: projects.reduce((sum, p) => {
+    estimatedImpact: projects.reduce((sum: number, p: Project) => {
       const impact = p.metrics?.[0]?.improvement || '';
       const match = impact.match(/(\d+)%/);
       return sum + (match ? parseInt(match[1]) : 0);
@@ -601,7 +627,7 @@ export const getPortfolioMetrics = () => {
 // For search functionality
 export const searchProjects = (query: string): Project[] => {
   const searchTerm = query.toLowerCase();
-  return getAllProjects().filter(project => 
+  return getAllProjects().filter((project: Project) =>
     project.title.toLowerCase().includes(searchTerm) ||
     project.description.toLowerCase().includes(searchTerm) ||
     project.shortDescription?.toLowerCase().includes(searchTerm) ||
@@ -612,8 +638,8 @@ export const searchProjects = (query: string): Project[] => {
 
 // For filtering by technology
 export const getProjectsByTechnology = (technology: string): Project[] => {
-  return getAllProjects().filter(project =>
-    project.technologies.some(tech => 
+  return getAllProjects().filter((project: Project) =>
+    project.technologies.some(tech =>
       tech.toLowerCase().includes(technology.toLowerCase())
     )
   );
@@ -623,16 +649,16 @@ export const getProjectsByTechnology = (technology: string): Project[] => {
 export const getRelatedProjects = (projectId: string, limit: number = 3): Project[] => {
   const project = getProjectById(projectId);
   if (!project) return [];
-  
+
   // Find projects with similar technologies or categories
   const related = getAllProjects()
-    .filter(p => 
-      p.id !== projectId && 
-      (p.category === project.category || 
-       p.technologies.some(tech => project.technologies.includes(tech)))
+    .filter((p: Project) =>
+      p.id !== projectId &&
+      (p.category === project.category ||
+        p.technologies.some(tech => project.technologies.includes(tech)))
     )
     .slice(0, limit);
-  
+
   return related;
 };
 

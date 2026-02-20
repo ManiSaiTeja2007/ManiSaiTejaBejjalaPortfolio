@@ -4,6 +4,7 @@ import { ProjectHeader } from './ProjectHeader';
 import { TechStackDisplay } from './TechStackDisplay';
 import { ProjectFooter } from './ProjectFooter';
 import type { Project } from '@/types/project';
+import { useNavigate } from 'react-router-dom';
 
 interface ProjectCardProps {
   project: Project;
@@ -18,9 +19,22 @@ export const ProjectCard = ({
   showDescription = true,
   variant = 'detailed'
 }: ProjectCardProps) => {
+  const navigate = useNavigate();
   const isCompact = variant === 'compact';
   const isFeatured = variant === 'featured';
-  
+
+  const handleClick = () => {
+    // Navigate to project detail page
+    navigate(`/projects/${project.category}/${project.id}`);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleClick();
+    }
+  };
+
   return (
     <BaseCard
       hoverable
@@ -30,6 +44,8 @@ export const ProjectCard = ({
       className={`cursor-pointer ${className}`}
       role="button"
       tabIndex={0}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
     >
       <ProjectHeader
         title={project.title}
@@ -37,19 +53,19 @@ export const ProjectCard = ({
         githubUrl={project.githubUrl}
         liveUrl={project.liveUrl}
       />
-      
+
       {showDescription && !isCompact && (
         <p className="text-slate-600 dark:text-slate-400 mb-6 line-clamp-2">
           {project.shortDescription || project.description}
         </p>
       )}
-      
+
       <TechStackDisplay 
         technologies={project.technologies}
         maxDisplay={isCompact ? 2 : 4}
         showIcons={!isCompact}
       />
-      
+
       {!isCompact && (
         <>
           <div className="flex flex-wrap gap-2 mb-6">
@@ -62,7 +78,7 @@ export const ProjectCard = ({
               </span>
             ))}
           </div>
-          
+
           <ProjectFooter 
             isFeatured={project.featured}
             viewText={isFeatured ? 'Explore Project' : 'View Details'}

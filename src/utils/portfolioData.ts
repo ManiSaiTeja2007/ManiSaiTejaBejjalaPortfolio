@@ -1,3 +1,4 @@
+// src/utils/portfolioData.ts
 import type { 
   Service, 
   Skill, 
@@ -46,19 +47,19 @@ export const skills: Skill[] = [
   { id: 'css', name: 'CSS3', level: 5, category: 'frontend' },
   { id: 'tailwind', name: 'Tailwind CSS', level: 4, category: 'frontend' },
   { id: 'nextjs', name: 'Next.js', level: 3, category: 'frontend' },
-  
+
   // Backend
   { id: 'nodejs', name: 'Node.js', level: 3, category: 'backend' },
   { id: 'express', name: 'Express.js', level: 3, category: 'backend' },
   { id: 'mongodb', name: 'MongoDB', level: 3, category: 'backend' },
   { id: 'firebase', name: 'Firebase', level: 3, category: 'backend' },
-  
+
   // Languages
   { id: 'python', name: 'Python', level: 4, category: 'language' },
   { id: 'c', name: 'C', level: 4, category: 'language' },
   { id: 'cpp', name: 'C++', level: 3, category: 'language' },
   { id: 'java', name: 'Java', level: 3, category: 'language' },
-  
+
   // Tools
   { id: 'git', name: 'Git', level: 4, category: 'tool' },
   { id: 'docker', name: 'Docker', level: 2, category: 'tool' },

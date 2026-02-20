@@ -7,11 +7,11 @@ export function useThrottle<T extends (...args: unknown[]) => unknown>(
 ): T {
   const lastCallRef = useRef<number>(0);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  
+
   return useCallback(
     (...args: Parameters<T>) => {
       const now = Date.now();
-      
+
       if (now - lastCallRef.current >= delay) {
         lastCallRef.current = now;
         callback(...args);
@@ -19,7 +19,7 @@ export function useThrottle<T extends (...args: unknown[]) => unknown>(
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current);
         }
-        
+
         timeoutRef.current = setTimeout(() => {
           lastCallRef.current = Date.now();
           callback(...args);

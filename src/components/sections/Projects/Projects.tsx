@@ -1,3 +1,4 @@
+// src/components/sections/Projects/Projects.tsx
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ProjectCard } from '../../common/Cards/ProjectCard';
@@ -10,14 +11,14 @@ type ProjectTier = 'all' | 'complex' | 'ui' | 'hardware';
 export const Projects = () => {
   const [showAllFeatured, setShowAllFeatured] = useState(false);
   const [activeTier, setActiveTier] = useState<ProjectTier>('all');
-  
+
   // Tier projects based on complexity
   const projectTiers = {
     complex: featuredProjects.filter(p => p.category === 'aws' || p.category === 'nodejs'),
     ui: featuredProjects.filter(p => p.category === 'react' || p.category === 'angular'),
     hardware: featuredProjects.filter(p => p.category === 'arduino' || p.category === 'c'),
   };
-  
+
   const displayedProjects = showAllFeatured 
     ? featuredProjects 
     : featuredProjects.slice(0, 4);
@@ -46,11 +47,11 @@ export const Projects = () => {
             <Sparkles size={16} />
             <span className="text-sm font-medium">Strategic Project Portfolio</span>
           </motion.div>
-          
+
           <h2 className="section-title">
             Building Solutions That Matter
           </h2>
-          
+
           <p className="section-description max-w-3xl">
             Each project represents a unique challenge and learning opportunity. 
             They're organized to showcase different aspects of my technical and problem-solving abilities.
@@ -71,7 +72,7 @@ export const Projects = () => {
               Filter by Focus Area:
             </h3>
           </div>
-          
+
           <div className="flex flex-wrap justify-center gap-3">
             {[
               { id: 'all' as ProjectTier, label: 'All Projects', count: featuredProjects.length },
@@ -165,7 +166,7 @@ export const Projects = () => {
               )}
             </button>
           )}
-          
+
           <Link
             to="/projects"
             className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-primary-brand/30 text-primary-brand rounded-xl hover:border-primary-brand hover:bg-primary-brand/5 transition-all duration-300 font-semibold"

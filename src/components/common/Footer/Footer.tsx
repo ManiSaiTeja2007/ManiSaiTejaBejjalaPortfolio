@@ -1,3 +1,4 @@
+// src/components/common/Footer/Footer.tsx
 import { ArrowUp } from 'lucide-react';
 
 export const Footer = () => {

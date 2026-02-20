@@ -1,4 +1,4 @@
-// src/components/providers/usePerformance.ts (NEW FILE)
+// src/components/providers/usePerformance.ts
 import { useContext } from 'react';
 import { PerformanceContext } from './PerformanceProvider';
 

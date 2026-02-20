@@ -1,3 +1,4 @@
+// src/components/sections/About/About.tsx
 import { motion } from 'framer-motion';
 import { GraduationCap, Briefcase, MapPin, Calendar, BookOpen, Target } from 'lucide-react';
 import { PERSONAL_INFO, ACADEMIC_INFO, FOCUS_AREAS } from '@/utils/constants';
@@ -18,11 +19,11 @@ export const About = () => {
               <span className="inline-block px-4 py-2 bg-primary-brand/10 text-primary-brand rounded-full text-sm font-medium mb-4">
                 My Journey
               </span>
-              
+
               <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-6">
                 From Circuits to Code
               </h2>
-              
+
               <div className="space-y-4 text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
                 <p>
                   Hello! I'm <strong>{PERSONAL_INFO.name}</strong>, a passionate 
@@ -30,14 +31,14 @@ export const About = () => {
                   My journey began with curiosity about how things work at the hardware level, 
                   which naturally evolved into exploring how software brings hardware to life.
                 </p>
-                
+
                 <p>
                   What makes my approach unique is the <strong>systems-level perspective</strong> from my ECE background. 
                   I understand that every line of code runs on physical hardware, and this awareness 
                   fundamentally shapes how I architect solutions—always considering performance, 
                   efficiency, and real-world constraints.
                 </p>
-                
+
                 <p>
                   I'm constantly exploring the intersection of <strong>electronics, software development, 
                   and artificial intelligence</strong>. This blend allows me to approach problems from 
@@ -63,7 +64,7 @@ export const About = () => {
               </ul>
             </div>
           </div>
-          
+
           {/* Right Column - Information Cards */}
           <div className="space-y-6">
             {/* Education Card */}
@@ -83,7 +84,7 @@ export const About = () => {
                   <p className="text-sm text-slate-600 dark:text-slate-400">{ACADEMIC_INFO.year}</p>
                 </div>
               </div>
-              
+
               <div className="space-y-4">
                 <div>
                   <h4 className="font-semibold text-slate-900 dark:text-white">{PERSONAL_INFO.college}</h4>
@@ -92,7 +93,7 @@ export const About = () => {
                     CGPA: {ACADEMIC_INFO.gpa}
                   </p>
                 </div>
-                
+
                 <div>
                   <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Relevant Courses</h4>
                   <div className="flex flex-wrap gap-2">
@@ -126,18 +127,18 @@ export const About = () => {
                   <p className="text-sm text-slate-600 dark:text-slate-400">Open to opportunities</p>
                 </div>
               </div>
-              
+
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <MapPin className="text-slate-500" size={20} />
                   <span className="text-slate-700 dark:text-slate-300">{PERSONAL_INFO.location}</span>
                 </div>
-                
+
                 <div className="flex items-center gap-3">
                   <Calendar className="text-slate-500" size={20} />
                   <span className="text-slate-700 dark:text-slate-300">Summer 2025 & Beyond</span>
                 </div>
-                
+
                 <div className="mt-4">
                   <span className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-sm font-medium">
                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
@@ -164,7 +165,7 @@ export const About = () => {
                   <p className="text-sm text-slate-600 dark:text-slate-400">Build, Learn, Iterate</p>
                 </div>
               </div>
-              
+
               <div className="space-y-3">
                 {[
                   "Learning through hands-on projects",
@@ -199,7 +200,7 @@ export const About = () => {
               Principles that guide my approach to building technology solutions
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {

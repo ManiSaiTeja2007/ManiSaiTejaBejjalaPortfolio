@@ -1,3 +1,4 @@
+// src/hooks/useGitHubStats.ts
 import { useState, useEffect } from 'react';
 import { githubService } from '@/services/githubService';
 import type { GitHubStats, GitHubRepo, LanguageStats } from '@/services/githubService';
@@ -12,7 +13,7 @@ export const useGitHubStats = () => {
       try {
         setLoading(true);
         setError(null);
-        
+
         const data = await githubService.getStats();
         setStats(data);
       } catch (err) {
@@ -30,7 +31,7 @@ export const useGitHubStats = () => {
     githubService.clearCache();
     setLoading(true);
     setError(null);
-    
+
     try {
       const data = await githubService.getStats();
       setStats(data);
@@ -60,7 +61,7 @@ export const useGitHubRepos = () => {
       try {
         setLoading(true);
         setError(null);
-        
+
         const data = await githubService.getRepos();
         setRepos(data);
       } catch (err) {

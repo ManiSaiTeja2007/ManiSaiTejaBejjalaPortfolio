@@ -1,3 +1,4 @@
+// src/components/sections/Connect/Connect.tsx
 import { motion } from 'framer-motion';
 import { 
   Github, Linkedin, Twitter, Codepen, 

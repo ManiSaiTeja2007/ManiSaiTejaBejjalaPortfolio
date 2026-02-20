@@ -1,3 +1,4 @@
+// src/components/common/Header/MobileMenu.tsx
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface MobileMenuLink {
@@ -30,6 +31,27 @@ export const MobileMenu = ({ isOpen, links, activeSection, onClose }: MobileMenu
     },
   };
 
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    onClose();
+
+    // Get the target element
+    const targetId = href.replace('#', '');
+    const targetElement = document.getElementById(targetId);
+
+    if (targetElement) {
+      // Account for fixed header height
+      const headerOffset = 80; // Adjust this value based on your header height
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -47,10 +69,10 @@ export const MobileMenu = ({ isOpen, links, activeSection, onClose }: MobileMenu
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={onClose}
+                  onClick={(e) => handleLinkClick(e, link.href)}
                   className={`block px-4 py-3 rounded-lg transition-colors duration-200 ${
                     isActive
-                      ? 'bg-primary-brand/10 text-primary-brand font-bold'
+                      ? 'bg-primary-brand/10 text-primary-brand font-medium'
                       : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
                   }`}
                 >

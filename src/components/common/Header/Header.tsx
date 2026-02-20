@@ -1,7 +1,7 @@
+// src/components/common/Header/Header.tsx
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
-import { Navigation } from './Navigation';
 import { MobileMenu } from './MobileMenu';
 import { useScrollSpy } from '@/hooks/useScrollSpy';
 import { SECTION_IDS } from '@/utils/constants';
@@ -16,7 +16,7 @@ export const Header = () => {
     } else {
       document.body.style.overflow = 'unset';
     }
-    
+
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -33,25 +33,62 @@ export const Header = () => {
     { href: '#fun-fact', label: 'Fun Fact' },
   ];
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+
+    const targetId = href.replace('#', '');
+    const targetElement = document.getElementById(targetId);
+
+    if (targetElement) {
+      const headerOffset = 80;
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <header className="fixed top-0 w-full bg-white/95 dark:bg-slate-800/95 backdrop-blur-md z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         {/* Logo */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-3">
           <div className="h-10 w-10 bg-primary-brand rounded-lg flex items-center justify-center">
             <span className="text-white font-poppins font-bold text-2xl">M</span>
           </div>
           <a
             href="#hero"
+            onClick={(e) => handleNavClick(e, '#hero')}
             className="text-2xl font-poppins font-bold text-primary-brand hidden md:block"
           >
-            Mani Sai Teja <span className="md:inline lg:block">Bejjala</span>
+            Mani Sai Teja
           </a>
         </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
-          <Navigation links={navLinks} activeSection={activeSection} />
+          <nav className="flex space-x-6">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href.substring(1);
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={`font-medium transition-colors duration-200 ${
+                    isActive
+                      ? 'text-primary-brand font-semibold'
+                      : 'text-slate-700 dark:text-slate-300 hover:text-primary-brand'
+                  }`}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
+          </nav>
           <ThemeToggle />
         </div>
 

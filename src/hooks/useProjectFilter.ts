@@ -1,3 +1,4 @@
+// src/hooks/useProjectFilter.ts
 import { useState, useMemo } from 'react';
 import type { Project } from '@/types/project';
 
@@ -17,7 +18,7 @@ export const useProjectFilter = (projects: Project[]) => {
         project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.tags.some(tag => tag.name.toLowerCase().includes(searchQuery.toLowerCase()));
-      
+
       return matchesCategory && matchesSearch;
     });
   }, [projects, selectedCategory, searchQuery]);

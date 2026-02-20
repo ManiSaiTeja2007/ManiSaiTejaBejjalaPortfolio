@@ -1,4 +1,4 @@
-// Personal Information
+// src/utils/constants.ts
 export const PERSONAL_INFO = {
   name: 'Mani Sai Teja Bejjala',
   fullName: 'Mani Sai Teja Bejjala',

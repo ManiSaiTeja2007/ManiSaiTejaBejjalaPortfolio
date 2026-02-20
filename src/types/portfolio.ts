@@ -1,3 +1,4 @@
+// src/types/portfolio.ts
 export interface ApexProject {
   id: string;
   title: string;

@@ -1,3 +1,4 @@
+// src/components/sections/Hero/Hero.tsx
 import { motion } from 'framer-motion';
 import { ArrowRight, Code2, Cpu, Zap, GraduationCap, MapPin } from 'lucide-react';
 import { PERSONAL_INFO, ACADEMIC_INFO } from '@/utils/constants';
@@ -16,7 +17,7 @@ export const Hero = () => {
     >
       {/* Animated background */}
       <div className="absolute inset-0 bg-grid-pattern opacity-10" />
-      
+
       {/* Floating elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {dotPositions.map((position, i) => (
@@ -95,7 +96,7 @@ export const Hero = () => {
                 <span className="mx-2">ECE Student</span> • 
                 <span className="text-primary-brand font-semibold ml-2">IIIT Sri City</span>
               </p>
-              
+
               {/* Quick Info */}
               <div className="flex flex-wrap justify-center gap-4 text-sm md:text-base text-slate-600 dark:text-slate-400">
                 <div className="flex items-center gap-2">
@@ -135,7 +136,7 @@ export const Hero = () => {
                 <span>View My Projects</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
-              
+
               <a
                 href="#contact"
                 className="inline-flex items-center justify-center gap-3 px-8 py-4 border-2 border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded-xl font-semibold hover:border-primary-brand hover:text-primary-brand dark:hover:text-primary-brand transition-all duration-300 hover:-translate-y-1"

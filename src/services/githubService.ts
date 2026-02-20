@@ -1,4 +1,4 @@
-// src/services/githubService.ts (Simplified to fix errors)
+// src/services/githubService.ts
 import { GITHUB_CONFIG } from '@/utils/constants';
 
 export interface GitHubRepo {

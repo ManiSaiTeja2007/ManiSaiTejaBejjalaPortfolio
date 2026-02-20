@@ -1,3 +1,4 @@
+/* src/styles/theme.css */
 /* Theme-specific styles */
 
 /* Dark mode transitions */
@@ -26,12 +27,12 @@
   .no-print {
     display: none !important;
   }
-  
+
   body {
     background: white !important;
     color: black !important;
   }
-  
+
   a {
     color: black !important;
     text-decoration: underline !important;
@@ -51,7 +52,7 @@
     --card-bg: #000000;
     --section-bg: #1a1a1a;
   }
-  
+
   .border {
     border-width: 2px !important;
   }
@@ -62,11 +63,11 @@
   .mobile-stack {
     flex-direction: column !important;
   }
-  
+
   .mobile-full-width {
     width: 100% !important;
   }
-  
+
   .mobile-text-center {
     text-align: center !important;
   }

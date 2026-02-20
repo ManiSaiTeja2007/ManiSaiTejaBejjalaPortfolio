@@ -1,3 +1,4 @@
+// src/components/sections/FunFact/FunFact.tsx
 import { motion } from 'framer-motion';
 import { Zap } from 'lucide-react';
 
@@ -23,13 +24,13 @@ export const FunFact = () => {
         <div className="inline-flex items-center justify-center p-3 bg-primary-brand/10 rounded-full mb-6">
           <Zap className="text-primary-brand" size={32} />
         </div>
-        
+
         <blockquote className="text-2xl font-poppins font-semibold italic text-slate-800 dark:text-slate-200 mb-6">
           "I love blending my ECE background with frontend development,
           constantly experimenting with new tech stacks to create innovative
           projects that seamlessly bridge hardware and software!"
         </blockquote>
-        
+
         <div className="text-slate-600 dark:text-slate-400">
           <p className="mb-4">
             When I'm not coding, you can find me exploring new IoT projects,
