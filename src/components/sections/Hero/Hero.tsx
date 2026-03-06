@@ -1,7 +1,14 @@
 // src/components/sections/Hero/Hero.tsx
-import { motion } from 'framer-motion';
-import { ArrowRight, Code2, Cpu, Zap, GraduationCap, MapPin } from 'lucide-react';
-import { PERSONAL_INFO, ACADEMIC_INFO } from '@/utils/constants';
+import { motion } from "framer-motion";
+import {
+  ArrowRight,
+  Code2,
+  Cpu,
+  Zap,
+  GraduationCap,
+  MapPin,
+} from "lucide-react";
+import { PERSONAL_INFO, ACADEMIC_INFO } from "@/utils/constants";
 
 export const Hero = () => {
   // Generate deterministic positions based on index
@@ -11,8 +18,8 @@ export const Hero = () => {
   }));
 
   return (
-    <section 
-      id="hero" 
+    <section
+      id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 dark:via-gray-900 dark:to-blue-900/20"
     >
       {/* Animated background */}
@@ -66,21 +73,27 @@ export const Hero = () => {
               </span>
             </motion.div>
 
-            {/* Name */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-4"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight mb-4"
             >
-              <span className="block text-slate-900 dark:text-white">Mani Sai Teja</span>
               <motion.span
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4 }}
-                className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400"
+                className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400"
               >
                 Bejjala
+              </motion.span>{" "}
+              <motion.span
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 }}
+                className="inline-block text-slate-900 dark:text-white"
+              >
+                Mani Sai Teja
               </motion.span>
             </motion.h1>
 
@@ -92,19 +105,29 @@ export const Hero = () => {
               className="space-y-4 mb-10"
             >
               <p className="text-xl md:text-2xl text-slate-700 dark:text-slate-300 font-medium">
-                <span className="text-slate-900 dark:text-white">Frontend Developer</span> • 
-                <span className="mx-2">ECE Student</span> • 
-                <span className="text-primary-brand font-semibold ml-2">IIIT Sri City</span>
+                <span className="text-slate-900 dark:text-white">
+                  Frontend Developer
+                </span>{" "}
+                •<span className="mx-2">ECE Student</span> •
+                <span className="text-primary-brand font-semibold ml-2">
+                  IIIT Sri City
+                </span>
               </p>
 
               {/* Quick Info */}
               <div className="flex flex-wrap justify-center gap-4 text-sm md:text-base text-slate-600 dark:text-slate-400">
                 <div className="flex items-center gap-2">
-                  <GraduationCap size={18} className="text-blue-600 dark:text-blue-400" />
+                  <GraduationCap
+                    size={18}
+                    className="text-blue-600 dark:text-blue-400"
+                  />
                   <span>{ACADEMIC_INFO.year}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <MapPin size={18} className="text-green-600 dark:text-green-400" />
+                  <MapPin
+                    size={18}
+                    className="text-green-600 dark:text-green-400"
+                  />
                   <span>{PERSONAL_INFO.location}</span>
                 </div>
               </div>
@@ -117,9 +140,10 @@ export const Hero = () => {
               transition={{ delay: 0.6 }}
               className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mb-12 leading-relaxed"
             >
-              Building bridges between hardware intelligence and software elegance. 
-              Exploring the intersection of Electronics Engineering, Web Development, 
-              and Artificial Intelligence to create innovative solutions.
+              Building bridges between hardware intelligence and software
+              elegance. Exploring the intersection of Electronics Engineering,
+              Web Development, and Artificial Intelligence to create innovative
+              solutions.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -154,10 +178,10 @@ export const Hero = () => {
             >
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
                 {[
-                  { value: '20+', label: 'Projects Built' },
-                  { value: '15+', label: 'Technologies' },
-                  { value: '2', label: 'Years Coding' },
-                  { value: '100%', label: 'Passionate' },
+                  { value: "20+", label: "Projects Built" },
+                  { value: "15+", label: "Technologies" },
+                  { value: "2", label: "Years Coding" },
+                  { value: "100%", label: "Passionate" },
                 ].map((stat, index) => (
                   <div key={index} className="text-center">
                     <div className="text-2xl md:text-3xl font-bold text-primary-brand mb-2">

@@ -1,5 +1,5 @@
 // src/components/providers/PerformanceProvider.tsx
-import { createContext, useEffect, useCallback } from 'react';
+import { createContext, useEffect, useCallback, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 
@@ -24,6 +24,18 @@ function PerformanceProvider({ children }: { children: ReactNode }) {
   const [metrics, setMetrics] = useLocalStorage<PerformanceMetrics>('perf-metrics', {});
   const [isPerfMode, setIsPerfMode] = useLocalStorage<boolean>('perf-mode', false);
 
+  // Memoize the logMetric function to prevent unnecessary re-renders
+  const logMetric = useCallback((name: string, value: number) => {
+    setMetrics((prev: PerformanceMetrics) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }, [setMetrics]);
+
+  const togglePerfMode = useCallback(() => {
+    setIsPerfMode((prev: boolean) => !prev);
+  }, [setIsPerfMode]);
+
   useEffect(() => {
     if (!isPerfMode) return;
 
@@ -31,16 +43,9 @@ function PerformanceProvider({ children }: { children: ReactNode }) {
       for (const entry of list.getEntries()) {
         if (entry.entryType === 'paint') {
           const metric = entry as PerformancePaintTiming;
-          setMetrics((prev: PerformanceMetrics) => ({
-            ...prev,
-            [metric.name]: Math.round(metric.startTime),
-          }));
+          logMetric(metric.name, Math.round(metric.startTime));
         } else if (entry.entryType === 'largest-contentful-paint') {
-          const metric = entry as PerformanceEntry;
-          setMetrics((prev: PerformanceMetrics) => ({
-            ...prev,
-            largestContentfulPaint: Math.round(metric.startTime),
-          }));
+          logMetric('largestContentfulPaint', Math.round(entry.startTime));
         }
       }
     });
@@ -48,23 +53,17 @@ function PerformanceProvider({ children }: { children: ReactNode }) {
     observer.observe({ entryTypes: ['paint', 'largest-contentful-paint'] });
 
     return () => observer.disconnect();
-  }, [isPerfMode]); // Remove setMetrics from dependencies
+  }, [isPerfMode, logMetric]); // Add logMetric to dependencies
 
-  const logMetric = useCallback((name: string, value: number) => {
-    setMetrics((prev: PerformanceMetrics) => ({
-      ...prev,
-      [name]: value,
-    }));
-  }, [setMetrics]); // Add setMetrics as dependency
-
-  const togglePerfMode = useCallback(() => {
-    setIsPerfMode((prev: boolean) => !prev);
-  }, [setIsPerfMode]);
+  const value = useMemo(() => ({
+    metrics,
+    logMetric,
+    isPerfMode,
+    togglePerfMode,
+  }), [metrics, logMetric, isPerfMode, togglePerfMode]);
 
   return (
-    <PerformanceContext.Provider
-      value={{ metrics, logMetric, isPerfMode, togglePerfMode }}
-    >
+    <PerformanceContext.Provider value={value}>
       {children}
       {isPerfMode && (
         <div className="fixed bottom-4 right-4 bg-slate-800 text-white p-3 rounded-lg text-xs z-50">

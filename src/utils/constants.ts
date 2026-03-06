@@ -38,7 +38,7 @@ export const SOCIAL_LINKS = {
   github: 'https://github.com/manisaiteja2007',
   linkedin: 'https://www.linkedin.com/in/mani-sai-teja-bejjala',
   kaggle: 'https://www.kaggle.com/bejjalamanisaiteja',
-  hashnode: 'https://manisaitejabejjala.hashnode.dev',
+  hashnode: 'https://hashnode.com/@ManiSaiTejaBejjala',
   discord: 'https://discord.com/users/manisaiteja7509',
   codepen: 'https://codepen.io/bejjala-mani-sai-teja',
   devto: 'https://dev.to/manisaiteja2007',
@@ -111,8 +111,8 @@ export const GOALS = [
 export const AVAILABILITY = {
   status: 'actively-seeking',
   types: ['Internships', 'Freelance Projects', 'Collaborations', 'Research Opportunities'],
-  timeline: 'Summer 2025 & Beyond',
-  location: 'Remote or On-site (India)',
+  timeline: 'Summer 2026',
+  location: 'Remote',
 };
 
 // GitHub Stats Configuration
